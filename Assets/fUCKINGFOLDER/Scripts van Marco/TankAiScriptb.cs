@@ -34,11 +34,9 @@ public class TankAiScriptb : BasicAiScriptMarco
         switch (UnitStat)
         {
             case UnitStatus.Aiming:
-                Debug.Log("I am aiming");
                 MyAnim.SetBool("Start", false);
                 break;
             case UnitStatus.Idle:
-                Debug.Log("Idle");
                 MyAnim.SetBool("Start", true);
                 break;
             default:
