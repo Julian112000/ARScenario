@@ -65,13 +65,11 @@ public class TestHumanScript : BasicAiScriptMarco
         switch (UnitStat)
         {
             case UnitStatus.Aiming:
-                Debug.Log("Ï am aiming");
                 MyAnimations.Play("Aiming");
                 //MyAnimations.Blend("Aiming", 1.0f, 0.3f);
                 
                 break;
             case UnitStatus.Idle:
-                Debug.Log("I am Idle");
                 MyAnimations.Blend("Idle", 1.0f, 0.3f);
                 //MyAnimations.Play("Idle");
 
