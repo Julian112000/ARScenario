@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
+  m_Name: Test4
+  m_EditorClassIdentifier: 
+  name: test4
+  description: dit is voor test4
+  artwork: {fileID: 21300000, guid: 3ad96b6f755813945a17d494dbe86341, type: 3}
+  ConnectedModel: {fileID: 6566804861729480406, guid: 8bcbca6331fdf3a4f835c6a667e5e32b,
+    type: 3}

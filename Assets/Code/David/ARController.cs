@@ -40,8 +40,7 @@
         //
         [SerializeField]
         private Camera FirstpersonCam;
-        [SerializeField]
-        private GameObject Model;
+        private static GameObject Model;
         public ControllerState controllerstate;
         [SerializeField]
         private GameObject CurrentplacedObject;
@@ -54,10 +53,13 @@
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(Session.Status);
+            SessionHandling();
+        }
+
+        private void SessionHandling()
+        {
             if (Session.Status != SessionStatus.Tracking)
             {
-                Debug.Log("NOT TRACKING");
                 return;
             }
             if (controllerstate == ControllerState.Placing)
@@ -78,6 +80,7 @@
 
         }
 
+        #region Input Voids
         void ScreenInputPlacing()
         {
             Touch touch;
@@ -142,7 +145,7 @@
 
         void ScreenInputRotating()
         {
-            if(Input.touchCount == 1)
+            if (Input.touchCount == 1)
             {
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
@@ -168,6 +171,13 @@
                     }
                 }
             }
+        }
+        #endregion
+
+        //Static void to change model from another script
+        public static void ChangeModel(GameObject modelpar)
+        {
+            Model = modelpar;
         }
 
 
