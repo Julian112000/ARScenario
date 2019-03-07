@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4055847820020234}
   - component: {fileID: 33340294062673050}
   - component: {fileID: 23646549736039258}
-  - component: {fileID: 114776205485222536}
+  - component: {fileID: 4746187359481119068}
   m_Layer: 0
-  m_Name: DetectedPlaneVisualizer
+  m_Name: DetectedSavedPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 92b1ca249edc047509db2c7bc05789ef, type: 2}
+  - {fileID: 2100000, guid: 803693aece80a6d4eb3195f138746a7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &114776205485222536
+--- !u!114 &4746187359481119068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,6 +87,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654175882956584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23e3f20de6c2e405a93736a38f74b0fb, type: 3}
+  m_Script: {fileID: 11500000, guid: fd84cab23c0af51408db49d885b04c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
