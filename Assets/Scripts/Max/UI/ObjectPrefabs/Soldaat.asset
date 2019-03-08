@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Soldaat
   description: Voor nu, een soldaat.
   artwork: {fileID: 21300000, guid: 7eb0e0989fe693942843d84f4b0c0149, type: 3}
-  ConnectedModel: {fileID: 1283650867661888980, guid: 3383768bb7f14e24b8bd6808081cd2a0,
+  ConnectedModel: {fileID: 6463956401187989751, guid: 83301c00e1c32f448904900874c9cb6e,
     type: 3}

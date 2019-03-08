@@ -8,7 +8,6 @@ public class TankAiScriptb : BasicAiScriptMarco
     UnitType MyType;
     UnitStatus UnitStat;
 
-    public bool PlayAnimations;
     public Transform Turret;
     public Animator MyAnim;
 
@@ -46,6 +45,11 @@ public class TankAiScriptb : BasicAiScriptMarco
     }
     private void Update()
     {
+        if (PlayAnimations)
+        {
+            PlayAnimation();
+        }
+
         if (IsSelecting)
         {
             Aim(UnitStat);

@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Truck
   description: Voor nu, een truck.
   artwork: {fileID: 21300000, guid: 0752214a7513951419532b852edaaa4f, type: 3}
-  ConnectedModel: {fileID: 6566804861729480406, guid: 8bcbca6331fdf3a4f835c6a667e5e32b,
+  ConnectedModel: {fileID: 1590782745259705619, guid: 3868734fe9498674f8a3014524d161c9,
     type: 3}

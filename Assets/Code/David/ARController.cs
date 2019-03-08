@@ -24,7 +24,7 @@
     {
         Placing,
         Scaling,
-        Rotating
+        Rotating,
     }
 
 
@@ -41,7 +41,7 @@
         [SerializeField]
         private Camera FirstpersonCam;
         private static GameObject Model;
-        public ControllerState controllerstate;
+        public static ControllerState controllerstate;
         [SerializeField]
         private GameObject CurrentplacedObject;
         [SerializeField]
@@ -49,6 +49,15 @@
         //
         Vector2 FirstPos;
         Vector2 LastPos;
+        //
+        [SerializeField]
+        GameObject BuildCanvas;
+        [SerializeField]
+        GameObject ObjectEditCanvas;
+        [SerializeField]
+        GameObject ScalingFeedback;
+        [SerializeField]
+        GameObject RotateFeedback;
 
         // Update is called once per frame
         void Update()
@@ -64,20 +73,41 @@
             }
             if (controllerstate == ControllerState.Placing)
             {
+                //BuildCanvas.SetActive(true);
+                ObjectEditCanvas.SetActive(false);
+                //
                 ScreenInputPlacing();
                 GridViewer.SetActive(true);
             }
-            if (controllerstate == ControllerState.Scaling)
+            //
+            if(controllerstate != ControllerState.Placing)
             {
-                ScreenInputScaling();
-                GridViewer.SetActive(false);
-            }
-            if (controllerstate == ControllerState.Rotating)
-            {
-                ScreenInputRotating();
-                GridViewer.SetActive(false);
-            }
+                BuildCanvas.SetActive(false);
+                ObjectEditCanvas.SetActive(true);
+                if (Input.touchCount == 1)
+                {
+                    controllerstate = ControllerState.Rotating;
+                    ScreenInputRotating();
+                    GridViewer.SetActive(false);
+                    ScalingFeedback.SetActive(false);
+                    RotateFeedback.SetActive(true);
 
+                }
+                if(Input.touchCount == 2)
+                {
+                    controllerstate = ControllerState.Scaling;
+                    //
+                    ScreenInputScaling();
+                    GridViewer.SetActive(false);
+                    ScalingFeedback.SetActive(true);
+                    RotateFeedback.SetActive(false);
+                }
+                if(Input.touchCount == 0)
+                {
+                    ScalingFeedback.SetActive(true);
+                    RotateFeedback.SetActive(true);
+                }
+            }
         }
 
         #region Input Voids
@@ -107,10 +137,13 @@
                     GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
                     SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
                     CurrentplacedObject = SpawnedObject;
-                    // world evolves.
+                    //
                     Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
                     SpawnedObject.transform.parent = anchor.transform;
+                    //Switch Editor State to scaling
+                    controllerstate = ControllerState.Rotating;
                     //
+
                 }
             }
         }
@@ -180,6 +213,9 @@
             Model = modelpar;
         }
 
-
+        public static void ChangeToBuild()
+        {
+            controllerstate = ControllerState.Placing;
+        }
     }
 }

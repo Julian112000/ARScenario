@@ -15,5 +15,5 @@ MonoBehaviour:
   name: test5
   description: Dit is voor test5
   artwork: {fileID: 21300000, guid: 9d1642fe0af8d3a4f9ab7ec0ccde73c4, type: 3}
-  ConnectedModel: {fileID: 6566804861729480406, guid: 8bcbca6331fdf3a4f835c6a667e5e32b,
+  ConnectedModel: {fileID: 4387967165760929355, guid: 3fea35c053b90984ba072c5734203d87,
     type: 3}

@@ -23,17 +23,26 @@ public class SceneHandler : MonoBehaviour
 
     public static void EnableBuildMode()
     {
-        SwitchToBuildMode();
-        CurrentSceneState = SceneState.BuildMode;
+        if(SwitchToBuildMode != null)
+        {
+            SwitchToBuildMode();
+            CurrentSceneState = SceneState.BuildMode;
+        }
     }
     public static void EnablePlayMode()
     {
-        SwitchToPlayMode();
-        CurrentSceneState = SceneState.Playing;
+        if(SwitchToPlayMode != null)
+        {
+            SwitchToPlayMode();
+            CurrentSceneState = SceneState.Playing;
+        }
     }
     public static void EnablePauseMode()
     {
-        SwitchToPauseMode();
-        CurrentSceneState = SceneState.Paused;
+        if(SwitchToPauseMode != null)
+        {
+            SwitchToPauseMode();
+            CurrentSceneState = SceneState.Paused;
+        }
     }
 }

@@ -15,9 +15,14 @@
     {
         public ObjectChangerScript change;
 
-        public ChangeUIScript canvasChange;
-
         public Camera mainCamera;
+   
+        [SerializeField]
+        private GameObject buildModeUI;
+        [SerializeField]
+        private GameObject mainModeUI;
+        [SerializeField]
+        private GameObject rotatingModeUI;
 
         private bool CanClick = true;
 
@@ -31,26 +36,38 @@
                 {
                     if (CanClick)
                     {
-                        if (hit.collider.tag == "RightArrow" && change.currentObject <= 4)
+                        if (hit.collider.tag == "RightArrow" && change.currentObject <= 4) //Right arrow
                         {
+                            Debug.Log("Bierbuik . log");
                                 StartCoroutine(MoveArrow(1));
                                 CanClick = false;
                         }
-                        else if (hit.collider.gameObject.tag == "LeftArrow" && change.currentObject >= 2)
+                        else if (hit.collider.gameObject.tag == "LeftArrow" && change.currentObject >= 2) //Left arrow
                         {
                                 StartCoroutine(MoveArrow(-1));
                                 CanClick = false;
                         }
-                        else if (hit.collider.gameObject.tag == "DoneButton")
+                        else if (hit.collider.gameObject.tag == "DoneButton") //Close build mode
                         {
                             StartCoroutine(DoneButton());
                             CanClick = false;
                         }
-                        else if (hit.collider.gameObject.tag == "confirmChoice")
+                        else if (hit.collider.gameObject.tag == "ConfirmRotate") //Close rotate/scale mode
                         {
-                            Debug.Log("Chose");
+                            StartCoroutine(ConfirmRotation());
+                            CanClick = false;
                         }
-                       
+                        else if (hit.collider.gameObject.tag == "BuildModeButton")
+                        {
+                            StartCoroutine(OpenBuildMenu());
+                            CanClick = false;
+                        }
+                        else if(hit.collider.gameObject.tag == "PlayMode")
+                        {
+                            StartCoroutine(StartPlayMode());
+                            CanClick = false;
+                        }
+
                     }
                 }
             }
@@ -66,12 +83,35 @@
         }
         public IEnumerator DoneButton()
         {
-            canvasChange.buildModeUI.SetActive(false);
-            canvasChange.mainModeUI.SetActive(true);
+            buildModeUI.SetActive(false);
+            mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
             //
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator ConfirmRotation()
+        {
+            rotatingModeUI.SetActive(false);
+            mainModeUI.SetActive(true);
+            ARController.ChangeToBuild();
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator OpenBuildMenu()
+        {
+            buildModeUI.SetActive(true);
+            mainModeUI.SetActive(false);
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator StartPlayMode()
+        {
+            buildModeUI.SetActive(false);
+            mainModeUI.SetActive(false);
+            SceneHandler.EnablePlayMode();
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }

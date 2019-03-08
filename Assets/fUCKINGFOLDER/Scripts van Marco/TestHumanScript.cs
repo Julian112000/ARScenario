@@ -8,28 +8,15 @@ public class TestHumanScript : BasicAiScriptMarco
     UnitType MyType;
     UnitStatus UnitStat;
 
-    public bool PlayAnimations;
     public Animation MyAnimations;
-    public AnimationClip Idle, Aiming;
-
+    private Animator animator;
     private void Start()
     {
         MyType = UnitType.Infantery;
 
-        if(MyAnimations = GetComponent<Animation>())
+        if(animator = GetComponent<Animator>())
         {
             NoAmin = false;
-        }
-        else
-        {
-            NoAmin = true;
-        }
-
-        if (!PlayAnimations && !NoAmin)
-        {
-            MyAnimations.AddClip(Idle, "Idle");
-            MyAnimations.AddClip(Aiming, "Aiming");
-            
         }
         else
         {
@@ -65,13 +52,12 @@ public class TestHumanScript : BasicAiScriptMarco
         switch (UnitStat)
         {
             case UnitStatus.Aiming:
-                MyAnimations.Play("Aiming");
+                animator.SetBool("Aiming", true);
                 //MyAnimations.Blend("Aiming", 1.0f, 0.3f);
                 
                 break;
             case UnitStatus.Idle:
-                MyAnimations.Blend("Idle", 1.0f, 0.3f);
-                //MyAnimations.Play("Idle");
+                animator.SetBool("Aiming", false);
 
                 break;
             default:
@@ -83,11 +69,16 @@ public class TestHumanScript : BasicAiScriptMarco
 
     private void Update()
     {
+        if (PlayAnimations)
+        {
+            PLayAnimation();
+        }
+ 
         if (IsSelecting)
         {
             Aim(UnitStat);
         }
-        if (Input.GetKey(KeyCode.Space) && !NoAmin)
+        if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {
             Health--;
             if(UnitStat == UnitStatus.Aiming)
@@ -99,13 +90,6 @@ public class TestHumanScript : BasicAiScriptMarco
                 UnitStat = UnitStatus.Aiming;
             }
             PLayAnimation();
-        }
-        if (!NoAmin)
-        {
-            if (!MyAnimations.isPlaying && PlayAnimations)
-            {
-                PLayAnimation();
-            }
         }
     }
 

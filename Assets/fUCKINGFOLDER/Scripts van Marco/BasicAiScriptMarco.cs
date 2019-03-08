@@ -8,6 +8,7 @@ public class BasicAiScriptMarco : MonoBehaviour
     public Camera Mcamera;
     
     protected bool NoAmin;
+    public bool PlayAnimations;
     private float _Health = 10;
     private bool _IsSelecting;
 
@@ -52,6 +53,7 @@ public class BasicAiScriptMarco : MonoBehaviour
     private void Awake()
     {
         Mcamera = Camera.main;
+        SceneHandler.SwitchToPlayMode += ToggleAnims;
     }
 
     public void AimAt(GameObject Target, UnitStatus status)
@@ -84,6 +86,10 @@ public class BasicAiScriptMarco : MonoBehaviour
                 IsSelecting = false;
             }
         }
+    }
+    public void ToggleAnims()
+    {
+        PlayAnimations = true;
     }
 
 
