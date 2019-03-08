@@ -25,6 +25,7 @@
         Placing,
         Scaling,
         Rotating,
+        Targeting
     }
 
 
@@ -53,6 +54,8 @@
         [SerializeField]
         GameObject BuildCanvas;
         [SerializeField]
+        GameObject SelectBuildCanvas;
+        [SerializeField]
         GameObject ObjectEditCanvas;
         [SerializeField]
         GameObject ScalingFeedback;
@@ -71,7 +74,7 @@
             {
                 return;
             }
-            if (controllerstate == ControllerState.Placing)
+            if (controllerstate == ControllerState.Placing && !SelectBuildCanvas.activeSelf)
             {
                 //BuildCanvas.SetActive(true);
                 ObjectEditCanvas.SetActive(false);
@@ -80,7 +83,7 @@
                 GridViewer.SetActive(true);
             }
             //
-            if(controllerstate != ControllerState.Placing)
+            if(controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting)
             {
                 BuildCanvas.SetActive(false);
                 ObjectEditCanvas.SetActive(true);

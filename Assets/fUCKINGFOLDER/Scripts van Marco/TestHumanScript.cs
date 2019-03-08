@@ -7,7 +7,7 @@ public class TestHumanScript : BasicAiScriptMarco
    
     UnitType MyType;
     UnitStatus UnitStat;
-
+    public static bool SetNew;
     public Animation MyAnimations;
     private Animator animator;
     private void Start()
@@ -24,6 +24,7 @@ public class TestHumanScript : BasicAiScriptMarco
         }
         
     }
+    
 
     public void SelectTarget()
     {
@@ -74,9 +75,10 @@ public class TestHumanScript : BasicAiScriptMarco
             PLayAnimation();
         }
  
-        if (IsSelecting)
+        if (SetNew)
         {
             Aim(UnitStat);
+            UnitStat = UnitStatus.Aiming;
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {

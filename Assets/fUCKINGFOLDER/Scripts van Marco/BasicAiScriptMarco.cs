@@ -64,7 +64,7 @@ public class BasicAiScriptMarco : MonoBehaviour
     public GameObject CheckCast()
     {
         RaycastHit hit;
-        Ray ray = Mcamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Mcamera.ScreenPointToRay(Input.GetTouch(0).position);
         if(Physics.Raycast(ray, out hit, 1000f))
         {
             return hit.collider.gameObject;
@@ -77,13 +77,14 @@ public class BasicAiScriptMarco : MonoBehaviour
     public void Aim(UnitStatus Stat)
     {
         IsSelecting = true;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0)
         {
             MyTarget = CheckCast();
             if (MyTarget != null)
             {
                 AimAt(MyTarget, Status);
                 IsSelecting = false;
+                TestHumanScript.SetNew = false;
             }
         }
     }

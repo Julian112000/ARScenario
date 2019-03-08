@@ -11,6 +11,9 @@ TagManager:
   - confirmChoice
   - ConfirmRotate
   - PlayMode
+  - LookAtAni
+  - TargetModeButton
+  - BackButton
   layers:
   - Default
   - TransparentFX

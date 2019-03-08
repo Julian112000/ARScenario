@@ -23,6 +23,8 @@
         private GameObject mainModeUI;
         [SerializeField]
         private GameObject rotatingModeUI;
+        [SerializeField]
+        private GameObject targetModeUI;
 
         private bool CanClick = true;
 
@@ -67,7 +69,21 @@
                             StartCoroutine(StartPlayMode());
                             CanClick = false;
                         }
-
+                        else if(hit.collider.gameObject.tag == "LookAtAni")
+                        {
+                            TestHumanScript.SetNew = true;
+                            CanClick = false;
+                        }
+                        else if (hit.collider.gameObject.tag == "TargetModeButton")
+                        {
+                            StartCoroutine(StartTargetMode());
+                            CanClick = false;
+                        }
+                        else if (hit.collider.gameObject.tag == "BackButton")
+                        {
+                            StartCoroutine(StopTargetMode());
+                            CanClick = false;
+                        }
                     }
                 }
             }
@@ -115,6 +131,24 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
+        public IEnumerator StartTargetMode()
+        {
+            targetModeUI.SetActive(true);
+            mainModeUI.SetActive(false);
+            ARController.controllerstate = ControllerState.Targeting;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+
+        public IEnumerator StopTargetMode()
+        {
+            targetModeUI.SetActive(false);
+            mainModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Placing;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+
 
     }
 }
