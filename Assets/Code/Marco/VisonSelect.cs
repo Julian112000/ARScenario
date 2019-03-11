@@ -44,6 +44,7 @@ public class VisonSelect : MonoBehaviour
             if (human = hit.collider.gameObject.GetComponent<TestHumanScript>())
             {
                 human.SetNewT = true;
+                human.IsMouse = true;
                 Debug.Log("Werkt");
                 return true;
             }

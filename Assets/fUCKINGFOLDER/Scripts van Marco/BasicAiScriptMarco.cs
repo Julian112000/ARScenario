@@ -78,6 +78,20 @@ public class BasicAiScriptMarco : MonoBehaviour
             return null;
         }
     }
+    public GameObject CheckCastM()
+    {
+        RaycastHit hit;
+        Ray ray = Mcamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 1000f))
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void Aim(UnitStatus Stat)
     {
         IsSelecting = true;
@@ -108,6 +122,24 @@ public class BasicAiScriptMarco : MonoBehaviour
                 SelectedImg.SetActive(false);
             }
         }
+    }
+    public bool AimM(UnitStatus Stat, bool Local, GameObject me)
+    {
+        IsSelecting = true;
+        if (Input.GetMouseButtonDown(0))
+        {
+            MyTarget = CheckCastM();
+            //ConsoleScript.Instance.SetFeedback(MessageType.TargetMessage, me.name, MyTarget.name);
+            if (MyTarget != null)
+            {
+                AimAt(MyTarget, Status);
+                IsSelecting = false;
+                TestHumanScript.SetNew = false;
+                Local = false;
+                return Local;
+            }
+        }
+        return Local;
     }
     public void ToggleAnims()
     {
