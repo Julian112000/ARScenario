@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class TestHumanScript : BasicAiScriptMarco
 {
-   
+
     UnitType MyType;
     UnitStatus UnitStat;
     public static bool SetNew;
+    public bool SetNewT;
     public Animation MyAnimations;
     private Animator animator;
     private void Start()
     {
         MyType = UnitType.Infantery;
 
-        if(animator = GetComponent<Animator>())
+        if (animator = GetComponent<Animator>())
         {
             NoAmin = false;
         }
@@ -22,9 +23,8 @@ public class TestHumanScript : BasicAiScriptMarco
         {
             NoAmin = true;
         }
-        
+
     }
-    
 
     public void SelectTarget()
     {
@@ -55,7 +55,7 @@ public class TestHumanScript : BasicAiScriptMarco
             case UnitStatus.Aiming:
                 animator.SetBool("Aiming", true);
                 //MyAnimations.Blend("Aiming", 1.0f, 0.3f);
-                
+
                 break;
             case UnitStatus.Idle:
                 animator.SetBool("Aiming", false);
@@ -74,20 +74,29 @@ public class TestHumanScript : BasicAiScriptMarco
         {
             PLayAnimation();
         }
- 
-        if (SetNew)
+
+        if (SetNew || SetNewT)
         {
             UnitStat = UnitStatus.Aiming;
-            Aim(UnitStat);
+
+            if (SetNewT)
+            {
+                Aim(UnitStat, SetNewT);
+            }
+            else
+            {
+                Aim(UnitStat);
+            }
             if (!NoAmin)
             {
                 PLayAnimation();
             }
+
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {
             Health--;
-            if(UnitStat == UnitStatus.Aiming)
+            if (UnitStat == UnitStatus.Aiming)
             {
                 UnitStat = UnitStatus.Idle;
             }

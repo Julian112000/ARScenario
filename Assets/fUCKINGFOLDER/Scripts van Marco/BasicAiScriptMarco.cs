@@ -6,14 +6,14 @@ public class BasicAiScriptMarco : MonoBehaviour
 {
     public GameObject MyTarget;
     public Camera Mcamera;
-    
+
     protected bool NoAmin;
     public bool PlayAnimations;
     private float _Health = 10;
     private bool _IsSelecting;
 
-    public enum UnitType {Tank, Infantery}
-    public enum UnitStatus {Idle, Killed, Wounded, Aiming}
+    public enum UnitType { Tank, Infantery }
+    public enum UnitStatus { Idle, Killed, Wounded, Aiming }
 
     UnitStatus Status;
 
@@ -40,7 +40,7 @@ public class BasicAiScriptMarco : MonoBehaviour
         {
             _Health = value;
 
-            if(_Health <= 0)
+            if (_Health <= 0)
             {
                 Status = UnitStatus.Killed;
                 Debug.Log("Bleh");
@@ -65,7 +65,7 @@ public class BasicAiScriptMarco : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Mcamera.ScreenPointToRay(Input.GetTouch(0).position);
-        if(Physics.Raycast(ray, out hit, 1000f))
+        if (Physics.Raycast(ray, out hit, 1000f))
         {
             return hit.collider.gameObject;
         }
@@ -85,6 +85,21 @@ public class BasicAiScriptMarco : MonoBehaviour
                 AimAt(MyTarget, Status);
                 IsSelecting = false;
                 TestHumanScript.SetNew = false;
+            }
+        }
+    }
+    public void Aim(UnitStatus Stat, bool Local)
+    {
+        IsSelecting = true;
+        if (Input.touchCount > 0)
+        {
+            MyTarget = CheckCast();
+            if (MyTarget != null)
+            {
+                AimAt(MyTarget, Status);
+                IsSelecting = false;
+                TestHumanScript.SetNew = false;
+                Local = false;
             }
         }
     }
