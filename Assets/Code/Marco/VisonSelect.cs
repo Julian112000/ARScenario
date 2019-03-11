@@ -18,9 +18,15 @@ public class VisonSelect : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             TestHumanScript human;
+            TankAiScriptb tank;
             if (human = hit.collider.gameObject.GetComponent<TestHumanScript>())
             {
                 human.SetNewT = true;
+                return true;
+            }
+            if(tank = hit.collider.gameObject.GetComponent<TankAiScriptb>())
+            {
+                tank.SetNewT = true;
                 return true;
             }
         }

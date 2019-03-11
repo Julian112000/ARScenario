@@ -8,6 +8,7 @@ public class TankAiScriptb : BasicAiScriptMarco
     UnitType MyType;
     UnitStatus UnitStat;
 
+    public bool SetNewT;
     public Transform Turret;
     public Animator MyAnim;
 
@@ -50,9 +51,9 @@ public class TankAiScriptb : BasicAiScriptMarco
             PlayAnimation();
         }
 
-        if (IsSelecting)
+        if (SetNewT)
         {
-            Aim(UnitStat);
+            Aim(UnitStat, SetNewT, this.gameObject);
         }
     }
 
