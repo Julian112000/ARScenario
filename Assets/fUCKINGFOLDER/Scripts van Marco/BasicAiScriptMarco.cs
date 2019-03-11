@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BasicAiScriptMarco : MonoBehaviour
 {
-    public GameObject MyTarget;
+    public GameObject MyTarget, SelectedImg;
     public Camera Mcamera;
 
     protected bool NoAmin;
@@ -54,6 +54,10 @@ public class BasicAiScriptMarco : MonoBehaviour
     {
         Mcamera = Camera.main;
         SceneHandler.SwitchToPlayMode += ToggleAnims;
+        if(SelectedImg != null)
+        {
+            SelectedImg.SetActive(false);
+        }
     }
 
     public void AimAt(GameObject Target, UnitStatus status)
@@ -74,6 +78,20 @@ public class BasicAiScriptMarco : MonoBehaviour
             return null;
         }
     }
+    public GameObject CheckCastM()
+    {
+        RaycastHit hit;
+        Ray ray = Mcamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 1000f))
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void Aim(UnitStatus Stat)
     {
         IsSelecting = true;
@@ -101,8 +119,26 @@ public class BasicAiScriptMarco : MonoBehaviour
                 IsSelecting = false;
                 TestHumanScript.SetNew = false;
                 Local = false;
+                SelectedImg.SetActive(false);
             }
         }
+    }
+    public bool AimM(UnitStatus Stat, bool Local, GameObject me)
+    {
+        IsSelecting = true;
+        if (Input.GetMouseButtonDown(0))
+        {
+            MyTarget = CheckCastM();
+            if (MyTarget != null)
+            {
+                AimAt(MyTarget, Status);
+                IsSelecting = false;
+                TestHumanScript.SetNew = false;
+                Local = false;
+                return Local;
+            }
+        }
+        return Local;
     }
     public void ToggleAnims()
     {

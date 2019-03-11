@@ -8,13 +8,13 @@ public class TestHumanScript : BasicAiScriptMarco
     UnitType MyType;
     UnitStatus UnitStat;
     public static bool SetNew;
-    public bool SetNewT;
+    public bool SetNewT, IsMouse;
     public Animation MyAnimations;
     private Animator animator;
     private void Start()
     {
         MyType = UnitType.Infantery;
-
+        
         if (animator = GetComponent<Animator>())
         {
             NoAmin = false;
@@ -75,23 +75,34 @@ public class TestHumanScript : BasicAiScriptMarco
             PLayAnimation();
         }
 
-        if (SetNew || SetNewT)
+        if (SetNewT)
         {
+            SelectedImg.SetActive(true);
             UnitStat = UnitStatus.Aiming;
-
-            if (SetNewT)
+            if (SetNewT && !IsMouse)
             {
                 Aim(UnitStat, SetNewT, this.gameObject);
+                if (Input.touchCount > 0)
+                {
+                    SetNewT = !AimM(UnitStat, SetNewT, this.gameObject);
+                }
             }
             else
             {
-                Aim(UnitStat);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    SetNewT = !AimM(UnitStat, SetNewT, this.gameObject);
+                }
             }
             if (!NoAmin)
             {
                 PLayAnimation();
             }
 
+        }
+        if(!SetNewT)
+        {
+            SelectedImg.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {
