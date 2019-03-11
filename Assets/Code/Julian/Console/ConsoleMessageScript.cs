@@ -9,6 +9,8 @@ public class ConsoleMessageScript : MonoBehaviour
     private Text m_Text;
     [SerializeField]
     private Animator m_Animator;
+    [SerializeField]
+    private CanvasGroup m_CanvasAlpha;
 
     public bool m_IsEnabled;
 
@@ -27,12 +29,11 @@ public class ConsoleMessageScript : MonoBehaviour
         if (toggle)
         {
             m_Animator.enabled = false;
-            GetComponent<CanvasGroup>().alpha = 1;
+            m_CanvasAlpha.alpha = 1;
         }
         else
         {
             m_Animator.enabled = true;
         }
-
     }
 }
