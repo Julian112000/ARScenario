@@ -107,6 +107,7 @@
             //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
+            //
         }
         public IEnumerator ConfirmRotation()
         {

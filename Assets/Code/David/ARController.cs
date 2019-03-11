@@ -62,9 +62,23 @@
         [SerializeField]
         GameObject RotateFeedback;
 
-        // Update is called once per frame
+        public bool canPlace = false;
+
+        private void Start()
+        {
+            canPlace = false;
+        }
         void Update()
         {
+            if (SelectBuildCanvas.activeSelf || ObjectEditCanvas.activeSelf)
+            {
+                canPlace = false;
+            }
+            else
+            {
+                StartCoroutine(SetBuildMode());
+            }
+
             SessionHandling();
         }
 
@@ -74,8 +88,10 @@
             {
                 return;
             }
-            if (controllerstate == ControllerState.Placing && !SelectBuildCanvas.activeSelf)
+            //
+            if (controllerstate == ControllerState.Placing && canPlace)
             {
+                Debug.Log("Allowed");
                 //BuildCanvas.SetActive(true);
                 ObjectEditCanvas.SetActive(false);
                 //
@@ -83,7 +99,7 @@
                 GridViewer.SetActive(true);
             }
             //
-            if(controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting)
+            if (controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting)
             {
                 BuildCanvas.SetActive(false);
                 ObjectEditCanvas.SetActive(true);
@@ -112,7 +128,11 @@
                 }
             }
         }
-
+        public IEnumerator SetBuildMode()
+        {
+            yield return new WaitForSeconds(1f);
+            canPlace = true;
+        }
         #region Input Voids
         void ScreenInputPlacing()
         {
