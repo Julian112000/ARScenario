@@ -93,7 +93,6 @@ public class TestHumanScript : BasicAiScriptMarco
                 {
                     SetNewT = !AimM(UnitStat, SetNewT, this.gameObject);
                 }
-                //AimM(UnitStat, SetNewT, this.gameObject);
             }
             if (!NoAmin)
             {

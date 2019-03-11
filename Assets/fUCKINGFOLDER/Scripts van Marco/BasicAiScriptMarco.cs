@@ -129,7 +129,6 @@ public class BasicAiScriptMarco : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             MyTarget = CheckCastM();
-            //ConsoleScript.Instance.SetFeedback(MessageType.TargetMessage, me.name, MyTarget.name);
             if (MyTarget != null)
             {
                 AimAt(MyTarget, Status);

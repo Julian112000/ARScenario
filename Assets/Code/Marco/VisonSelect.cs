@@ -45,13 +45,11 @@ public class VisonSelect : MonoBehaviour
             {
                 human.SetNewT = true;
                 human.IsMouse = true;
-                Debug.Log("Werkt");
                 return true;
             }
             if (tank = hit.collider.gameObject.GetComponent<TankAiScriptb>())
             {
                 tank.SetNewT = true;
-                Debug.Log("Werkt");
                 return true;
             }
         }
