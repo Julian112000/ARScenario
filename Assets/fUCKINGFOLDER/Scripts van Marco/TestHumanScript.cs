@@ -79,6 +79,10 @@ public class TestHumanScript : BasicAiScriptMarco
         {
             UnitStat = UnitStatus.Aiming;
             Aim(UnitStat);
+            if (!NoAmin)
+            {
+                PLayAnimation();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {
