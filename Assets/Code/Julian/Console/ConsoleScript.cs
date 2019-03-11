@@ -20,6 +20,8 @@ public class ConsoleScript : MonoBehaviour
     [SerializeField]
     private ScrollRect m_ConsoleRect;
     [SerializeField]
+    private RectTransform m_ConsoleRectTransform;
+    [SerializeField]
     private Transform m_FeedbackParent;
     [SerializeField]
     private GameObject m_FeedbackPrefab;
@@ -27,6 +29,8 @@ public class ConsoleScript : MonoBehaviour
     private int m_MaxMessages;
     [SerializeField]
     private bool m_ConsoleEnabled;
+    [SerializeField]
+    private Vector2[] m_ConsoleScaling;
 
     private List<ConsoleMessageScript> m_MessageList = new List<ConsoleMessageScript>();
     private int m_CurrentMessage;
@@ -75,8 +79,16 @@ public class ConsoleScript : MonoBehaviour
     public void ToggleConsole()
     {
         m_ConsoleEnabled = !m_ConsoleEnabled;
-        if (m_ConsoleEnabled) m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 255);
-        else m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 0);
+        if (m_ConsoleEnabled)
+        {
+            m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 255);
+            m_ConsoleRectTransform.localScale = m_ConsoleScaling[1];
+        }
+        else
+        {
+            m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 0);
+            m_ConsoleRectTransform.localScale = m_ConsoleScaling[0];
+        }
 
         m_ConsoleRect.enabled = m_ConsoleEnabled;
         //
