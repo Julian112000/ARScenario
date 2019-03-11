@@ -77,8 +77,8 @@ public class TestHumanScript : BasicAiScriptMarco
  
         if (SetNew)
         {
-            Aim(UnitStat);
             UnitStat = UnitStatus.Aiming;
+            Aim(UnitStat);
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {

@@ -202,7 +202,7 @@
                     else if (LastPos.x < FirstPos.x)
                     {
                         Debug.Log("Swiping Left");
-                        CurrentplacedObject.transform.Rotate(new Vector3(0, RotateSpeed, 0));
+                        CurrentplacedObject.transform.Rotate(new Vector3(0, -RotateSpeed, 0));
 
                     }
                 }
