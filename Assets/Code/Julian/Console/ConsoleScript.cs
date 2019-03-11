@@ -23,7 +23,6 @@ public class ConsoleScript : MonoBehaviour
     [SerializeField]
     private int m_MaxMessages;
 
-    [SerializeField]
     private List<ConsoleMessageScript> m_MessageList = new List<ConsoleMessageScript>();
     private int m_CurrentMessage;
     private bool m_ConsoleEnabled;
@@ -35,13 +34,6 @@ public class ConsoleScript : MonoBehaviour
         {
             ConsoleMessageScript message = Instantiate(m_FeedbackPrefab, m_FeedbackParent).GetComponent<ConsoleMessageScript>();
             m_MessageList.Add(message);
-        }
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SetFeedback(MessageType.TargetMessage, "Test", "Test2");
         }
     }
     public void SetFeedback(MessageType messagetype, string name1, string name2)

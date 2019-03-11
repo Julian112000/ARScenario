@@ -160,6 +160,7 @@
                     GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
                     SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
                     CurrentplacedObject = SpawnedObject;
+                    ConsoleScript.Instance.SetFeedback(MessageType.BuildMessage, CurrentplacedObject.name);
                     //
                     Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
                     SpawnedObject.transform.parent = anchor.transform;
