@@ -136,6 +136,7 @@
             targetModeUI.SetActive(true);
             mainModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Targeting;
+            TestHumanScript.SetNew = true;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
