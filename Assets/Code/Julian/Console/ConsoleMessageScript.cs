@@ -19,13 +19,17 @@ public class ConsoleMessageScript : MonoBehaviour
         m_Animator.SetBool("In", true);
         m_IsEnabled = true;
     }
-    public void ShowMessage()
+    public void ToggleMessage(bool toggle)
     {
-        m_Animator.enabled = false;
-        GetComponent<CanvasGroup>().alpha = 1;
-    }
-    public void HideMessage()
-    {
-        m_Animator.enabled = true;
+        if (toggle)
+        {
+            m_Animator.enabled = false;
+            GetComponent<CanvasGroup>().alpha = 1;
+        }
+        else
+        {
+            m_Animator.enabled = true;
+        }
+
     }
 }

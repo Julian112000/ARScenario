@@ -8,24 +8,28 @@ public enum MessageType
     KillMessage,
     BuildMessage,
     TargetMessage,
-    ShotMessage
+    ShotMessage,
+    SelectMessage
 };
 public class ConsoleScript : MonoBehaviour
 {
     public static ConsoleScript Instance;
 
     [SerializeField]
-    private GameObject m_ConsolePanel;
+    private Image m_ConsolePanel;
+    [SerializeField]
+    private ScrollRect m_ConsoleRect;
     [SerializeField]
     private Transform m_FeedbackParent;
     [SerializeField]
     private GameObject m_FeedbackPrefab;
     [SerializeField]
     private int m_MaxMessages;
+    [SerializeField]
+    private bool m_ConsoleEnabled;
 
     private List<ConsoleMessageScript> m_MessageList = new List<ConsoleMessageScript>();
     private int m_CurrentMessage;
-    private bool m_ConsoleEnabled;
     private MessageType m_MessageType;
 
     private void Start()
@@ -35,7 +39,12 @@ public class ConsoleScript : MonoBehaviour
             ConsoleMessageScript message = Instantiate(m_FeedbackPrefab, m_FeedbackParent).GetComponent<ConsoleMessageScript>();
             m_MessageList.Add(message);
         }
+        for (int i = 0; i < 20; i++)
+        {
+            SetFeedback(MessageType.SelectMessage, "test1");
+        }
     }
+
     public void SetFeedback(MessageType messagetype, string name1, string name2)
     {
         switch (messagetype)
@@ -58,12 +67,26 @@ public class ConsoleScript : MonoBehaviour
             case MessageType.BuildMessage:
                 ToggleFeedback("placed " + name1);
                 break;
+            case MessageType.SelectMessage:
+                ToggleFeedback("selected " + name1);
+                break;
         }
     }
     public void ToggleConsole()
     {
         m_ConsoleEnabled = !m_ConsoleEnabled;
-        m_ConsolePanel.SetActive(m_ConsoleEnabled);
+        if (m_ConsoleEnabled) m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 255);
+        else m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 0);
+
+        m_ConsoleRect.enabled = m_ConsoleEnabled;
+        //
+        for (int i = 0; i < m_MessageList.Count; i++)
+        {
+            if (m_MessageList[i].m_IsEnabled)
+            {
+                m_MessageList[i].ToggleMessage(m_ConsoleEnabled);
+            }
+        }
     }
     private void ToggleFeedback(string message)
     {
