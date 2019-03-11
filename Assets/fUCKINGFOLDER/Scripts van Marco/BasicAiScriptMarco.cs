@@ -88,12 +88,13 @@ public class BasicAiScriptMarco : MonoBehaviour
             }
         }
     }
-    public void Aim(UnitStatus Stat, bool Local)
+    public void Aim(UnitStatus Stat, bool Local, GameObject me)
     {
         IsSelecting = true;
         if (Input.touchCount > 0)
         {
             MyTarget = CheckCast();
+            ConsoleScript.Instance.SetFeedback(MessageType.TargetMessage, me.name, MyTarget.name);
             if (MyTarget != null)
             {
                 AimAt(MyTarget, Status);

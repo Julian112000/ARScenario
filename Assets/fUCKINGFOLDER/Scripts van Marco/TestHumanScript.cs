@@ -81,7 +81,7 @@ public class TestHumanScript : BasicAiScriptMarco
 
             if (SetNewT)
             {
-                Aim(UnitStat, SetNewT);
+                Aim(UnitStat, SetNewT, this.gameObject);
             }
             else
             {
