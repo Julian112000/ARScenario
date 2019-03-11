@@ -17,6 +17,9 @@ public class ConsoleMessageScript : MonoBehaviour
         gameObject.SetActive(true);
         m_Text.text = text;
         m_Animator.SetBool("In", true);
+    }
+    public void Delete()
+    {
         m_IsEnabled = true;
     }
     public void ToggleMessage(bool toggle)

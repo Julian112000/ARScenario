@@ -43,10 +43,6 @@ public class ConsoleScript : MonoBehaviour
             ConsoleMessageScript message = Instantiate(m_FeedbackPrefab, m_FeedbackParent).GetComponent<ConsoleMessageScript>();
             m_MessageList.Add(message);
         }
-        for (int i = 0; i < 20; i++)
-        {
-            SetFeedback(MessageType.SelectMessage, "test1");
-        }
     }
 
     public void SetFeedback(MessageType messagetype, string name1, string name2)
@@ -79,6 +75,8 @@ public class ConsoleScript : MonoBehaviour
     public void ToggleConsole()
     {
         m_ConsoleEnabled = !m_ConsoleEnabled;
+        m_ConsoleRect.enabled = m_ConsoleEnabled;
+
         if (m_ConsoleEnabled)
         {
             m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 255);
@@ -89,8 +87,6 @@ public class ConsoleScript : MonoBehaviour
             m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 0);
             m_ConsoleRectTransform.localScale = m_ConsoleScaling[0];
         }
-
-        m_ConsoleRect.enabled = m_ConsoleEnabled;
         //
         for (int i = 0; i < m_MessageList.Count; i++)
         {
