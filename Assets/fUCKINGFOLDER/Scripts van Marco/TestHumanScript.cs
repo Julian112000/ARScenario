@@ -14,7 +14,7 @@ public class TestHumanScript : BasicAiScriptMarco
     private void Start()
     {
         MyType = UnitType.Infantery;
-
+        
         if (animator = GetComponent<Animator>())
         {
             NoAmin = false;
@@ -78,6 +78,7 @@ public class TestHumanScript : BasicAiScriptMarco
         if (SetNew || SetNewT)
         {
             UnitStat = UnitStatus.Aiming;
+            SelectedImg.SetActive(true);
 
             if (SetNewT)
             {

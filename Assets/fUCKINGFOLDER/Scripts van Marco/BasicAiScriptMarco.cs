@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BasicAiScriptMarco : MonoBehaviour
 {
-    public GameObject MyTarget;
+    public GameObject MyTarget, SelectedImg;
     public Camera Mcamera;
 
     protected bool NoAmin;
@@ -54,6 +54,10 @@ public class BasicAiScriptMarco : MonoBehaviour
     {
         Mcamera = Camera.main;
         SceneHandler.SwitchToPlayMode += ToggleAnims;
+        if(SelectedImg != null)
+        {
+            SelectedImg.SetActive(false);
+        }
     }
 
     public void AimAt(GameObject Target, UnitStatus status)
@@ -101,6 +105,7 @@ public class BasicAiScriptMarco : MonoBehaviour
                 IsSelecting = false;
                 TestHumanScript.SetNew = false;
                 Local = false;
+                SelectedImg.SetActive(false);
             }
         }
     }
