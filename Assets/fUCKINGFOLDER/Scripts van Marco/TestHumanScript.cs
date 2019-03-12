@@ -84,7 +84,7 @@ public class TestHumanScript : BasicAiScriptMarco
                 Aim(UnitStat, SetNewT, this.gameObject);
                 if (Input.touchCount > 0)
                 {
-                    SetNewT = !AimM(UnitStat, SetNewT, this.gameObject);
+                    SetNewT = !Aim(UnitStat, SetNewT, this.gameObject);
                 }
             }
             else

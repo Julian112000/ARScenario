@@ -106,7 +106,7 @@ public class BasicAiScriptMarco : MonoBehaviour
             }
         }
     }
-    public void Aim(UnitStatus Stat, bool Local, GameObject me)
+    public bool Aim(UnitStatus Stat, bool Local, GameObject me)
     {
         IsSelecting = true;
         if (Input.touchCount > 0)
@@ -120,8 +120,10 @@ public class BasicAiScriptMarco : MonoBehaviour
                 TestHumanScript.SetNew = false;
                 Local = false;
                 SelectedImg.SetActive(false);
+                return Local;
             }
         }
+        return Local;
     }
     public bool AimM(UnitStatus Stat, bool Local, GameObject me)
     {
