@@ -54,6 +54,14 @@ public class TankAiScriptb : BasicAiScriptMarco
         if (SetNewT)
         {
             Aim(UnitStat, SetNewT, this.gameObject);
+            if(Input.touchCount > 0)
+            {
+                SetNewT = !Aim(UnitStat, SetNewT, this.gameObject);
+            }
+        }
+        else
+        {
+            SelectedImg.SetActive(false);
         }
     }
 
