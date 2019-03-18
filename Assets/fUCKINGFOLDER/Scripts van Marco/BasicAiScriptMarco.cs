@@ -12,7 +12,7 @@ public class BasicAiScriptMarco : MonoBehaviour
     private float _Health = 10;
     private bool _IsSelecting;
 
-    public enum UnitType { Tank, Infantery }
+    public enum UnitType { Tank, Infantery, Badguy}
     public enum UnitStatus { Idle, Killed, Wounded, Aiming }
 
     UnitStatus Status;
@@ -117,7 +117,6 @@ public class BasicAiScriptMarco : MonoBehaviour
             {
                 AimAt(MyTarget, Status);
                 IsSelecting = false;
-                TestHumanScript.SetNew = false;
                 Local = false;
                 SelectedImg.SetActive(false);
                 return Local;

@@ -13,8 +13,15 @@ public class TestHumanScript : BasicAiScriptMarco
     private Animator animator;
     private void Start()
     {
-        MyType = UnitType.Infantery;
-        
+        if (gameObject.CompareTag("Bad"))
+        {
+            MyType = UnitType.Badguy;
+            AiBehave.BadGuys.Add(gameObject);
+        }
+        else
+        {
+            MyType = UnitType.Infantery;
+        }
         if (animator = GetComponent<Animator>())
         {
             NoAmin = false;
@@ -67,6 +74,25 @@ public class TestHumanScript : BasicAiScriptMarco
         }
     }
 
+    void TestDel()
+    {
+        Vector3 pos = transform.position;
+
+        for(int i = 0; i < AiBehave.BadGuys.Capacity; i++)
+        {
+            Vector3 Dir = AiBehave.BadGuys[i].transform.position - transform.position;
+            if(Vector3.SignedAngle(Dir, transform.forward, Vector3.up) < 30f && Vector3.SignedAngle(Dir, transform.forward, Vector3.up) > -30)
+            {
+                Debug.Log("I can aim at" + AiBehave.BadGuys[i].ToString() + Vector3.SignedAngle(Dir, transform.forward, Vector3.up).ToString());
+            }
+            else
+            {
+                Debug.Log(Vector3.SignedAngle(Dir, transform.forward, Vector3.up).ToString());
+            }
+        }
+        
+    }
+
 
     private void Update()
     {
@@ -106,6 +132,7 @@ public class TestHumanScript : BasicAiScriptMarco
         }
         if (Input.GetKeyDown(KeyCode.Space) && !NoAmin)
         {
+            TestDel();
             Health--;
             if (UnitStat == UnitStatus.Aiming)
             {
