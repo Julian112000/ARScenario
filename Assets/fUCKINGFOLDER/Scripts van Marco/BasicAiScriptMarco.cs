@@ -1,156 +1,165 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BasicAiScriptMarco : MonoBehaviour
+﻿namespace GoogleARCore.Examples.HelloAR
 {
-    public GameObject MyTarget, SelectedImg;
-    public Camera Mcamera;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using GoogleARCore;
 
-    protected bool NoAmin;
-    public bool PlayAnimations;
-    private float _Health = 10;
-    private bool _IsSelecting;
+#if UNITY_EDITOR
+    // Set up touch input propagation while using Instant Preview in the editor.
+    using Input = InstantPreviewInput;
+#endif
 
-    public enum UnitType { Tank, Infantery }
-    public enum UnitStatus { Idle, Killed, Wounded, Aiming }
-
-    UnitStatus Status;
-
-    public bool IsSelecting
+    public class BasicAiScriptMarco : MonoBehaviour
     {
-        get
-        {
-            return _IsSelecting;
-        }
-        set
-        {
-            _IsSelecting = value;
-        }
-    }
+        public GameObject MyTarget, SelectedImg;
+        public Camera Mcamera;
 
-    public float Health
-    {
-        get
-        {
-            return _Health;
-        }
+        protected bool NoAmin;
+        public bool PlayAnimations;
+        private float _Health = 10;
+        private bool _IsSelecting;
 
-        set
-        {
-            _Health = value;
+        public enum UnitType { Tank, Infantery }
+        public enum UnitStatus { Idle, Killed, Wounded, Aiming }
 
-            if (_Health <= 0)
+        UnitStatus Status;
+
+        public bool IsSelecting
+        {
+            get
             {
-                Status = UnitStatus.Killed;
-                Debug.Log("Bleh");
-                // is weg
+                return _IsSelecting;
             }
-
-        }
-    }
-
-    private void Awake()
-    {
-        Mcamera = Camera.main;
-        SceneHandler.SwitchToPlayMode += ToggleAnims;
-        if(SelectedImg != null)
-        {
-            SelectedImg.SetActive(false);
-        }
-    }
-
-    public void AimAt(GameObject Target, UnitStatus status)
-    {
-        transform.LookAt(new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z));
-    }
-
-    public GameObject CheckCast()
-    {
-        RaycastHit hit;
-        Ray ray = Mcamera.ScreenPointToRay(Input.GetTouch(0).position);
-        if (Physics.Raycast(ray, out hit, 1000f))
-        {
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    public GameObject CheckCastM()
-    {
-        RaycastHit hit;
-        Ray ray = Mcamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 1000f))
-        {
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public void Aim(UnitStatus Stat)
-    {
-        IsSelecting = true;
-        if (Input.touchCount > 0)
-        {
-            MyTarget = CheckCast();
-            if (MyTarget != null)
+            set
             {
-                AimAt(MyTarget, Status);
-                IsSelecting = false;
-                TestHumanScript.SetNew = false;
+                _IsSelecting = value;
             }
         }
-    }
-    public bool Aim(UnitStatus Stat, bool Local, GameObject me)
-    {
-        IsSelecting = true;
-        if (Input.touchCount > 0)
+
+        public float Health
         {
-            MyTarget = CheckCast();
-            ConsoleScript.Instance.SetFeedback(MessageType.TargetMessage, me.name, MyTarget.name);
-            if (MyTarget != null)
+            get
             {
-                AimAt(MyTarget, Status);
-                IsSelecting = false;
-                TestHumanScript.SetNew = false;
-                Local = false;
+                return _Health;
+            }
+
+            set
+            {
+                _Health = value;
+
+                if (_Health <= 0)
+                {
+                    Status = UnitStatus.Killed;
+                    Debug.Log("Bleh");
+                    // is weg
+                }
+
+            }
+        }
+
+        private void Awake()
+        {
+            Mcamera = Camera.main;
+            SceneHandler.SwitchToPlayMode += ToggleAnims;
+            if (SelectedImg != null)
+            {
                 SelectedImg.SetActive(false);
-                return Local;
             }
         }
-        return Local;
-    }
-    public bool AimM(UnitStatus Stat, bool Local, GameObject me)
-    {
-        IsSelecting = true;
-        if (Input.GetMouseButtonDown(0))
+
+        public void AimAt(GameObject Target, UnitStatus status)
         {
-            MyTarget = CheckCastM();
-            if (MyTarget != null)
+            transform.LookAt(new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z));
+        }
+
+        public GameObject CheckCast()
+        {
+            RaycastHit hit;
+            Ray ray = Mcamera.ScreenPointToRay(Input.GetTouch(0).position);
+            if (Physics.Raycast(ray, out hit, 1000f))
             {
-                AimAt(MyTarget, Status);
-                IsSelecting = false;
-                TestHumanScript.SetNew = false;
-                Local = false;
-                return Local;
+                return hit.collider.gameObject;
+            }
+            else
+            {
+                return null;
             }
         }
-        return Local;
+        public GameObject CheckCastM()
+        {
+            RaycastHit hit;
+            Ray ray = Mcamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 1000f))
+            {
+                return hit.collider.gameObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Aim(UnitStatus Stat)
+        {
+            IsSelecting = true;
+            if (Input.touchCount > 0)
+            {
+                MyTarget = CheckCast();
+                if (MyTarget != null)
+                {
+                    AimAt(MyTarget, Status);
+                    IsSelecting = false;
+                    TestHumanScript.SetNew = false;
+                }
+            }
+        }
+        public bool Aim(UnitStatus Stat, bool Local, GameObject me)
+        {
+            IsSelecting = true;
+            if (Input.touchCount > 0)
+            {
+                MyTarget = CheckCast();
+
+                if (MyTarget != null)
+                {
+                    AimAt(MyTarget, Status);
+                    IsSelecting = false;
+                    TestHumanScript.SetNew = false;
+                    Local = false;
+                    ConsoleScript.Instance.SetFeedback(MessageType.TargetMessage, me.name.ToString(), MyTarget.name.ToString());
+                    return Local;
+                }
+            }
+            return Local;
+        }
+        public bool AimM(UnitStatus Stat, bool Local, GameObject me)
+        {
+            IsSelecting = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                MyTarget = CheckCastM();
+                if (MyTarget != null)
+                {
+                    AimAt(MyTarget, Status);
+                    IsSelecting = false;
+                    TestHumanScript.SetNew = false;
+                    Local = false;
+                    return Local;
+                }
+            }
+            return Local;
+        }
+        public void ToggleAnims()
+        {
+            PlayAnimations = true;
+        }
+
+
+
+
+
+
+
     }
-    public void ToggleAnims()
-    {
-        PlayAnimations = true;
-    }
-
-
-
-
-
-
-
 }

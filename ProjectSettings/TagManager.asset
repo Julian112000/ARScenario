@@ -14,6 +14,8 @@ TagManager:
   - LookAtAni
   - TargetModeButton
   - BackButton
+  - ConsoleButton
+  - ScanModeButton
   layers:
   - Default
   - TransparentFX
