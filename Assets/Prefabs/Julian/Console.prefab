@@ -44,8 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ConsolePanel: {fileID: 0}
+  m_ConsoleRect: {fileID: 0}
+  m_ConsoleRectTransform: {fileID: 0}
   m_FeedbackParent: {fileID: 0}
-  m_FeedbackPrefab: {fileID: 6169256148102521036, guid: f521bf9ee64af1d4eab9fb2d079e8936,
+  m_FeedbackPrefab: {fileID: 4846044869822473810, guid: f521bf9ee64af1d4eab9fb2d079e8936,
     type: 3}
   m_MaxMessages: 100
-  m_MessageList: []
+  m_ConsoleEnabled: 0
+  m_ConsoleScaling:
+  - {x: 3, y: 3}
+  - {x: 4, y: 4}
