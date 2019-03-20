@@ -36,6 +36,10 @@ public class ConsoleScript : MonoBehaviour
     private int m_CurrentMessage;
     private MessageType m_MessageType;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         for (int i = 0; i < m_MaxMessages; i++)
@@ -44,13 +48,6 @@ public class ConsoleScript : MonoBehaviour
             m_MessageList.Add(message);
         }
     }
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        SetFeedback((MessageType)Random.Range(0, 4), "BOT-" + Random.Range(0, 99).ToString(), "BOT-" + Random.Range(0, 99).ToString());
-    //    }
-    //}
     public void SetFeedback(MessageType messagetype, string name1, string name2)
     {
         switch (messagetype)

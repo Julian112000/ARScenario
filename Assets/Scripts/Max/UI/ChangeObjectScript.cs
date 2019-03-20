@@ -25,6 +25,10 @@
         private GameObject rotatingModeUI;
         [SerializeField]
         private GameObject targetModeUI;
+        [SerializeField]
+        private GameObject scanningModeUI;
+        [SerializeField]
+        private GameObject consoleModeUI;
 
         private bool CanClick = true;
 
@@ -84,6 +88,16 @@
                             StartCoroutine(StopTargetMode());
                             CanClick = false;
                         }
+                        else if (hit.collider.gameObject.tag == "ConsoleButton")
+                        {
+                            StartCoroutine(OpenConsole());
+                            CanClick = false;
+                        }
+                        else if (hit.collider.gameObject.tag == "ScanModeButton")
+                        {
+                            StartCoroutine(StartScanning());
+                            CanClick = false;
+                        }
                     }
                 }
             }
@@ -128,6 +142,8 @@
         {
             buildModeUI.SetActive(false);
             mainModeUI.SetActive(false);
+            targetModeUI.SetActive(false);
+            rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -145,12 +161,27 @@
         public IEnumerator StopTargetMode()
         {
             targetModeUI.SetActive(false);
+            scanningModeUI.SetActive(false);
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Placing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
+        public IEnumerator OpenConsole()
+        {
+            ConsoleScript.Instance.ToggleConsole();
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
 
+        public IEnumerator StartScanning()
+        {
+            scanningModeUI.SetActive(true);
+            mainModeUI.SetActive(false);
+            consoleModeUI.SetActive(false);
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
 
     }
 }
