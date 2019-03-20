@@ -75,7 +75,6 @@
                         }
                         else if(hit.collider.gameObject.tag == "LookAtAni")
                         {
-                            TestHumanScript.SetNew = true;
                             CanClick = false;
                         }
                         else if (hit.collider.gameObject.tag == "TargetModeButton")
@@ -153,7 +152,6 @@
             targetModeUI.SetActive(true);
             mainModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Targeting;
-            VisonSelect.NewTarget = true;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
