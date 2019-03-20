@@ -25,7 +25,8 @@
         Placing,
         Scaling,
         Rotating,
-        Targeting
+        Targeting,
+        Playing
     }
 
 
@@ -64,6 +65,11 @@
 
         public bool canPlace = false;
 
+        private void Awake()
+        {
+            SceneHandler.SwitchToPlayMode += TurnOffBuildGrid;
+        }
+
         private void Start()
         {
             canPlace = false;
@@ -99,7 +105,7 @@
                 GridViewer.SetActive(true);
             }
             //
-            if (controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting)
+            if (controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting && controllerstate != ControllerState.Playing)
             {
                 BuildCanvas.SetActive(false);
                 ObjectEditCanvas.SetActive(true);
@@ -230,6 +236,13 @@
             }
         }
         #endregion
+
+        //
+        public void TurnOffBuildGrid()
+        {
+            GridViewer.SetActive(false);
+            controllerstate = ControllerState.Playing;
+        }
 
         //Static void to change model from another script
         public static void ChangeModel(GameObject modelpar)

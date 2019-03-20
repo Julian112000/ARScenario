@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 
+
+Assets/GoogleARCore/SDK/InstantPreview/Scripts/InstantPreview\.apk\.meta
+
+Assets/GoogleARCore/SDK/InstantPreview/Scripts/InstantPreview\.apk\.meta

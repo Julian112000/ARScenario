@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
+  m_Name: B-Gebouw
+  m_EditorClassIdentifier: 
+  name: Bemand Gebouw
+  description: Beschrijving voor gebouw.
+  artwork: {fileID: 21300000, guid: 9d1642fe0af8d3a4f9ab7ec0ccde73c4, type: 3}
+  ConnectedModel: {fileID: 4387967165760929355, guid: 3fea35c053b90984ba072c5734203d87,
+    type: 3}
