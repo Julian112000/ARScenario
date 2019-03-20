@@ -72,10 +72,10 @@
             }
         }
 
-    void TestDel()
-    {
-        Vector3 pos = transform.position;
-
+        void TestDel()
+        {
+            Vector3 pos = transform.position;
+        }
         private void Update()
         {
             if (PlayAnimations)
