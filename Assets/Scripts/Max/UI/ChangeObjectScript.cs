@@ -16,9 +16,11 @@
         public ObjectChangerScript change;
 
         public Camera mainCamera;
+        
+        public LevelChanger changeANI;
    
-        [SerializeField]
-        private GameObject buildModeUI;
+        public GameObject buildModeUI;
+
         [SerializeField]
         private GameObject mainModeUI;
         [SerializeField]
@@ -44,7 +46,6 @@
                     {
                         if (hit.collider.tag == "RightArrow" && change.currentObject <= 4) //Right arrow
                         {
-                            Debug.Log("Bierbuik . log");
                                 StartCoroutine(MoveArrow(1));
                                 CanClick = false;
                         }
@@ -112,11 +113,14 @@
         }
         public IEnumerator DoneButton()
         {
-            buildModeUI.SetActive(false);
+            //buildModeUI.SetActive(false);
             mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
+            //
+
+            changeANI.CloseBuildANI();
             //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
