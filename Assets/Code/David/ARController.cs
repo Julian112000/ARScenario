@@ -22,9 +22,11 @@
     //
     public enum ControllerState
     {
+        Default,
+        Scanning,
         Placing,
-        Scaling,
-        Rotating,
+        Editing,
+        Waypointing,
         Targeting,
         Playing
     }
@@ -33,8 +35,6 @@
 
     public class ARController : MonoBehaviour
     {
-
-        //
         [SerializeField]
         private float ScaleSpeed = 0.05f;
         [SerializeField]
@@ -67,7 +67,7 @@
 
         private void Awake()
         {
-            SceneHandler.SwitchToPlayMode += TurnOffBuildGrid;
+            SceneHandler.SwitchToPlayMode += Playmode;
         }
 
         private void Start()
@@ -84,61 +84,96 @@
             {
                 StartCoroutine(SetBuildMode());
             }
-
             SessionHandling();
+            Debug.Log(controllerstate);
         }
 
         private void SessionHandling()
         {
+            //If you are not Tracking with the camera nothing works!
             if (Session.Status != SessionStatus.Tracking)
             {
                 return;
             }
-            //
-            if (controllerstate == ControllerState.Placing && canPlace)
+            //Switch state handling almost the entire ARController
+            switch (controllerstate)
             {
-                Debug.Log("Allowed");
-                //BuildCanvas.SetActive(true);
-                ObjectEditCanvas.SetActive(false);
-                //
-                ScreenInputPlacing();
-                GridViewer.SetActive(true);
-            }
-            //
-            if (controllerstate != ControllerState.Placing && controllerstate != ControllerState.Targeting && controllerstate != ControllerState.Playing)
-            {
-                BuildCanvas.SetActive(false);
-                ObjectEditCanvas.SetActive(true);
-                if (Input.touchCount == 1)
-                {
-                    controllerstate = ControllerState.Rotating;
-                    ScreenInputRotating();
-                    GridViewer.SetActive(false);
-                    ScalingFeedback.SetActive(false);
-                    RotateFeedback.SetActive(true);
-
-                }
-                if(Input.touchCount == 2)
-                {
-                    controllerstate = ControllerState.Scaling;
-                    //
-                    ScreenInputScaling();
-                    GridViewer.SetActive(false);
-                    ScalingFeedback.SetActive(true);
-                    RotateFeedback.SetActive(false);
-                }
-                if(Input.touchCount == 0)
-                {
-                    ScalingFeedback.SetActive(true);
-                    RotateFeedback.SetActive(true);
-                }
+                case ControllerState.Default:
+                    break;
+                case ControllerState.Scanning:
+                    Scanning();
+                    break;
+                case ControllerState.Placing:
+                    if (canPlace) Placing();
+                    break;
+                case ControllerState.Editing:
+                    Editing();
+                    break;
+                case ControllerState.Waypointing:
+                    break;
+                case ControllerState.Targeting:
+                    break;
+                case ControllerState.Playing:
+                    break;
+                default:
+                    break;
             }
         }
-        public IEnumerator SetBuildMode()
+        //The voids linked to the main ENUM
+        #region EnumVoids
+        //Called when the enum is on Scanning (when you want to scan in the ARCore grid WITHOUT ANY PLACE INPUT)
+        private void Scanning()
         {
-            yield return new WaitForSeconds(1f);
-            canPlace = true;
+            GridViewer.SetActive(true);
         }
+        //Called when enum is on Placing (you can still scan while placing)
+        private void Placing()
+        {
+            ScreenInputPlacing();
+            //
+            ObjectEditCanvas.SetActive(false);
+            GridViewer.SetActive(true);
+        }
+        //Called when enum is on Editing (this is when wanting to rotate or scale but no input has been found yet
+        private void Editing()
+        {
+            BuildCanvas.SetActive(false);
+            ObjectEditCanvas.SetActive(true);
+            //
+            if (Input.touchCount == 1)
+            {
+                Rotating();
+
+            }
+            if (Input.touchCount == 2)
+            {
+                Scaling();
+            }
+            if (Input.touchCount == 0)
+            {
+                ScalingFeedback.SetActive(true);
+                RotateFeedback.SetActive(true);
+            }
+        }
+        //This void is called when you are editing and have one finger on the touchscreen (Rotating)
+        private void Rotating()
+        {
+            ScreenInputRotating();
+            GridViewer.SetActive(false);
+            ScalingFeedback.SetActive(false);
+            RotateFeedback.SetActive(true);
+        }
+        //This void is called when you are editing and have two fingers on the touchscreen (Scaling)
+        private void Scaling()
+        {
+            ScreenInputScaling();
+            GridViewer.SetActive(false);
+            ScalingFeedback.SetActive(true);
+            RotateFeedback.SetActive(false);
+        }
+
+        #endregion
+        //The voids that handle the MobileInput
         #region Input Voids
         void ScreenInputPlacing()
         {
@@ -171,7 +206,7 @@
                     Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
                     SpawnedObject.transform.parent = anchor.transform;
                     //Switch Editor State to scaling
-                    controllerstate = ControllerState.Rotating;
+                    controllerstate = ControllerState.Editing;
                     //
 
                 }
@@ -237,22 +272,22 @@
         }
         #endregion
 
-        //
-        public void TurnOffBuildGrid()
+        //Void that is subscribed to the playmode event
+        public void Playmode()
         {
             GridViewer.SetActive(false);
             controllerstate = ControllerState.Playing;
         }
-
         //Static void to change model from another script
         public static void ChangeModel(GameObject modelpar)
         {
             Model = modelpar;
         }
-
-        public static void ChangeToBuild()
+        //Enumarator to make sure you dont place when pressing a confirm button
+        public IEnumerator SetBuildMode()
         {
-            controllerstate = ControllerState.Placing;
+            yield return new WaitForSeconds(1f);
+            canPlace = true;
         }
     }
 }

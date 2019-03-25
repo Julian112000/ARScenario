@@ -22,8 +22,10 @@ public enum AIBehaviour
 
 public class AIBasics : MonoBehaviour
 {
+    //Components and basic needed values
     private Animator animator;
     private UnitSide unittype;
+    //Stat based values
     protected float VisionRange;
     protected float MovementSpeed;
     //Variables Based for the waypoint system
@@ -31,39 +33,13 @@ public class AIBasics : MonoBehaviour
     private int CurrentWaypoint = 0;
     private bool WantsToMove = false;
 
+    //The Awake that is inherited by the child class, Every Unit with an AI element will have this Awake
     public virtual void Awake()
     {
         animator = GetComponent<Animator>();
         DecideType();
     }
-
-    public virtual void Update()
-    {
-        Vision();
-        //
-        //This is a check so that the character will iterate when needed
-        if (WantsToMove)
-        {
-            if(Vector3.Distance(transform.position,Waypoints[CurrentWaypoint]) > 0.3f)
-            {
-                MoveTowardsPoint(Waypoints[CurrentWaypoint]);
-            }
-            else
-            {
-                NavigateThroughPath();
-                WantsToMove = false;
-            }
-        }
-        //Test input for placing waypoints
-        if (Input.GetMouseButton(0))
-        {
-            var pos = Input.mousePosition;
-            pos.z = 45;
-            pos = Camera.main.ScreenToWorldPoint(pos);
-            PlaceWayPoint(pos);
-        }
-    }
-    
+    //Void called for in the Awake
     private void DecideType()
     {
         if (gameObject.tag == "Soldier")
@@ -81,14 +57,36 @@ public class AIBasics : MonoBehaviour
             Debug.Log("ERROR: Forgot to set Tag to the units!");
         }
     }
-
+    //
+    //The update that is inherited by the child class, Every Unit with an AI element will have this update
+    public virtual void Update()
+    {
+        //Everything related to the vision of the AI
+        Vision();
+        //
+        //This is a check so that the character will iterate when needed
+        if (WantsToMove)
+        {
+            if(Vector3.Distance(transform.position,Waypoints[CurrentWaypoint]) > 0.3f)
+            {
+                MoveTowardsPoint(Waypoints[CurrentWaypoint]);
+            }
+            else
+            {
+                NavigateThroughPath();
+                WantsToMove = false;
+            }
+        }
+        //
+    }
+    //Alles gerelateerd voor de AI zijn visie
     #region Vision Related
-    //De uiteindelijke void die gecalled word in de update voor vision control
+    //This void belongs in the update and gets called to make the entire vision work
     public void Vision()
     {
         CheckWhoIsNear();
     }
-    //Deze void loopt door de lijst van of enemies of friendlys heen en kijkt of er units die niet bij hem horen in zijn range staan
+    //This void, iterates through the list of enemies and friendlys (depending on type of the unit) and checks if they are in range 
     private void CheckWhoIsNear()
     {
         switch (unittype)
@@ -121,7 +119,7 @@ public class AIBasics : MonoBehaviour
                 break;
         }
     }
-    //Deze void word gecalled als er een unit in een unit zijn range staat. vervolgens kijkt deze void of dat die unit in een bepaalde angel van hem staat
+    //This void gets called when a unit is in this unit's range. the purpose of this void is check if it is in a certain viewing angle
     private void CheckAngle(GameObject Target)
     {
         Vector3 TargetDirection = Vector3.Normalize(Target.transform.position - transform.position);
@@ -132,7 +130,7 @@ public class AIBasics : MonoBehaviour
             CheckForCollision(Target);
         }
     }
-    //Deze void word gecalled als er een unit binnen de targetrange staat en binnen de juiste angle staat. Zo ja dan doe ik een Linecast die checkt of er een object tussen hun twee in staat. Staat er niks? dan is hij officieel in zicht
+    //This void gets called as a last check. that check is checking if there is something inbetween the targeted enemy and this unit. if this is true? a official target has been found
     private void CheckForCollision(GameObject Target)
     {
         if (Physics.Linecast(transform.position + new Vector3(0, 1, 0), Target.transform.position + new Vector3(0, 1, 0)))
@@ -156,11 +154,12 @@ public class AIBasics : MonoBehaviour
         }
     }
     #endregion
-
+    //Waypoint system voor navigatie
+    #region Navigation Related
 
     private void NavigateThroughPath()
     {
-        if(Waypoints != null)
+        if (Waypoints != null)
         {
             if (CurrentWaypoint < Waypoints.Count)
             {
@@ -189,4 +188,5 @@ public class AIBasics : MonoBehaviour
     {
         Waypoints.Add(Position);
     }
+    #endregion
 }

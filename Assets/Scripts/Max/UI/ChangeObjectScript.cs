@@ -103,9 +103,66 @@
                     }
                 }
             }
-            //Debug.DrawRay(transform.position, hit.point, Color.yellow);
         }
 
+        private void HandleAllButtons(RaycastHit hit)
+        {
+            if (hit.collider.tag == "RightArrow" && change.currentObject <= 4) //Right arrow
+            {
+                StartCoroutine(MoveArrow(1));
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "LeftArrow" && change.currentObject >= 2) //Left arrow
+            {
+                StartCoroutine(MoveArrow(-1));
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "DoneButton") //Close build mode
+            {
+                StartCoroutine(DoneButton());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "ConfirmRotate") //Close rotate/scale mode
+            {
+                StartCoroutine(ConfirmEditing());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "BuildModeButton")
+            {
+                StartCoroutine(OpenBuildMenu());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "PlayMode")
+            {
+                StartCoroutine(StartPlayMode());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "LookAtAni")
+            {
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "TargetModeButton")
+            {
+                StartCoroutine(StartTargetMode());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "BackButton")
+            {
+                StartCoroutine(StopTargetMode());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "ConsoleButton")
+            {
+                StartCoroutine(OpenConsole());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "ScanModeButton")
+            {
+                StartCoroutine(StartScanning());
+                CanClick = false;
+            }
+        }
+        #region All Enumerators
         public IEnumerator MoveArrow(int direction)
         {
             change.currentObject += direction;
@@ -119,6 +176,7 @@
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
+            ARController.controllerstate = ControllerState.Placing;
             //
 
             changeBuildANI.CloseBuildANI();
@@ -127,11 +185,11 @@
             CanClick = true;
             //
         }
-        public IEnumerator ConfirmRotation()
+        public IEnumerator ConfirmEditing()
         {
             rotatingModeUI.SetActive(false);
             mainModeUI.SetActive(true);
-            ARController.ChangeToBuild();
+            ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -187,9 +245,12 @@
             scanningModeUI.SetActive(true);
             mainModeUI.SetActive(false);
             consoleModeUI.SetActive(false);
+            ARController.controllerstate = ControllerState.Scanning;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
+
+        #endregion
 
     }
 }

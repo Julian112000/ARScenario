@@ -18,5 +18,8 @@ public class Human : AIBasics
     public override void Update()
     {
         base.Update();
+        //
+
+
     }
 }
