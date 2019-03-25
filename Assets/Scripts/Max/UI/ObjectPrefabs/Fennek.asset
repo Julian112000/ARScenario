@@ -15,5 +15,4 @@ MonoBehaviour:
   name: Fennek
   description: De beschrijving van de Fennek.
   artwork: {fileID: 21300000, guid: 3ad96b6f755813945a17d494dbe86341, type: 3}
-  ConnectedModel: {fileID: 3051921476968083281, guid: cb05c7078a232654db370e514ef325c9,
-    type: 3}
+  ConnectedModel: {fileID: 100000, guid: 2433bb175fde04b40a194fcabb766c09, type: 3}

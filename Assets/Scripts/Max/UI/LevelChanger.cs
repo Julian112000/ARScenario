@@ -27,16 +27,32 @@
             Application.LoadLevel(i + 1);
         }
 
+        public void OnCloseBuildComplete()
+        {
+
+            objChanger.buildModeUI.SetActive(false);
+        }
+
+        public void OnCloseMainComplete()
+        {
+            objChanger.mainModeUI.SetActive(false);
+        }
+
         public void CloseBuildANI()
         {
             animator.SetTrigger("Close");
         }
 
-        public void OnCloseBuildComplete()
+        public void CloseMainANI()
         {
-
-           objChanger.buildModeUI.SetActive(false);
-           print("works");
+            animator.SetTrigger("CloseM");
         }
+
+        public void ClosePlayANI()
+        {
+            animator.SetTrigger("CloseP");
+        }
+
+
     }
 }

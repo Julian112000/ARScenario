@@ -17,12 +17,14 @@
 
         public Camera mainCamera;
         
-        public LevelChanger changeANI;
+
+        public LevelChanger changeBuildANI, changeMainANI, changePlayANI;
    
+
         public GameObject buildModeUI;
 
-        [SerializeField]
-        private GameObject mainModeUI;
+        public GameObject mainModeUI;
+
         [SerializeField]
         private GameObject rotatingModeUI;
         [SerializeField]
@@ -113,14 +115,13 @@
         }
         public IEnumerator DoneButton()
         {
-            //buildModeUI.SetActive(false);
             mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
             //
 
-            changeANI.CloseBuildANI();
+            changeBuildANI.CloseBuildANI();
             //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -137,7 +138,12 @@
         public IEnumerator OpenBuildMenu()
         {
             buildModeUI.SetActive(true);
-            mainModeUI.SetActive(false);
+            //
+
+            changeMainANI.CloseMainANI();
+            changePlayANI.ClosePlayANI();
+            //
+
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
