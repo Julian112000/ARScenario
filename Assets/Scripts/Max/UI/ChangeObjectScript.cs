@@ -16,10 +16,9 @@
         public ObjectChangerScript change;
 
         public Camera mainCamera;
-        
 
         public LevelChanger changeBuildANI, changeMainANI, changePlayANI;
-   
+
 
         public GameObject buildModeUI;
 
@@ -46,60 +45,7 @@
                 {
                     if (CanClick)
                     {
-                        if (hit.collider.tag == "RightArrow" && change.currentObject <= 4) //Right arrow
-                        {
-                                StartCoroutine(MoveArrow(1));
-                                CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "LeftArrow" && change.currentObject >= 2) //Left arrow
-                        {
-                                StartCoroutine(MoveArrow(-1));
-                                CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "DoneButton") //Close build mode
-                        {
-                            StartCoroutine(DoneButton());
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "ConfirmRotate") //Close rotate/scale mode
-                        {
-                            StartCoroutine(ConfirmRotation());
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "BuildModeButton")
-                        {
-                            StartCoroutine(OpenBuildMenu());
-                            CanClick = false;
-                        }
-                        else if(hit.collider.gameObject.tag == "PlayMode")
-                        {
-                            StartCoroutine(StartPlayMode());
-                            CanClick = false;
-                        }
-                        else if(hit.collider.gameObject.tag == "LookAtAni")
-                        {
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "TargetModeButton")
-                        {
-                            StartCoroutine(StartTargetMode());
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "BackButton")
-                        {
-                            StartCoroutine(StopTargetMode());
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "ConsoleButton")
-                        {
-                            StartCoroutine(OpenConsole());
-                            CanClick = false;
-                        }
-                        else if (hit.collider.gameObject.tag == "ScanModeButton")
-                        {
-                            StartCoroutine(StartScanning());
-                            CanClick = false;
-                        }
+                        HandleAllButtons(hit);
                     }
                 }
             }
@@ -172,14 +118,14 @@
         }
         public IEnumerator DoneButton()
         {
+            changeBuildANI.CloseBuildANI();
+            //
+
             mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
             ARController.controllerstate = ControllerState.Placing;
-            //
-
-            changeBuildANI.CloseBuildANI();
             //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -196,12 +142,12 @@
         public IEnumerator OpenBuildMenu()
         {
             buildModeUI.SetActive(true);
-            //
 
+            //
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
-            //
 
+            //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -253,5 +199,4 @@
         #endregion
 
     }
-}
- 
+} 
