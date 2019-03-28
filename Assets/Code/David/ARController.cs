@@ -43,9 +43,9 @@
         [SerializeField]
         private Camera FirstpersonCam;
         private static GameObject Model;
-        public static ControllerState controllerstate;
         [SerializeField]
-        private GameObject CurrentplacedObject;
+        public static ControllerState controllerstate;
+        public static GameObject CurrentplacedObject;
         [SerializeField]
         GameObject GridViewer;
         //
@@ -99,6 +99,7 @@
             switch (controllerstate)
             {
                 case ControllerState.Default:
+                    Default();
                     break;
                 case ControllerState.Scanning:
                     Scanning();
@@ -110,6 +111,7 @@
                     Editing();
                     break;
                 case ControllerState.Waypointing:
+                    PlacingWaypoints();
                     break;
                 case ControllerState.Targeting:
                     break;
@@ -121,6 +123,11 @@
         }
         //The voids linked to the main ENUM
         #region EnumVoids
+        //Called when the enum is in Defaultmode
+        private void Default()
+        {
+            //GridViewer.SetActive(true);
+        }
         //Called when the enum is on Scanning (when you want to scan in the ARCore grid WITHOUT ANY PLACE INPUT)
         private void Scanning()
         {
@@ -139,6 +146,7 @@
         {
             BuildCanvas.SetActive(false);
             ObjectEditCanvas.SetActive(true);
+            GridViewer.SetActive(false);
             //
             if (Input.touchCount == 1)
             {
@@ -171,10 +179,16 @@
             ScalingFeedback.SetActive(true);
             RotateFeedback.SetActive(false);
         }
-
+        //This void is called when you are done editing and are ready to place waypoints for the Unit's path
+        private void PlacingWaypoints()
+        {
+            GridViewer.SetActive(true);
+            ScreenInputWaypointing();
+        }
         #endregion
         //The voids that handle the MobileInput
         #region Input Voids
+        //Screen Input when in build mode and Prefab of unit has been selected to place
         void ScreenInputPlacing()
         {
             Touch touch;
@@ -212,7 +226,7 @@
                 }
             }
         }
-
+        //Screen input for Scaling this is pinching with two fingers to make a object smaller or unpinching to make it bigger
         void ScreenInputScaling()
         {
             if (Input.touchCount == 2)
@@ -240,7 +254,7 @@
             }
 
         }
-
+        //Screen input for rotating this is swiping left or right to turn the object
         void ScreenInputRotating()
         {
             if (Input.touchCount == 1)
@@ -267,6 +281,34 @@
                         CurrentplacedObject.transform.Rotate(new Vector3(0, -RotateSpeed, 0));
 
                     }
+                }
+            }
+        }
+        //Screen input for Placing waypoints so that the player gets a path
+        void ScreenInputWaypointing()
+        {
+            Touch touch;
+            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            {
+                return;
+            }
+
+            //
+            TrackableHit hit;
+            TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                TrackableHitFlags.FeaturePointWithSurfaceNormal;
+
+            if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
+            {
+                if ((hit.Trackable is DetectedPlane) &&
+                    Vector3.Dot(FirstpersonCam.transform.position - hit.Pose.position,
+                        hit.Pose.rotation * Vector3.up) < 0)
+                {
+                    Debug.Log("Hit at back of the current DetectedPlane");
+                }
+                else
+                {
+                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position);
                 }
             }
         }

@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Soldaat
   description: De beschrijving van de Soldaat.
   artwork: {fileID: 21300000, guid: 7eb0e0989fe693942843d84f4b0c0149, type: 3}
-  ConnectedModel: {fileID: 1746994467, guid: f74024d3993712847b9823b5a7385c56, type: 3}
+  ConnectedModel: {fileID: 5014541577067834460, guid: 22606dad577d4674b8a2bcd00f25c33f,
+    type: 3}

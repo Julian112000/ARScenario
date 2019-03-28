@@ -11,13 +11,16 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/David/DefensieLogoScene.unity
     guid: 1149a39bb86ae8241aecb76b32127763
-  - enabled: 1
-    path: Assets/Scenes/David/StartScreen.unity
+  - enabled: 0
+    path: Assets/Scenes/David/OurLogoScene.unity
     guid: 383a6059a3c94df43bb92fb83f519bef
   - enabled: 1
     path: Assets/Scenes/David/ARBuildTest.unity
     guid: 865d74d7cfccea84ea37ce12a01183cf
+  - enabled: 0
+    path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
+    guid: 5eb72b68a4d60364db86707a46814044
   m_configObjects: {}

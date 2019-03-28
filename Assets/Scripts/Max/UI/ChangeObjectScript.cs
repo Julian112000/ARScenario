@@ -32,6 +32,9 @@
         private GameObject scanningModeUI;
         [SerializeField]
         private GameObject consoleModeUI;
+        [SerializeField]
+        private GameObject WaypointplacementUI;
+        public GameObject CurrentSelectedObject;
 
         private bool CanClick = true;
 
@@ -107,6 +110,26 @@
                 StartCoroutine(StartScanning());
                 CanClick = false;
             }
+            else if (hit.collider.gameObject.tag == "ScanModeDoneButton")
+            {
+                StartCoroutine(StopScanning());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "ConfirmWaypoint")
+            {
+                StartCoroutine(ConfirmWaypoint());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "ClearWaypoint")
+            {
+                StartCoroutine(ClearWaypoints());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "UndoWaypoint")
+            {
+                StartCoroutine(UndoWaypoint());
+                CanClick = false;
+            }
         }
         #region All Enumerators
         public IEnumerator MoveArrow(int direction)
@@ -114,14 +137,14 @@
             change.currentObject += direction;
             change.ChangeCurrentObject(change.currentObject);
             yield return new WaitForSeconds(0.25f);
-            CanClick = true;
+            CanClick = true; 
         }
         public IEnumerator DoneButton()
         {
             changeBuildANI.CloseBuildANI();
             //
 
-            mainModeUI.SetActive(true);
+            //mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
@@ -134,8 +157,8 @@
         public IEnumerator ConfirmEditing()
         {
             rotatingModeUI.SetActive(false);
-            mainModeUI.SetActive(true);
-            ARController.controllerstate = ControllerState.Default;
+            WaypointplacementUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Waypointing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -169,7 +192,6 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
-
         public IEnumerator StopTargetMode()
         {
             targetModeUI.SetActive(false);
@@ -185,7 +207,6 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
-
         public IEnumerator StartScanning()
         {
             scanningModeUI.SetActive(true);
@@ -195,7 +216,36 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
-
+        public IEnumerator UndoWaypoint()
+        {
+            Debug.Log("Undo");
+            ARController.CurrentplacedObject.GetComponent<AIBasics>().UndoLastWaypoint();
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator ClearWaypoints()
+        {
+            Debug.Log("Cleared");
+            ARController.CurrentplacedObject.GetComponent<AIBasics>().ClearWaypoints();
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator ConfirmWaypoint()
+        {
+            WaypointplacementUI.SetActive(false);
+            mainModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Default;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator StopScanning()
+        {
+            scanningModeUI.SetActive(false);
+            mainModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Default;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
         #endregion
 
     }

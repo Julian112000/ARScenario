@@ -17,6 +17,10 @@ TagManager:
   - Soldier
   - Terrorist
   - ConfirmWaypoint
+  - Friendly
+  - ClearWaypoint
+  - UndoWaypoint
+  - ScanModeDoneButton
   layers:
   - Default
   - TransparentFX

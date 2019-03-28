@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Terrorist
   description: De beschrijving van de Terrorist
   artwork: {fileID: 21300000, guid: 0752214a7513951419532b852edaaa4f, type: 3}
-  ConnectedModel: {fileID: 8701124135697710113, guid: cd5c96f45b969e0458832a4393de1a97,
+  ConnectedModel: {fileID: 4698490657173877167, guid: 896dd7be2285c7e48a60212fe2cf02e6,
     type: 3}
