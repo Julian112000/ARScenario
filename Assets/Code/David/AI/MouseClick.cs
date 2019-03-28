@@ -15,7 +15,8 @@ public class MouseClick : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
-                prefab.PlaceWayPoint(hit.point);
+                //prefab.PlaceWayPoint(hit.point);
+                prefab.AimAtPoint(hit.point);
             }
         }
         if (Input.GetKeyDown(KeyCode.K))

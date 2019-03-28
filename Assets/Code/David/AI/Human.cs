@@ -22,4 +22,8 @@ public class Human : AIBasics
     {
         base.Update();
     }
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
 }

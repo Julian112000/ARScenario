@@ -32,11 +32,14 @@ public abstract class AIBasics : AIStats
     private Animator animator;
     private LineRenderer linerenderer;
     private UnitSide unitside;
+    private AIStates aistate;
     protected UnitType unittype;
     [SerializeField]
     public Transform VisionPoint;
     [SerializeField]
     public GameObject LookingObject;
+    [SerializeField]
+    public GameObject Spine;
     //Stat based values
     protected float VisionRange;
     protected float MovementSpeed;
@@ -45,6 +48,12 @@ public abstract class AIBasics : AIStats
     private List<Vector3> Waypoints = new List<Vector3>();
     private int CurrentWaypoint = 0;
     protected bool WantsToMove = false;
+    //Variables For when the unit is selected to aim at a certain point
+    //The offset when aiming (this is because the animation might not always work)
+    [SerializeField]
+    private Vector3 ChestOffset;
+    private Vector3 PointToAimAt;
+    public GameObject Target;
 
 
     //Constructor of this class
@@ -113,7 +122,11 @@ public abstract class AIBasics : AIStats
         //Different Types of Updates (peek definition of update to see what it does)
         VisionUpdate();
         NavigationUpdate();
+    }
+    public virtual void LateUpdate()
+    {
         //
+        ActionUpdate();
     }
     //Everything related to the vision of the AI
     #region Vision Related
@@ -171,7 +184,7 @@ public abstract class AIBasics : AIStats
     private void CheckForCollision(GameObject Target, AIBasics TargetScript)
     {
         RaycastHit hit;
-        if (Physics.Linecast(VisionPoint.position, TargetScript.VisionPoint.position , out hit))
+        if (Physics.Linecast(VisionPoint.position, TargetScript.VisionPoint.position, out hit))
         {
             Debug.Log("Blocked");
         }
@@ -182,12 +195,12 @@ public abstract class AIBasics : AIStats
             switch (unitside)
             {
                 case UnitSide.Terrorist:
-                    Debug.DrawLine(VisionPoint.position,TargetScript.VisionPoint.position, Color.red);
-                    LookingObject.transform.LookAt(Target.transform.position);
+                    Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.red);
+                    //LookingObject.transform.LookAt(Target.transform.position);
                     break;
                 case UnitSide.Friendly:
                     Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.blue);
-                    LookingObject.transform.LookAt(TargetScript.VisionPoint.position);
+                    //LookingObject.transform.LookAt(TargetScript.VisionPoint.position);
                     break;
                 default:
                     break;
@@ -220,7 +233,7 @@ public abstract class AIBasics : AIStats
             }
         }
         //Check if there is a waypoint And if there is the linerender will be setactive
-        if(Waypoints.Count > 1)
+        if (Waypoints.Count > 1)
         {
             linerenderer.enabled = true;
         }
@@ -255,7 +268,7 @@ public abstract class AIBasics : AIStats
     }
     //Void that is used when you are done with all the waypoints, Or you want to make a new path so u have to clear the old one
     public void ClearWaypoints()
-    { 
+    {
         WantsToMove = false;
         Waypoints.Clear();
         CurrentWaypoint = 0;
@@ -269,7 +282,7 @@ public abstract class AIBasics : AIStats
     {
         Waypoints.Add(Position);
         linerenderer.positionCount = Waypoints.Count;
-        linerenderer.SetPosition(Waypoints.Count - 1,Waypoints[Waypoints.Count - 1]);
+        linerenderer.SetPosition(Waypoints.Count - 1, Waypoints[Waypoints.Count - 1]);
     }
     //Undo the last placed waypoint, Useful for when you place a waypoint but did not want to place it there
     public void UndoLastWaypoint()
@@ -341,6 +354,61 @@ public abstract class AIBasics : AIStats
     private void Shoot()
     {
 
+    }
+    #endregion
+    //Action Voids
+    #region Actions
+    public void ActionUpdate()
+    {
+        switch (aistate)
+        {
+            case AIStates.AimAtPoint:
+                AimingAtPoint();
+                break;
+            case AIStates.StandStill:
+                break;
+            case AIStates.WalkTowards:
+                break;
+            case AIStates.Patrol:
+                break;
+            default:
+                break;
+        }
+    }
+    public void AimAtPoint(Vector3 Point)
+    {
+        aistate = AIStates.AimAtPoint;
+        PointToAimAt = Point;
+    }
+    private void AimingAtPoint()
+    {
+        animator.SetBool("Aiming", true);
+        OnlyYLook(PointToAimAt);
+        //
+        Transform Chest;
+        Chest = animator.GetBoneTransform(HumanBodyBones.Chest);
+        Chest.LookAt(PointToAimAt);
+        Chest.rotation = Chest.rotation * Quaternion.Euler(ChestOffset);
+        //
+        Transform Head;
+        Head = animator.GetBoneTransform(HumanBodyBones.Head);
+        Head.LookAt(PointToAimAt);
+    }
+    public void StopAimingAtPoint()
+    {
+        animator.SetBool("Aiming", false);
+    }
+
+    #endregion
+    //Self made voids to make my life helpful
+    #region HelpFullVoids
+    //A lookat to only rotate the Y axis
+    private void OnlyYLook(Vector3 Target)
+    {
+        Vector3 lookPos = Target - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = rotation;
     }
     #endregion
 }
