@@ -17,9 +17,10 @@
 
         public Camera mainCamera;
 
+        
         public LevelChanger changeBuildANI, changeMainANI, changePlayANI;
 
-
+        [Header("UIModes")]
         public GameObject buildModeUI;
 
         public GameObject mainModeUI;
@@ -27,13 +28,20 @@
         [SerializeField]
         private GameObject rotatingModeUI;
         [SerializeField]
-        private GameObject targetModeUI;
+        private GameObject placeModeUI;
         [SerializeField]
         private GameObject scanningModeUI;
         [SerializeField]
         private GameObject consoleModeUI;
         [SerializeField]
-        private GameObject WaypointplacementUI;
+        private GameObject waypointPlacementUI;
+        [SerializeField]
+        private GameObject behaveModeUI;
+        [SerializeField]
+        private GameObject selectModeUI;
+        
+
+        [Header("Object")]
         public GameObject CurrentSelectedObject;
 
         private bool CanClick = true;
@@ -76,62 +84,86 @@
                 StartCoroutine(ConfirmEditing());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "BuildModeButton")
+            else if (hit.collider.gameObject.tag == "BuildModeButton") //Open build selectment
             {
                 StartCoroutine(OpenBuildMenu());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "PlayMode")
+            else if (hit.collider.gameObject.tag == "PlayMode") //Start scenario
             {
                 StartCoroutine(StartPlayMode());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "LookAtAni")
+            else if (hit.collider.gameObject.tag == "LookAtAni") //??
             {
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "TargetModeButton")
+            else if (hit.collider.gameObject.tag == "TargetModeButton") //Start build placement.
             {
                 StartCoroutine(StartTargetMode());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "BackButton")
+            else if (hit.collider.gameObject.tag == "BackButton") //Go to home and close all other UI tabs.
             {
-                StartCoroutine(StopTargetMode());
+                StartCoroutine(HomeButton());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "ConsoleButton")
+            else if (hit.collider.gameObject.tag == "ConsoleButton") //Open & close console.
             {
                 StartCoroutine(OpenConsole());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "ScanModeButton")
+            else if (hit.collider.gameObject.tag == "ScanModeButton") //Open scanmode
             {
                 StartCoroutine(StartScanning());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "ScanModeDoneButton")
+            else if (hit.collider.gameObject.tag == "ScanModeDoneButton") //Close scan mode
             {
                 StartCoroutine(StopScanning());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "ConfirmWaypoint")
+            else if (hit.collider.gameObject.tag == "ConfirmWaypoint") //Confirm waypointS
             {
                 StartCoroutine(ConfirmWaypoint());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "ClearWaypoint")
+            else if (hit.collider.gameObject.tag == "ClearWaypoint") //Clear all waypoints
             {
                 StartCoroutine(ClearWaypoints());
                 CanClick = false;
             }
-            else if (hit.collider.gameObject.tag == "UndoWaypoint")
+            else if (hit.collider.gameObject.tag == "UndoWaypoint") //Undo last waypoint.
             {
                 StartCoroutine(UndoWaypoint());
                 CanClick = false;
             }
+            else if (hit.collider.gameObject.tag == "ConfirmPlacement") //Go back to the build choose UI;
+            {
+                StartCoroutine(ConfirmPlacement());
+                CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "BehaviorSelect") //Open the select target menu.
+            {
+                StartCoroutine(BehaveSelection());
+                CanClick = false;
+            }
+            else if(hit.collider.gameObject.tag == "SkipSelect") //Om het selecten te skippen, TIJDELIJK.
+            {
+                StartCoroutine(SkipSelect());
+                CanClick = false;
+            }
         }
         #region All Enumerators
+
+        public IEnumerator SkipSelect()
+        {
+            selectModeUI.SetActive(false);
+            behaveModeUI.SetActive(true);
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+
         public IEnumerator MoveArrow(int direction)
         {
             change.currentObject += direction;
@@ -144,6 +176,7 @@
             changeBuildANI.CloseBuildANI();
             //
 
+            placeModeUI.SetActive(true);
             //mainModeUI.SetActive(true);
             //
 
@@ -157,8 +190,15 @@
         public IEnumerator ConfirmEditing()
         {
             rotatingModeUI.SetActive(false);
-            WaypointplacementUI.SetActive(true);
+            waypointPlacementUI.SetActive(true);
             ARController.controllerstate = ControllerState.Waypointing;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator ConfirmPlacement()
+        {
+            placeModeUI.SetActive(false);
+            buildModeUI.SetActive(true);
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -174,11 +214,21 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
+
+        public IEnumerator BehaveSelection()
+        {
+            selectModeUI.SetActive(true);
+            mainModeUI.SetActive(false);
+
+            //
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
         public IEnumerator StartPlayMode()
         {
             buildModeUI.SetActive(false);
             mainModeUI.SetActive(false);
-            targetModeUI.SetActive(false);
+            placeModeUI.SetActive(false);
             rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
             yield return new WaitForSeconds(0.25f);
@@ -186,17 +236,25 @@
         }
         public IEnumerator StartTargetMode()
         {
-            targetModeUI.SetActive(true);
+            placeModeUI.SetActive(true);
             mainModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Targeting;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
-        public IEnumerator StopTargetMode()
+        public IEnumerator HomeButton() //HOME BUTTON.
         {
-            targetModeUI.SetActive(false);
+            placeModeUI.SetActive(false);
             scanningModeUI.SetActive(false);
+            buildModeUI.SetActive(false);
+            behaveModeUI.SetActive(false);
+            selectModeUI.SetActive(false);
+            waypointPlacementUI.SetActive(false);
+
+            //
             mainModeUI.SetActive(true);
+
+            //
             ARController.controllerstate = ControllerState.Placing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -232,7 +290,7 @@
         }
         public IEnumerator ConfirmWaypoint()
         {
-            WaypointplacementUI.SetActive(false);
+            waypointPlacementUI.SetActive(false);
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);

@@ -21,6 +21,9 @@ TagManager:
   - ClearWaypoint
   - UndoWaypoint
   - ScanModeDoneButton
+  - ConfirmPlacement
+  - SkipSelect
+  - BehaviorSelect
   layers:
   - Default
   - TransparentFX
