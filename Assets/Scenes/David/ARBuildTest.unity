@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -371,6 +371,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83537771}
   m_CullTransparentMesh: 0
+--- !u!1 &98970260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 759414017, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 99939348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &99939348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -456,7 +462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1914077727, guid: 3b5417beef39ea947b0e421a7a033318, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 531819481, guid: 3b5417beef39ea947b0e421a7a033318, type: 3}
       propertyPath: m_Name
@@ -1911,7 +1917,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &521898244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2271,6 +2277,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 951791360968524599, guid: 6cb892b7945615749bbc7348f40c0c92,
     type: 3}
   m_PrefabInstance: {fileID: 602635241}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &610893591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 634335897, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 99939348}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &725211316
 GameObject:
@@ -3750,13 +3762,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScaleSpeed: 0.025
   RotateSpeed: 1
-  FirstpersonCam: {fileID: 0}
+  FirstpersonCam: {fileID: 1617712181}
   GridViewer: {fileID: 602635242}
-  BuildCanvas: {fileID: 0}
-  SelectBuildCanvas: {fileID: 0}
-  ObjectEditCanvas: {fileID: 0}
-  ScalingFeedback: {fileID: 0}
-  RotateFeedback: {fileID: 0}
+  BuildCanvas: {fileID: 1819341914}
+  SelectBuildCanvas: {fileID: 1805675304}
+  ObjectEditCanvas: {fileID: 2073884908}
+  ScalingFeedback: {fileID: 98970260}
+  RotateFeedback: {fileID: 610893591}
+  SelectingObjectCanvas: {fileID: 1412334233}
+  FullyEditingCanvas: {fileID: 521898243}
+  CurrentSelectedModel: {fileID: 0}
   canPlace: 0
 --- !u!4 &1333434795
 Transform:
@@ -4228,6 +4243,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542475800}
   m_CullTransparentMesh: 0
+--- !u!20 &1617712181 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1289184268, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 99939348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1681517268
 GameObject:
   m_ObjectHideFlags: 0
@@ -4590,6 +4611,12 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 999
   m_TargetDisplay: 0
+--- !u!1 &1805675304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 935124434, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 99939348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1819341914 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 453384370, guid: 3b5417beef39ea947b0e421a7a033318,
@@ -5029,6 +5056,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2073884908 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2022388133, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 99939348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2087063483
 GameObject:
   m_ObjectHideFlags: 0

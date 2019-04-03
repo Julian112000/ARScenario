@@ -190,15 +190,17 @@
         public IEnumerator ConfirmEditing()
         {
             rotatingModeUI.SetActive(false);
-            waypointPlacementUI.SetActive(true);
-            ARController.controllerstate = ControllerState.Waypointing;
+            //waypointPlacementUI.SetActive(true);
+            buildModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
         public IEnumerator ConfirmPlacement()
         {
             placeModeUI.SetActive(false);
-            buildModeUI.SetActive(true);
+            rotatingModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Editing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -219,7 +221,7 @@
         {
             selectModeUI.SetActive(true);
             mainModeUI.SetActive(false);
-
+            ARController.controllerstate = ControllerState.SelectingObject;
             //
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -255,7 +257,7 @@
             mainModeUI.SetActive(true);
 
             //
-            ARController.controllerstate = ControllerState.Placing;
+            ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }

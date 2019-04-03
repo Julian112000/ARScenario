@@ -26,6 +26,8 @@
         Scanning,
         Placing,
         Editing,
+        SelectingObject,
+        FullyEditingObject,
         Waypointing,
         Targeting,
         Playing
@@ -53,6 +55,9 @@
         Vector2 LastPos;
         //
         [SerializeField]
+        LayerMask unitlayer;
+        //
+        [SerializeField]
         GameObject BuildCanvas;
         [SerializeField]
         GameObject SelectBuildCanvas;
@@ -62,6 +67,12 @@
         GameObject ScalingFeedback;
         [SerializeField]
         GameObject RotateFeedback;
+        [SerializeField]
+        GameObject SelectingObjectCanvas;
+        [SerializeField]
+        GameObject FullyEditingCanvas;
+        [SerializeField]
+        GameObject CurrentSelectedModel;
 
         public bool canPlace = false;
 
@@ -109,6 +120,12 @@
                     break;
                 case ControllerState.Editing:
                     Editing();
+                    break;
+                case ControllerState.SelectingObject:
+                    SelectingObject();
+                    break;
+                case ControllerState.FullyEditingObject:
+                    FullyEditingObject();
                     break;
                 case ControllerState.Waypointing:
                     PlacingWaypoints();
@@ -162,6 +179,24 @@
                 ScalingFeedback.SetActive(true);
                 RotateFeedback.SetActive(true);
             }
+        }
+        //This void handles everything needed when wanting to select an object to edit it afterwards
+        private void SelectingObject()
+        {
+            ScreenInputSelectingObject();
+            //
+            SelectingObjectCanvas.SetActive(true);
+            //
+            GridViewer.SetActive(false);
+            ScalingFeedback.SetActive(false);
+            RotateFeedback.SetActive(false);
+            //
+        }
+        //This void is when you have an object selected and now want to choose what to do with it.
+        private void FullyEditingObject()
+        {
+            FullyEditingCanvas.SetActive(true);
+            SelectingObjectCanvas.SetActive(false);
         }
         //This void is called when you are editing and have one finger on the touchscreen (Rotating)
         private void Rotating()
@@ -311,6 +346,50 @@
                     CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position);
                 }
             }
+        }
+        //Screen Input when in Select mode. this handles it so that you can tap on an object and edit it
+        void ScreenInputSelectingObject()
+        {
+            Touch touch;
+            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            {
+                return;
+            }
+            //
+            //TrackableHit hit;
+            //TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+            //    TrackableHitFlags.FeaturePointWithSurfaceNormal;
+            Ray ray = FirstpersonCam.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, unitlayer))
+            {
+                CurrentSelectedModel = hit.collider.gameObject;
+                CurrentSelectedModel.GetComponent<AIBasics>().Selected = true;
+                //
+                controllerstate = ControllerState.FullyEditingObject;
+            }
+            //if (Physics.Raycast(touch.position, FirstpersonCam.transform.forward,out hit, UnitLayer))
+            //{
+            //    CurrentSelectedModel = hit.collider.gameObject;
+            //    CurrentSelectedModel.GetComponent<AIBasics>().Selected = true;
+            //    //
+            //    controllerstate = ControllerState.FullyEditingObject;
+                
+            //    //{
+
+            //    //    GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
+            //    //    SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
+            //    //    CurrentplacedObject = SpawnedObject;
+            //    //    ConsoleScript.Instance.SetFeedback(MessageType.BuildMessage, CurrentplacedObject.name);
+            //    //    //
+            //    //    Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
+            //    //    SpawnedObject.transform.parent = anchor.transform;
+            //    //    //Switch Editor State to scaling
+            //    //    controllerstate = ControllerState.Editing;
+            //    //    //
+
+            //    //}
+            //}
         }
         #endregion
 

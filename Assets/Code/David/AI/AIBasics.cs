@@ -54,6 +54,7 @@ public abstract class AIBasics : AIStats
     private Vector3 ChestOffset;
     private Vector3 PointToAimAt;
     public GameObject Target;
+    public bool Selected;
 
 
     //Constructor of this class
@@ -233,10 +234,7 @@ public abstract class AIBasics : AIStats
             }
         }
         //Check if there is a waypoint And if there is the linerender will be setactive
-        if (Waypoints.Count > 1)
-        {
-            linerenderer.enabled = true;
-        }
+        LineRendererUpdate();
     }
     //Void that gets called to skip to the next waypoint or cancel walking when you've reached the end
     private void NavigateThroughPath()
@@ -294,9 +292,20 @@ public abstract class AIBasics : AIStats
             Debug.Log("Undo Happened!");
         }
     }
-
+    //
 
     //LINERENDERER RELATED ONLY
+    private void LineRendererUpdate()
+    {
+        if (Selected)
+        {
+            TurnRendererOn();
+        }
+        else if (!Selected)
+        {
+            TurnRendererOff();
+        }
+    }
     //turn off linerenderer
     public void TurnRendererOff()
     {
