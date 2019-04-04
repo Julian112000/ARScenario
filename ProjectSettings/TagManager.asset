@@ -24,6 +24,9 @@ TagManager:
   - ConfirmPlacement
   - SkipSelect
   - BehaviorSelect
+  - confirmChoice
+  - NewScenario
+  - LoadScenario
   layers:
   - Default
   - TransparentFX

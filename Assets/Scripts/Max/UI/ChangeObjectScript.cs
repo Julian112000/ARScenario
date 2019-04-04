@@ -18,19 +18,19 @@
         public Camera mainCamera;
 
         
-        public LevelChanger changeBuildANI, changeMainANI, changePlayANI;
+        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanUI;
 
         [Header("UIModes")]
         public GameObject buildModeUI;
 
         public GameObject mainModeUI;
 
-        [SerializeField]
-        private GameObject rotatingModeUI;
-        [SerializeField]
-        private GameObject placeModeUI;
-        [SerializeField]
-        private GameObject scanningModeUI;
+        public GameObject placeModeUI;
+
+        public GameObject rotatingModeUI;
+
+        public GameObject scanningModeUI;
+
         [SerializeField]
         private GameObject consoleModeUI;
         [SerializeField]
@@ -64,7 +64,7 @@
 
         private void HandleAllButtons(RaycastHit hit)
         {
-            if (hit.collider.tag == "RightArrow" && change.currentObject <= 4) //Right arrow
+            if (hit.collider.tag == "RightArrow" && change.currentObject <= 5) //Right arrow
             {
                 StartCoroutine(MoveArrow(1));
                 CanClick = false;
@@ -171,7 +171,7 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true; 
         }
-        public IEnumerator DoneButton()
+        public IEnumerator DoneButton() //Confirm Build Selection.
         {
             changeBuildANI.CloseBuildANI();
             //
@@ -189,17 +189,16 @@
         }
         public IEnumerator ConfirmEditing()
         {
-            rotatingModeUI.SetActive(false);
-            //waypointPlacementUI.SetActive(true);
-            buildModeUI.SetActive(true);
+            changeRotateANI.CloseRotateANI();
+            placeModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
         public IEnumerator ConfirmPlacement()
         {
-            placeModeUI.SetActive(false);
-            rotatingModeUI.SetActive(true);
+            changePlaceANI.ClosePlaceAni();
+            buildModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Editing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -236,7 +235,7 @@
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
-        public IEnumerator StartTargetMode()
+        public IEnumerator StartTargetMode() 
         {
             placeModeUI.SetActive(true);
             mainModeUI.SetActive(false);
@@ -246,9 +245,11 @@
         }
         public IEnumerator HomeButton() //HOME BUTTON.
         {
-            placeModeUI.SetActive(false);
+            changeBuildANI.CloseBuildANI();
+            changePlaceANI.ClosePlaceAni();
+            //
+
             scanningModeUI.SetActive(false);
-            buildModeUI.SetActive(false);
             behaveModeUI.SetActive(false);
             selectModeUI.SetActive(false);
             waypointPlacementUI.SetActive(false);
@@ -300,7 +301,7 @@
         }
         public IEnumerator StopScanning()
         {
-            scanningModeUI.SetActive(false);
+            changeScanUI.CloseScanningANI();
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);

@@ -14,12 +14,6 @@ public class ObjectChangerScript : MonoBehaviour
 
     public int currentObject = 3;
 
-
-    //public RawImage o_ri_1;
-    //public RawImage o_ri_2;
-    //public RawImage o_ri_3;
-    //public RawImage o_ri_4;
-    //public RawImage o_ri_5;
     private void Awake()
     {
         Debug.Log(currentObject);
