@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Fennek
   description: De beschrijving van de Fennek.
-  artwork: {fileID: 21300000, guid: 3ad96b6f755813945a17d494dbe86341, type: 3}
+  artwork: {fileID: 21300000, guid: f552658668ca1c34d9d6d4e950488307, type: 3}
   ConnectedModel: {fileID: 100000, guid: 2433bb175fde04b40a194fcabb766c09, type: 3}

@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
-  m_Name: CV-90
+  m_Name: Mine
   m_EditorClassIdentifier: 
-  name: CV-90
-  description: De beschrijving van de CV-90.
-  artwork: {fileID: 21300000, guid: 3f59648de6810ee43bcde9db1aed74b7, type: 3}
-  ConnectedModel: {fileID: 1454246927, guid: bc7f436435358074ca5759ec21f59ab2, type: 3}
+  name: Mine
+  description: Coming soon.
+  artwork: {fileID: 21300000, guid: c329bb4f0f5d45b48a0194aa747e4a48, type: 3}
+  ConnectedModel: {fileID: 4387967165760929355, guid: 3fea35c053b90984ba072c5734203d87,
+    type: 3}

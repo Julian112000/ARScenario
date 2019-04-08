@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Soldaat
   description: De beschrijving van de Soldaat.
-  artwork: {fileID: 21300000, guid: 7eb0e0989fe693942843d84f4b0c0149, type: 3}
+  artwork: {fileID: 21300000, guid: c329bb4f0f5d45b48a0194aa747e4a48, type: 3}
   ConnectedModel: {fileID: 5014541577067834460, guid: 22606dad577d4674b8a2bcd00f25c33f,
     type: 3}

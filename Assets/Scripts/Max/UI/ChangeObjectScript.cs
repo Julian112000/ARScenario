@@ -18,7 +18,7 @@
         public Camera mainCamera;
 
         
-        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanUI;
+        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI;
 
         [Header("UIModes")]
         public GameObject buildModeUI;
@@ -31,15 +31,14 @@
 
         public GameObject scanningModeUI;
 
+        public GameObject behaveModeUI;
+
+        public GameObject selectModeUI;
+
         [SerializeField]
         private GameObject consoleModeUI;
         [SerializeField]
         private GameObject waypointPlacementUI;
-        [SerializeField]
-        private GameObject behaveModeUI;
-        [SerializeField]
-        private GameObject selectModeUI;
-        
 
         [Header("Object")]
         public GameObject CurrentSelectedObject;
@@ -50,13 +49,24 @@
         {
             if (Input.touchCount > 0)
             {
+                Touch touch = Input.GetTouch(0);
                 Ray ray = mainCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
                     if (CanClick)
                     {
-                        HandleAllButtons(hit);
+                        switch (touch.phase)
+                        {
+                            case TouchPhase.Began:
+                                Debug.Log("yeet");
+                                break;
+
+                            case TouchPhase.Ended:
+                                Debug.Log("yoot");
+                                HandleAllButtons(hit);
+                                break;
+                        }
                     }
                 }
             }
@@ -64,7 +74,7 @@
 
         private void HandleAllButtons(RaycastHit hit)
         {
-            if (hit.collider.tag == "RightArrow" && change.currentObject <= 5) //Right arrow
+            if (hit.collider.tag == "RightArrow" && change.currentObject <= 7) //Right arrow
             {
                 StartCoroutine(MoveArrow(1));
                 CanClick = false;
@@ -158,7 +168,7 @@
 
         public IEnumerator SkipSelect()
         {
-            selectModeUI.SetActive(false);
+            changeSelectANI.CloseSelectANI();
             behaveModeUI.SetActive(true);
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -190,7 +200,11 @@
         public IEnumerator ConfirmEditing()
         {
             changeRotateANI.CloseRotateANI();
+
+            //
             placeModeUI.SetActive(true);
+
+            //
             ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -198,7 +212,11 @@
         public IEnumerator ConfirmPlacement()
         {
             changePlaceANI.ClosePlaceAni();
+
+            //
             buildModeUI.SetActive(true);
+
+            //
             ARController.controllerstate = ControllerState.Editing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
@@ -219,7 +237,12 @@
         public IEnumerator BehaveSelection()
         {
             selectModeUI.SetActive(true);
-            mainModeUI.SetActive(false);
+
+            //
+            changeMainANI.CloseMainANI();
+            changePlayANI.ClosePlayANI();
+
+            //
             ARController.controllerstate = ControllerState.SelectingObject;
             //
             yield return new WaitForSeconds(0.25f);
@@ -227,8 +250,9 @@
         }
         public IEnumerator StartPlayMode()
         {
+            changeMainANI.CloseMainANI();
+            changePlayANI.ClosePlayANI();
             buildModeUI.SetActive(false);
-            mainModeUI.SetActive(false);
             placeModeUI.SetActive(false);
             rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
@@ -247,11 +271,11 @@
         {
             changeBuildANI.CloseBuildANI();
             changePlaceANI.ClosePlaceAni();
+            changeSelectANI.CloseSelectANI();
+            changeBehaveANI.CloseBehaveANI();
+            changeScanANI.CloseScanningANI();
             //
 
-            scanningModeUI.SetActive(false);
-            behaveModeUI.SetActive(false);
-            selectModeUI.SetActive(false);
             waypointPlacementUI.SetActive(false);
 
             //
@@ -271,7 +295,8 @@
         public IEnumerator StartScanning()
         {
             scanningModeUI.SetActive(true);
-            mainModeUI.SetActive(false);
+            changeMainANI.CloseMainANI();
+            changePlayANI.ClosePlayANI();
             consoleModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Scanning;
             yield return new WaitForSeconds(0.25f);
@@ -301,7 +326,7 @@
         }
         public IEnumerator StopScanning()
         {
-            changeScanUI.CloseScanningANI();
+            changeScanANI.CloseScanningANI();
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);

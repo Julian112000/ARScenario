@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: SniperToren
   description: De beschrijvijng van de toren.
-  artwork: {fileID: 21300000, guid: 9d1642fe0af8d3a4f9ab7ec0ccde73c4, type: 3}
+  artwork: {fileID: 21300000, guid: c329bb4f0f5d45b48a0194aa747e4a48, type: 3}
   ConnectedModel: {fileID: 100000, guid: 77db87e6d0bdfc041b711f5fc34a5b58, type: 3}

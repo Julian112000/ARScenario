@@ -27,6 +27,8 @@
             Application.LoadLevel(i + 1);
         }
 
+
+        //After Animations
         public void LetMeDannyDeletoFade()
         {
             this.gameObject.SetActive(false);
@@ -58,6 +60,18 @@
             objChanger.scanningModeUI.SetActive(false);
         }
 
+        public void OnCloseSelectComplete()
+        {
+            objChanger.selectModeUI.SetActive(false);
+        }
+
+        public void OnCloseBehaveComplete()
+        {
+            objChanger.behaveModeUI.SetActive(false);
+        }
+
+
+        //Animation Triggers
         public void CloseBuildANI()
         {
             animator.SetTrigger("Close");
@@ -86,6 +100,16 @@
         public void CloseScanningANI()
         {
             animator.SetTrigger("CloseScanning");
+        }
+
+        public void CloseSelectANI()
+        {
+            animator.SetTrigger("CloseSelect");
+        }
+
+        public void CloseBehaveANI()
+        {
+            animator.SetTrigger("CloseBehave");
         }
 
 

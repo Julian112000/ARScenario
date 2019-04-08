@@ -27,6 +27,7 @@ TagManager:
   - confirmChoice
   - NewScenario
   - LoadScenario
+  - None
   layers:
   - Default
   - TransparentFX
