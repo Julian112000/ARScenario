@@ -1,50 +1,83 @@
 fileFormatVersion: 2
-guid: 8542439787e6d6d4b892874a692acd4e
+guid: 57feba7991b08df4a928633225d8a888
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: polySurface101
-    100004: polySurface403
-    100006: polySurface404
-    100008: polySurface405
-    100010: polySurface406
-    100012: polySurface478
-    100014: polySurface537
-    100016: polySurface545
-    400000: //RootNode
-    400002: polySurface101
-    400004: polySurface403
-    400006: polySurface404
-    400008: polySurface405
-    400010: polySurface406
-    400012: polySurface478
-    400014: polySurface537
-    400016: polySurface545
-    2100000: Fennek_1
-    2100002: Fennek_2
-    2300000: polySurface403
-    2300002: polySurface404
-    2300004: polySurface405
-    2300006: polySurface406
-    2300008: polySurface478
-    2300010: polySurface537
-    2300012: polySurface545
-    3300000: polySurface403
-    3300002: polySurface404
-    3300004: polySurface405
-    3300006: polySurface406
-    3300008: polySurface478
-    3300010: polySurface537
-    3300012: polySurface545
-    4300000: polySurface403
-    4300002: polySurface404
-    4300004: polySurface405
-    4300006: polySurface406
-    4300008: polySurface537
-    4300010: polySurface478
-    4300012: polySurface545
-  externalObjects: {}
+    100000: Base
+    100002: Camera
+    100004: Detail
+    100006: Deur
+    100008: //RootNode
+    100010: Gun
+    100012: L_Achter
+    100014: L_Voor
+    100016: polySurface553
+    100018: polySurface620
+    100020: R_Achter
+    100022: R_Voor
+    100024: Wielen
+    400000: Base
+    400002: Camera
+    400004: Detail
+    400006: Deur
+    400008: //RootNode
+    400010: Gun
+    400012: L_Achter
+    400014: L_Voor
+    400016: polySurface553
+    400018: polySurface620
+    400020: R_Achter
+    400022: R_Voor
+    400024: Wielen
+    2100000: lambert1
+    2100002: Fennek_1
+    2100004: Fennek_2
+    2300000: Base
+    2300002: Camera
+    2300004: Deur
+    2300006: //RootNode
+    2300008: Gun
+    2300010: L_Achter
+    2300012: L_Voor
+    2300014: polySurface620
+    2300016: R_Achter
+    2300018: R_Voor
+    3300000: Base
+    3300002: Camera
+    3300004: Deur
+    3300006: //RootNode
+    3300008: Gun
+    3300010: L_Achter
+    3300012: L_Voor
+    3300014: polySurface620
+    3300016: R_Achter
+    3300018: R_Voor
+    4300000: Fennek
+    4300002: L_Voor
+    4300004: L_Achter
+    4300006: R_Voor
+    4300008: R_Achter
+    4300010: polySurface620
+    4300012: Gun
+    4300014: Camera
+    4300016: Deur
+    4300018: Base
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fennek_1
+    second: {fileID: 2100000, guid: 85a6ae4972342574f9c10080206ef7d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fennek_2
+    second: {fileID: 2100000, guid: 295d733e62c03b64fa516adf8720449e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 2433bb175fde04b40a194fcabb766c09, type: 3}
   materials:
     importMaterials: 1
     materialName: 0

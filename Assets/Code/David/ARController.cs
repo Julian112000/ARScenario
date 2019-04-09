@@ -56,6 +56,8 @@
         //
         [SerializeField]
         LayerMask unitlayer;
+        [SerializeField]
+        GameObject WaypointPrefab;
         //
         [SerializeField]
         GameObject BuildCanvas;
@@ -343,7 +345,9 @@
                 }
                 else
                 {
-                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position);
+                    GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation);
+                    WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
+                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position, script);
                 }
             }
         }

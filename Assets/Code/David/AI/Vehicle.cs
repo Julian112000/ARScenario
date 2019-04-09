@@ -2,26 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : AIBasics
+public class Vehicle : AIBasics
 {
-    [Header("Human Related")]
+    [Header("Vehicle Related")]
     [SerializeField]
-    private Vector3 ChestOffset;
+    private GameObject AimingObject;
 
     public override void Awake()
     {
         base.Awake();
-        unittype = UnitType.Human;
+        unittype = UnitType.Fennek;
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            WantsToMove = true;
-        }
     }
     public override void LateUpdate()
     {
@@ -29,7 +24,7 @@ public class Human : AIBasics
         ActionUpdate();
     }
 
-    //Actions made for a human (not a vechicle)
+    //Actions made for a Vehicle (not a Vehicle)
     //Action Voids
     #region Actions
     public void ActionUpdate()
@@ -65,18 +60,8 @@ public class Human : AIBasics
     }
     private void AimingAtPoint()
     {
-        animator.SetBool("Aiming", true);
-        OnlyYLook(PointToAimAt);
         //
-        Transform Chest;
-        Chest = animator.GetBoneTransform(HumanBodyBones.Chest);
-        Chest.LookAt(PointToAimAt);
-        Chest.rotation = Chest.rotation * Quaternion.Euler(ChestOffset);
-        //
-        Transform Head;
-        Head = animator.GetBoneTransform(HumanBodyBones.Head);
-        Head.LookAt(PointToAimAt);
-        //Debug line
+        AimingObject.transform.LookAt(PointToAimAt);
         Debug.DrawLine(VisionPoint.position, PointToAimAt, Color.green);
 
     }
@@ -104,22 +89,20 @@ public class Human : AIBasics
     #region Target Enemy Related
     private void TargetEnemy()
     {
-        animator.SetBool("Aiming", true);
+        OnlyYLook(LookingObject, PointToAimAt);
         TrackTarget(FoundTargetScript.VisionPoint.position);
     }
     private void TrackTarget(Vector3 Targetpos)
     {
-        Transform Chest;
-        Chest = animator.GetBoneTransform(HumanBodyBones.Chest);
-        Chest.LookAt(Targetpos);
-        Chest.rotation = Chest.rotation * Quaternion.Euler(ChestOffset);
+        OnlyYLook(LookingObject, Targetpos);
+        AimingObject.transform.LookAt(Targetpos);
         //
-        Transform Head;
-        Head = animator.GetBoneTransform(HumanBodyBones.Head);
-        Head.LookAt(Targetpos);
+
         //Debug line
         Debug.DrawLine(VisionPoint.position, Targetpos, Color.green);
         //Check if target is still in range
+
+
     }
     #endregion
     //Everything related to the Target and Move state

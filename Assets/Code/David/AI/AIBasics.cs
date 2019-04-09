@@ -10,51 +10,76 @@ public enum UnitSide
 public enum UnitType
 {
     Human,
-    Tank
+    Tank,
+    Fennek
 }
 public enum AIStates
 {
     AimAtPoint,
     StandStill,
-    WalkTowards,
-    Patrol
+    GoTowards,
+    Patrol,
+    TargetEnemy,
+    TargetAndMove
 }
 public enum AIBehaviour
 {
+    Passive,
     React,
     Attack,
+    Destroy
 }
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(LineRenderer))]
 public abstract class AIBasics : AIStats
 {
     //Components and basic needed values
-    private Animator animator;
-    private LineRenderer linerenderer;
+    protected Animator animator;
+    protected LineRenderer linerenderer;
+    [Header("Enums")]
+    [SerializeField]
     private UnitSide unitside;
-    private AIStates aistate;
+    [SerializeField]
+    public AIStates aistate;
+    [SerializeField]
     protected UnitType unittype;
+    [SerializeField]
+    protected AIBehaviour Behaviour;
+    [Header("Needed Objects")]
     [SerializeField]
     public Transform VisionPoint;
     [SerializeField]
-    public GameObject LookingObject;
+    protected GameObject LookingObject;
     [SerializeField]
-    public GameObject Spine;
+    private GameObject WaypointPrefab;
+    [SerializeField]
+    private LayerMask LineCastLayers;
+    //Basic Variables
+    [Header("Basic Variables")]
+    public bool Selected;
+    [SerializeField]
+    private int ViewingAngle = 90;
     //Stat based values
-    protected float VisionRange;
-    protected float MovementSpeed;
-    //Variables Based for the waypoint system
     [SerializeField]
-    private List<Vector3> Waypoints = new List<Vector3>();
-    private int CurrentWaypoint = 0;
-    protected bool WantsToMove = false;
+    private float VisionRange = 15f;
+    [SerializeField]
+    private float MovementSpeed = 0.75f;
+    [SerializeField]
+    protected GameObject FoundTarget;
+    protected AIBasics FoundTargetScript;
     //Variables For when the unit is selected to aim at a certain point
     //The offset when aiming (this is because the animation might not always work)
+    protected Vector3 PointToAimAt;
+    //Variables Based for the waypoint system
+    [Header("Waypoint related")]
     [SerializeField]
-    private Vector3 ChestOffset;
-    private Vector3 PointToAimAt;
-    public GameObject Target;
-    public bool Selected;
+    private List<Vector3> Waypoints = new List<Vector3>();
+    [SerializeField]
+    private List<WaypointScript> waypointscripts = new List<WaypointScript>();
+    [SerializeField]
+    private int CurrentWaypoint = 0;
+    [SerializeField]
+    protected bool WantsToMove = false;
 
 
     //Constructor of this class
@@ -88,26 +113,17 @@ public abstract class AIBasics : AIStats
             unitside = UnitSide.Friendly;
             AIsceneInfo.Friendlys.Add(this.gameObject);
             AIsceneInfo.FriendlysScripts.Add(this);
-            ChooseLineColor(Color.blue);
         }
         else if (gameObject.tag == "Terrorist")
         {
             unitside = UnitSide.Terrorist;
             AIsceneInfo.Enemies.Add(this.gameObject);
             AIsceneInfo.EnemiesScripts.Add(this);
-            ChooseLineColor(Color.red);
         }
         else
         {
             Debug.Log("ERROR: Forgot to set Tag to the units!");
         }
-    }
-    //Void to choose which color the Line will get
-    private void ChooseLineColor(Color color)
-    {
-        linerenderer.startColor = color;
-        linerenderer.endColor = color;
-        linerenderer.material.color = color;
     }
     //
     #endregion
@@ -127,14 +143,20 @@ public abstract class AIBasics : AIStats
     public virtual void LateUpdate()
     {
         //
-        ActionUpdate();
     }
     //Everything related to the vision of the AI
     #region Vision Related
     //This void belongs in the update and gets called to make the entire vision work
     public void VisionUpdate()
     {
-        CheckWhoIsNear();
+        if (FoundTarget == null)
+        {
+            CheckWhoIsNear();
+        }
+        else if(FoundTarget != null)
+        {
+            CheckVisionToTarget();
+        }
     }
     //This void, iterates through the list of enemies and friendlys (depending on type of the unit) and checks if they are in range 
     private void CheckWhoIsNear()
@@ -176,7 +198,7 @@ public abstract class AIBasics : AIStats
         Vector3 TargetDirection = Vector3.Normalize(Target.transform.position - transform.position);
         float Angle = Vector3.Angle(TargetDirection, transform.forward);
 
-        if (Angle < 90)
+        if (Angle < ViewingAngle)
         {
             CheckForCollision(Target, TargetScript);
         }
@@ -185,7 +207,7 @@ public abstract class AIBasics : AIStats
     private void CheckForCollision(GameObject Target, AIBasics TargetScript)
     {
         RaycastHit hit;
-        if (Physics.Linecast(VisionPoint.position, TargetScript.VisionPoint.position, out hit))
+        if (Physics.Linecast(VisionPoint.position, TargetScript.VisionPoint.position, out hit, LineCastLayers))
         {
             Debug.Log("Blocked");
         }
@@ -197,16 +219,76 @@ public abstract class AIBasics : AIStats
             {
                 case UnitSide.Terrorist:
                     Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.red);
+                    EnemySpotted();
+                    FoundTarget = Target;
+                    FoundTargetScript = TargetScript;
                     //LookingObject.transform.LookAt(Target.transform.position);
                     break;
                 case UnitSide.Friendly:
                     Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.blue);
+                    EnemySpotted();
+                    FoundTarget = Target;
+                    FoundTargetScript = TargetScript;
                     //LookingObject.transform.LookAt(TargetScript.VisionPoint.position);
                     break;
                 default:
                     break;
             }
         }
+    }
+    //Check if the currentTarget is still in range and if he is not behind something
+    public void CheckVisionToTarget()
+    {
+        float DistanceBetween = Vector3.Distance(transform.position, FoundTarget.transform.position);
+
+        if (DistanceBetween <= VisionRange)
+        {
+            CheckAngleFoundTarget();
+        }
+        else
+        {
+            ResetTarget();
+        }
+    }
+    private void CheckAngleFoundTarget()
+    {
+        Vector3 TargetDirection = Vector3.Normalize(FoundTarget.transform.position - transform.position);
+        float Angle = Vector3.Angle(TargetDirection, transform.forward);
+
+        if (Angle < ViewingAngle)
+        {
+            CheckCollisionFoundTarget();
+        }
+        else
+        {
+            ResetTarget();
+        }
+    }
+    private void CheckCollisionFoundTarget()
+    {
+        RaycastHit hit;
+        if (Physics.Linecast(VisionPoint.position, FoundTargetScript.VisionPoint.position, out hit, LineCastLayers))
+        {
+            ResetTarget();
+        }
+
+    }
+    private void ResetTarget()
+    {
+        switch (aistate)
+        {
+            case AIStates.TargetEnemy:
+                aistate = AIStates.StandStill;
+                break;
+            case AIStates.TargetAndMove:
+                aistate = AIStates.GoTowards;
+                break;
+            default:
+                break;
+        }
+        FoundTarget = null;
+        FoundTargetScript = null;
+        ResetParameters(animator);
     }
     #endregion
     //Waypoint system for navigation of the AI
@@ -219,13 +301,20 @@ public abstract class AIBasics : AIStats
         {
             if (Waypoints.Count > 0)
             {
-                if (Vector3.Distance(transform.position, Waypoints[CurrentWaypoint]) > 0.3f)
+                switch (aistate)
                 {
-                    MoveTowardsPoint(Waypoints[CurrentWaypoint]);
-                }
-                else
-                {
-                    NavigateThroughPath();
+                    case AIStates.GoTowards:
+                        GoTowardsUpdate();
+                        break;
+                    case AIStates.Patrol:
+                        PatrolUpdate();
+                        break;
+                    case AIStates.TargetAndMove:
+                        TargetAndMoveUpdate();
+                        break;
+                    default:
+                        Debug.Log("Has Waypoints but no movement choice");
+                        break;
                 }
             }
             else
@@ -233,11 +322,72 @@ public abstract class AIBasics : AIStats
                 NavigateThroughPath();
             }
         }
-        //Check if there is a waypoint And if there is the linerender will be setactive
-        LineRendererUpdate();
+    }
+    //When the state is on gotowards this is the update
+    private void GoTowardsUpdate()
+    {
+        if (Vector3.Distance(transform.position, Waypoints[CurrentWaypoint]) > 0.3f)
+        {
+            //Walk animation gets played
+            animator.SetBool("Walking", true);
+            //
+            MoveTowardsPoint(Waypoints[CurrentWaypoint]);
+        }
+        else
+        {
+            NavigateThroughPath();
+        }
+    }
+    //When the state is on Patrol this is the update
+    private void PatrolUpdate()
+    {
+        if (Vector3.Distance(transform.position, Waypoints[CurrentWaypoint]) > 0.3f)
+        {
+            //Walk animation gets played
+            animator.SetBool("Walking", true);
+            //
+            MoveTowardsPoint(Waypoints[CurrentWaypoint]);
+        }
+        else
+        {
+            LoopThroughPath();
+        }
+    }
+    //The update that is called when targeting and moving this handles just the moving of that part
+    private void TargetAndMoveUpdate()
+    {
+        if (Vector3.Distance(transform.position, Waypoints[CurrentWaypoint]) > 0.3f)
+        {
+            //Walk animation gets played
+            animator.SetBool("AimWalk", true);
+            //
+            MoveTowardsPoint(Waypoints[CurrentWaypoint]);
+        }
+        else
+        {
+            NavigateThroughPath();
+        }
     }
     //Void that gets called to skip to the next waypoint or cancel walking when you've reached the end
     private void NavigateThroughPath()
+    {
+        CurrentWaypoint++;
+        if (CurrentWaypoint < Waypoints.Count)
+        {
+            if (CurrentWaypoint > 1)
+            {
+                Destroy(waypointscripts[0].gameObject);
+                waypointscripts.Remove(waypointscripts[0]);
+            }
+            WantsToMove = true;
+        }
+        else
+        {
+            ClearWaypoints();
+        }
+    }
+    //Void that is almost the same as navigate throughpath but it resets and repeats the process when at the end
+    private void LoopThroughPath()
     {
         CurrentWaypoint++;
         if (CurrentWaypoint < Waypoints.Count)
@@ -246,22 +396,24 @@ public abstract class AIBasics : AIStats
         }
         else
         {
-            ClearWaypoints();
+            CurrentWaypoint = 1;
+            WantsToMove = true;
         }
     }
     //Void that gets called when you are moving towards a waypoint (this void moves the character forward)
     private void MoveTowardsPoint(Vector3 TargetPoint)
     {
-        //Walk animation gets played
-        animator.SetBool("Walking", true);
         //Make character look at target so that forward is towards the point
         transform.LookAt(TargetPoint);
         //Actual movement
         transform.position += transform.forward * MovementSpeed * Time.deltaTime;
         //Make line get swallowed by player
-        for (int i = 0; i < CurrentWaypoint; i++)
+        if(aistate == AIStates.GoTowards || aistate == AIStates.TargetAndMove)
         {
-            linerenderer.SetPosition(i, transform.position);
+            for (int i = 0; i < CurrentWaypoint; i++)
+            {
+                linerenderer.SetPosition(i, transform.position);
+            }
         }
     }
     //Void that is used when you are done with all the waypoints, Or you want to make a new path so u have to clear the old one
@@ -269,16 +421,33 @@ public abstract class AIBasics : AIStats
     {
         WantsToMove = false;
         Waypoints.Clear();
+        foreach (var Waypoint in waypointscripts)
+        {
+            Destroy(Waypoint.gameObject);
+        }
+        waypointscripts.Clear();
         CurrentWaypoint = 0;
-        animator.SetBool("Walking", false);
         Waypoints.Add(transform.position);
         linerenderer.positionCount = Waypoints.Count;
+        switch (aistate)
+        {
+            case AIStates.TargetAndMove:
+                animator.SetBool("Aiming", true);
+                animator.SetBool("AimWalk", false);
+                break;
+            default:
+                animator.SetBool("Walking", false);
+                animator.SetBool("AimWalk", false);
+                break;
+        }
         Debug.Log("Waypoints Cleared!");
     }
     //Void that gets called in the building phase this is what places the waypoints and adds them to the units list
-    public void PlaceWayPoint(Vector3 Position)
+    public void PlaceWayPoint(Vector3 Position, WaypointScript waypointscript)
     {
         Waypoints.Add(Position);
+        waypointscripts.Add(waypointscript);
+        //
         linerenderer.positionCount = Waypoints.Count;
         linerenderer.SetPosition(Waypoints.Count - 1, Waypoints[Waypoints.Count - 1]);
     }
@@ -288,34 +457,38 @@ public abstract class AIBasics : AIStats
         if (Waypoints.Count > 1)
         {
             Waypoints.Remove(Waypoints[Waypoints.Count - 1]);
+            Destroy(waypointscripts[waypointscripts.Count - 1].gameObject);
+            waypointscripts.Remove(waypointscripts[waypointscripts.Count - 1]);
             linerenderer.positionCount = Waypoints.Count;
             Debug.Log("Undo Happened!");
         }
     }
+    //Reposition the selected waypoint
+    public void RepositionWaypoint(WaypointScript Waypoint, Vector3 NewPosition)
+    {
+        for (int i = 0; i < waypointscripts.Count; i++)
+        {
+            if (waypointscripts[i] == Waypoint)
+            {
+                linerenderer.SetPosition(i + 1, NewPosition);
+                Waypoints[i + 1] = NewPosition;
+                Waypoint.gameObject.transform.position = NewPosition;
+            }
+        }
+    }
+    //Make it so that the last waypoint connects with the first waypoint
+    public void ConnectLastToFirst()
+    {
+        GameObject SpawnedObject = Instantiate(WaypointPrefab, transform.position, waypointscripts[0].gameObject.transform.rotation);
+        WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
+        //
+        Waypoints.Add(transform.position);
+        waypointscripts.Add(script);
+        //
+        linerenderer.positionCount = Waypoints.Count;
+        linerenderer.SetPosition(Waypoints.Count - 1, transform.position);
+    }
     //
-
-    //LINERENDERER RELATED ONLY
-    private void LineRendererUpdate()
-    {
-        if (Selected)
-        {
-            TurnRendererOn();
-        }
-        else if (!Selected)
-        {
-            TurnRendererOff();
-        }
-    }
-    //turn off linerenderer
-    public void TurnRendererOff()
-    {
-        linerenderer.enabled = false;
-    }
-    //Turn on linerenderer
-    public void TurnRendererOn()
-    {
-        linerenderer.enabled = true;
-    }
     #endregion
     //Combat related voids for the AI
     #region Combat Related
@@ -364,60 +537,113 @@ public abstract class AIBasics : AIStats
     {
 
     }
-    #endregion
-    //Action Voids
-    #region Actions
-    public void ActionUpdate()
+    //This void decides how to react on finding an enemy this is based on the Behaviour enum
+    private void EnemySpotted()
     {
-        switch (aistate)
+        switch (Behaviour)
         {
-            case AIStates.AimAtPoint:
-                AimingAtPoint();
+            case AIBehaviour.Passive:
+                Passive();
                 break;
-            case AIStates.StandStill:
+            case AIBehaviour.React:
+                React();
                 break;
-            case AIStates.WalkTowards:
+            case AIBehaviour.Attack:
+                Attack();
                 break;
-            case AIStates.Patrol:
+            case AIBehaviour.Destroy:
+                Destroy();
                 break;
             default:
                 break;
         }
     }
-    public void AimAtPoint(Vector3 Point)
+    #region BehaviourVoids
+    //The passive reaction void
+    private void Passive()
     {
-        aistate = AIStates.AimAtPoint;
-        PointToAimAt = Point;
+        Debug.Log("Enemy Spotted but on passive so no reaction");
     }
-    private void AimingAtPoint()
+    //The react void, This makes it so when spotting something you dont take action but when shot at u shoot back
+    private void React()
     {
-        animator.SetBool("Aiming", true);
-        OnlyYLook(PointToAimAt);
-        //
-        Transform Chest;
-        Chest = animator.GetBoneTransform(HumanBodyBones.Chest);
-        Chest.LookAt(PointToAimAt);
-        Chest.rotation = Chest.rotation * Quaternion.Euler(ChestOffset);
-        //
-        Transform Head;
-        Head = animator.GetBoneTransform(HumanBodyBones.Head);
-        Head.LookAt(PointToAimAt);
-    }
-    public void StopAimingAtPoint()
-    {
-        animator.SetBool("Aiming", false);
-    }
 
+    }
+    //The Attack void, this makes it so when spotting an enemy the AI instantly starts aiming and shooting at it
+    private void Attack()
+    {
+        aistate = AIStates.TargetAndMove;
+        ResetParameters(animator);
+    }
+    private void Destroy()
+    {
+        aistate = AIStates.TargetEnemy;
+        ResetParameters(animator);
+    }
+    #endregion
     #endregion
     //Self made voids to make my life helpful
     #region HelpFullVoids
     //A lookat to only rotate the Y axis
-    private void OnlyYLook(Vector3 Target)
+    public void OnlyYLook(Vector3 Target)
     {
         Vector3 lookPos = Target - transform.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = rotation;
+    }
+    //
+    public void OnlyYLook(GameObject ObjectToRotate,Vector3 Target)
+    {
+        Vector3 lookPos = Target - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        ObjectToRotate.transform.rotation = rotation;
+    }
+
+    //A void that resets the entire animator so that everything is false and you are in idle
+    private void ResetParameters(Animator animator)
+    {
+        AnimatorControllerParameter[] parameters = animator.parameters;
+
+        for (int i = 0; i < parameters.Length; i++)
+        {
+            AnimatorControllerParameter parameter = parameters[i];
+            switch (parameter.type)
+            {
+                case AnimatorControllerParameterType.Int:
+                    animator.SetInteger(parameter.name, parameter.defaultInt);
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    animator.SetFloat(parameter.name, parameter.defaultFloat);
+                    break;
+                case AnimatorControllerParameterType.Bool:
+                    animator.SetBool(parameter.name, parameter.defaultBool);
+                    break;
+            }
+        }
+
+        animator.SetTrigger("Reset");
+    }
+    //A void to turn off the visuals for playmode
+    public void TurnOffVisuals()
+    {
+        //Waypoint visuals
+        foreach (var waypoint in waypointscripts)
+        {
+            waypoint.gameObject.SetActive(false);
+        }
+        linerenderer.enabled = false;
+    }
+    //Void to turn on the visuals again
+    public void TurnOnVisuals()
+    {
+        //Waypoint visuals
+        foreach (var waypoint in waypointscripts)
+        {
+            waypoint.gameObject.SetActive(true);
+        }
+        linerenderer.enabled = true;
     }
     #endregion
 }
