@@ -19,6 +19,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using GoogleARCore;
+    using GoogleARCore.Examples.Common;
     //
     public enum ControllerState
     {
@@ -56,6 +57,8 @@
         //
         [SerializeField]
         LayerMask unitlayer;
+        [SerializeField]
+        GameObject WaypointPrefab;
         //
         [SerializeField]
         GameObject BuildCanvas;
@@ -148,7 +151,8 @@
         //Called when the enum is on Scanning (when you want to scan in the ARCore grid WITHOUT ANY PLACE INPUT)
         private void Scanning()
         {
-            GridViewer.SetActive(true);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            //GridViewer.SetActive(true);
         }
         //Called when enum is on Placing (you can still scan while placing)
         private void Placing()
@@ -156,14 +160,16 @@
             ScreenInputPlacing();
             //
             ObjectEditCanvas.SetActive(false);
-            GridViewer.SetActive(true);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            //GridViewer.SetActive(true);
         }
         //Called when enum is on Editing (this is when wanting to rotate or scale but no input has been found yet
         private void Editing()
         {
             BuildCanvas.SetActive(false);
             ObjectEditCanvas.SetActive(true);
-            GridViewer.SetActive(false);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            //GridViewer.SetActive(true);
             //
             if (Input.touchCount == 1)
             {
@@ -187,7 +193,8 @@
             //
             SelectingObjectCanvas.SetActive(true);
             //
-            GridViewer.SetActive(false);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(false);
             RotateFeedback.SetActive(false);
             //
@@ -202,7 +209,8 @@
         private void Rotating()
         {
             ScreenInputRotating();
-            GridViewer.SetActive(false);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(false);
             RotateFeedback.SetActive(true);
         }
@@ -210,14 +218,16 @@
         private void Scaling()
         {
             ScreenInputScaling();
-            GridViewer.SetActive(false);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(true);
             RotateFeedback.SetActive(false);
         }
         //This void is called when you are done editing and are ready to place waypoints for the Unit's path
         private void PlacingWaypoints()
         {
-            GridViewer.SetActive(true);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            //GridViewer.SetActive(true);
             ScreenInputWaypointing();
         }
         #endregion
@@ -343,7 +353,9 @@
                 }
                 else
                 {
-                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position);
+                    GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation);
+                    WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
+                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position, script);
                 }
             }
         }
@@ -365,6 +377,7 @@
             {
                 CurrentSelectedModel = hit.collider.gameObject;
                 CurrentSelectedModel.GetComponent<AIBasics>().Selected = true;
+                CurrentSelectedModel.GetComponent<AIBasics>().TurnOnVisuals();
                 //
                 controllerstate = ControllerState.FullyEditingObject;
             }
@@ -396,7 +409,8 @@
         //Void that is subscribed to the playmode event
         public void Playmode()
         {
-            GridViewer.SetActive(false);
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //GridViewer.SetActive(false);
             controllerstate = ControllerState.Playing;
         }
         //Static void to change model from another script
@@ -404,7 +418,7 @@
         {
             Model = modelpar;
         }
-        //Enumarator to make sure you dont place when pressing a confirm button
+        //Enumarator to make sure you dont place when pressing a button
         public IEnumerator SetBuildMode()
         {
             yield return new WaitForSeconds(1f);

@@ -90,11 +90,8 @@ namespace GoogleARCore.Examples.Common
             }
             else if (m_DetectedPlane.TrackingState != TrackingState.Tracking)
             {
-                 m_MeshRenderer.enabled = false;
                  return;
             }
-
-            m_MeshRenderer.enabled = true;
 
             _UpdateMeshIfNeeded();
         }
@@ -208,7 +205,10 @@ namespace GoogleARCore.Examples.Common
             m_Mesh.SetTriangles(m_MeshIndices, 0);
             m_Mesh.SetColors(m_MeshColors);
         }
-
+        public void ToggleMesh(bool toggle)
+        {
+            GetComponent<MeshRenderer>().enabled = toggle;
+        }
         private bool _AreVerticesListsEqual(List<Vector3> firstList, List<Vector3> secondList)
         {
             if (firstList.Count != secondList.Count)
