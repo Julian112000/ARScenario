@@ -54,6 +54,8 @@ public abstract class AIBasics : AIStats
     private GameObject WaypointPrefab;
     [SerializeField]
     private LayerMask LineCastLayers;
+    [SerializeField]
+    private GameObject SelectedArrow;
     //Basic Variables
     [Header("Basic Variables")]
     public bool Selected;
@@ -102,6 +104,9 @@ public abstract class AIBasics : AIStats
         linerenderer.SetPosition(0, transform.position);
         //
         Waypoints.Add(transform.position);
+        //
+        Selected = false;
+        TurnOffVisuals();
     }
     //Voids called for in the Awake
     #region Awake Voids
@@ -131,6 +136,9 @@ public abstract class AIBasics : AIStats
     public void PlayMode()
     {
         WantsToMove = true;
+        TurnOffVisuals();
+        aistate = AIStates.GoTowards;
+        Debug.Log("Nice");
     }
     #endregion
     //The update that is inherited by the child class, Every Unit with an AI element will have this update
@@ -634,6 +642,7 @@ public abstract class AIBasics : AIStats
             waypoint.gameObject.SetActive(false);
         }
         linerenderer.enabled = false;
+        SelectedArrow.SetActive(false);
     }
     //Void to turn on the visuals again
     public void TurnOnVisuals()
@@ -644,6 +653,7 @@ public abstract class AIBasics : AIStats
             waypoint.gameObject.SetActive(true);
         }
         linerenderer.enabled = true;
+        SelectedArrow.SetActive(true);
     }
     #endregion
 }

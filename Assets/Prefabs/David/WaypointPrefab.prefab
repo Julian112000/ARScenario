@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 3736889025906442718}
   - component: {fileID: 5651385781265326317}
   m_Layer: 9
-  m_Name: Waypoint
+  m_Name: WaypointPrefab
   m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 4077880475681992460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.31200477, y: 0.30483454, z: 1.8149983}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4077880475681633066}
   - {fileID: 4077880475681633064}

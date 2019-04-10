@@ -163,6 +163,11 @@
                 StartCoroutine(SkipSelect());
                 CanClick = false;
             }
+            else if (hit.collider.gameObject.tag == "StartWaypointing") //Om het selecten te skippen, TIJDELIJK.
+            {
+                StartCoroutine(StartWaypointing());
+                CanClick = false;
+            }
         }
         #region All Enumerators
 
@@ -205,7 +210,7 @@
             placeModeUI.SetActive(true);
 
             //
-            ARController.controllerstate = ControllerState.Default;
+            ARController.controllerstate = ControllerState.Placing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -217,7 +222,7 @@
             buildModeUI.SetActive(true);
 
             //
-            ARController.controllerstate = ControllerState.Editing;
+            ARController.controllerstate = ControllerState.Default;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -256,6 +261,7 @@
             placeModeUI.SetActive(false);
             rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
+            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -319,8 +325,8 @@
         public IEnumerator ConfirmWaypoint()
         {
             waypointPlacementUI.SetActive(false);
-            mainModeUI.SetActive(true);
-            ARController.controllerstate = ControllerState.Default;
+            behaveModeUI.SetActive(true);
+            ARController.controllerstate = ControllerState.FullyEditingObject;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }
@@ -329,6 +335,14 @@
             changeScanANI.CloseScanningANI();
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
+            yield return new WaitForSeconds(0.25f);
+            CanClick = true;
+        }
+        public IEnumerator StartWaypointing()
+        {
+            behaveModeUI.SetActive(false);
+            waypointPlacementUI.SetActive(true);
+            ARController.controllerstate = ControllerState.Waypointing;
             yield return new WaitForSeconds(0.25f);
             CanClick = true;
         }

@@ -28,6 +28,8 @@ TagManager:
   - NewScenario
   - LoadScenario
   - None
+  - Waypoint
+  - StartWaypointing
   layers:
   - Default
   - TransparentFX
@@ -38,7 +40,7 @@ TagManager:
   - 
   - 
   - Unit
-  - 
+  - Waypoint
   - 
   - 
   - 
