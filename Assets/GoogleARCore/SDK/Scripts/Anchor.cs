@@ -95,7 +95,7 @@ namespace GoogleARCore
         /// <summary>
         /// The Unity Update method.
         /// </summary>
-        private void Update()
+        public void Update()
         {
             if (m_NativeHandle == IntPtr.Zero)
             {
@@ -109,10 +109,6 @@ namespace GoogleARCore
                 return;
             }
 
-            var pose = m_NativeSession.AnchorApi.GetPose(m_NativeHandle);
-            transform.position = pose.position;
-            transform.rotation = pose.rotation;
-
             TrackingState currentFrameTrackingState = TrackingState;
             if (m_LastFrameTrackingState != currentFrameTrackingState)
             {
@@ -124,6 +120,10 @@ namespace GoogleARCore
 
                 m_LastFrameTrackingState = currentFrameTrackingState;
             }
+
+            var pose = m_NativeSession.AnchorApi.GetPose(m_NativeHandle);
+            transform.position = pose.position;
+            transform.rotation = pose.rotation;
         }
 
         private void OnDestroy()

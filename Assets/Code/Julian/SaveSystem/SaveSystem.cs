@@ -7,13 +7,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveScenario(GameObject sceneinfo, int amount)
+    public static void SaveScenario(GameObject sceneinfo, int amount, string lat, string lon)
     {
+        //Create new SceneStats and apply the data
         SceneStats mapstats = new SceneStats(sceneinfo);
-        SaveDatabase.Instance.OnSaveScenario(mapstats.scenarioName, DateTime.Now.ToString(), amount);
+        SaveDatabase.Instance.OnSaveScenario(mapstats.scenarioName, DateTime.Now.ToString(), amount, lat, lon);
     }
     public static void LoadScenarios(GameObject sceneinfo, int number)
     {
+        //Load all UI panels (standard number = 100)
         for (int i = 0; i < number; i++)
         {
             SaveDatabase.Instance.OnSelectScenario(i);
@@ -21,8 +23,9 @@ public static class SaveSystem
     }
     public static void SaveStandardUnit(GameObject unit, int number, int scenenumber)
     {
+        //Create new StandardUnitData script and add data to it
         StandardUnitData unitdata = new StandardUnitData(unit);
-        SaveDatabase.Instance.OnSaveUnit(unitdata.m_UnitId, scenenumber, unitdata.m_UnitName, unitdata.m_Position, unitdata.m_Rotation, unitdata.m_Scale, number);
+        SaveDatabase.Instance.OnSaveUnit(unitdata.m_UnitId, scenenumber, unitdata.m_UnitName, unitdata.m_Latitude, unitdata.m_Longitude, unitdata.m_PosY, unitdata.m_Rotation, unitdata.m_Scale, number);
     }
     [Serializable]
     public class SceneStats
@@ -35,8 +38,11 @@ public static class SaveSystem
         public SceneStats(GameObject sceneinfo)
         {
             SceneManager manager = sceneinfo.GetComponent<SceneManager>();
+            //Take over the id
             scenarioID = manager.m_CurrentID;
+            //Take over the name of the scenario
             scenarioName = manager.m_CurrentName;
+            //Take over the last updated time
             scenarioTime = manager.m_CurrentTime;
         }
     }
@@ -45,25 +51,28 @@ public static class SaveSystem
     {
         public int m_UnitId;
         public string m_UnitName;
-        public float[] m_Position;
+        public string m_Latitude;
+        public string m_Longitude;
+        public string m_PosY;
         public float[] m_Rotation;
         public float[] m_Scale;
 
         public StandardUnitData(GameObject unit)
         {
-            m_UnitId = unit.GetComponent<SaveData>().GetID();
+            SaveData data = unit.GetComponent<SaveData>();
+
+            m_UnitId = data.GetID();
             //Take over the name
             m_UnitName = unit.name;
             //Take over the position
-            m_Position = new float[3];
-            m_Position[0] = unit.transform.position.x;
-            m_Position[1] = unit.transform.position.y;
-            m_Position[2] = unit.transform.position.z;
+            m_Latitude = data.latitude.ToString();
+            m_Longitude = data.longitude.ToString();
+            m_PosY = data.GetPosition().y.ToString("0.000");
             //Take over the rotation
             m_Rotation = new float[3];
-            m_Rotation[0] = unit.transform.localEulerAngles.x;
-            m_Rotation[1] = unit.transform.localEulerAngles.y;
-            m_Rotation[2] = unit.transform.localEulerAngles.z;
+            m_Rotation[0] = data.GetEulerAngles().x;
+            m_Rotation[1] = data.GetEulerAngles().y;
+            m_Rotation[2] = data.GetEulerAngles().z;
             //Take over the scale
             m_Scale = new float[3];
             m_Scale[0] = unit.transform.localScale.x;

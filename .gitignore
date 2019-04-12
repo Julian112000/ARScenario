@@ -42,3 +42,23 @@ Assets/GoogleARCore/SDK/InstantPreview/Scripts/InstantPreview\.apk\.meta
 Assets/Models/David/LineRenderMat\.mat\.meta
 
 Assets/Scenes/David/ARBuildTest 1\.unity\.meta
+
+ProjectSettings/EditorBuildSettings\.asset
+
+Assets/Prefabs/Max/ARCore Device\.prefab
+
+Assets/Prefabs/Max/ARCore Device\.prefab\.meta
+
+Assets/Prefabs/David/Soldier\.prefab
+
+Assets/Prefabs/David/Soldier\.prefab\.meta
+
+Assets/Prefabs/Julian/ARCore Device 1\.prefab
+
+Assets/Prefabs/Julian/ARCore Device 1\.prefab\.meta
+
+Assets/Prefabs/Julian/ArController\.prefab
+
+Assets/Prefabs/Julian/ArController\.prefab\.meta
+
+Assets/Sprites/Final\.meta
