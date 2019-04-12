@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
   m_Name: Soldaat
   m_EditorClassIdentifier: 
-  name: Soldaat
-  description: De beschrijving van de Soldaat.
+  name: Soldier
+  name_Dutch: Soldaat
+  description: The description for the soldier.
+  description_Dutch: De beschrijving van de Soldaat.
   artwork: {fileID: 21300000, guid: ab12bfa6f267a764c8297f67cd1fa8ca, type: 3}
   ConnectedModel: {fileID: 5014541577067834460, guid: 22606dad577d4674b8a2bcd00f25c33f,
     type: 3}
+  ConnectedShowCase: {fileID: 0}

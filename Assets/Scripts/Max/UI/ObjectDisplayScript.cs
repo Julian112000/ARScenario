@@ -1,25 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class ObjectDisplayScript : MonoBehaviour
+﻿namespace GoogleARCore.Examples.HelloAR
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using GoogleARCore;
+    using GoogleARCore.Examples.Common;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-    public MainObjectScript UIObject;
+#if UNITY_EDITOR
+    // Set up touch input propagation while using Instant Preview in the editor.
+    using Input = InstantPreviewInput;
+#endif
+    public class ObjectDisplayScript : MonoBehaviour
+    {
 
-    public Text nameText;
-    public Text descriptionText;
+        public MainObjectScript UIObject;
 
-    public Image artworkImage;
+        public Text nameText;
+        public Text descriptionText;
+
+        public Image artworkImage;
+
+        public Renderer showCase;
+
+        public TextTranslate translate;
 
     void Update()
-    {
-        nameText.text = UIObject.name;
-        descriptionText.text = UIObject.description;
+        {
 
-        artworkImage.sprite = UIObject.artwork;
+            artworkImage.sprite = UIObject.artwork;
+
+            showCase.material.mainTexture = UIObject.ConnectedShowCase;
+
+            if (translate.dutchLang)
+            {
+                descriptionText.text = UIObject.description_Dutch;
+                nameText.text = UIObject.name_Dutch;
+            }
+            else if (translate.englishLang)
+            {
+                descriptionText.text = UIObject.description;
+                nameText.text = UIObject.name;
+            }
+
+        }
+
+
     }
-
-
 }

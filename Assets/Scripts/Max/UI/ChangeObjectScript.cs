@@ -17,7 +17,9 @@
 
         public Camera mainCamera;
 
-        
+        public TextTranslate translate;
+
+
         public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI;
 
         [Header("UIModes")]
@@ -167,6 +169,18 @@
             {
                 StartCoroutine(StartWaypointing());
                 CanClick = false;
+            }
+            else if (hit.collider.gameObject.tag == "DutchLang")
+            {
+                Debug.Log("Dutch");
+                translate.dutchLang = true;
+                translate.englishLang = false;
+            }
+            else if (hit.collider.gameObject.tag == "EnglishLang")
+            {
+                Debug.Log("English");
+                translate.englishLang = true;
+                translate.dutchLang = false;
             }
         }
         #region All Enumerators

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
-  name: SniperToren
-  description: De beschrijvijng van de toren.
+  name: SniperTower
+  name_Dutch: SniperToren
+  description: The description for the sniper tower.
+  description_Dutch: De beschrijvijng van de toren.
   artwork: {fileID: 21300000, guid: 189e2641d5eb6cc458a3e481298eb9d7, type: 3}
-  ConnectedModel: {fileID: 100000, guid: 77db87e6d0bdfc041b711f5fc34a5b58, type: 3}
+  ConnectedModel: {fileID: 100000, guid: e43f2cf81459c2841998326de33f0373, type: 3}
+  ConnectedShowCase: {fileID: 8400000, guid: 6cb1ce35698eb2544b5b65a8c7970ecf, type: 2}

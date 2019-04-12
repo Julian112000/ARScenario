@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/David/ARBuildTest.unity
     guid: 865d74d7cfccea84ea37ce12a01183cf
   - enabled: 0
+    path: Assets/Scenes/David/3DObject scene.unity
+    guid: 6ed0782ae0ee8de49b97ee08774f3f84
+  - enabled: 0
     path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: 5eb72b68a4d60364db86707a46814044
   m_configObjects: {}

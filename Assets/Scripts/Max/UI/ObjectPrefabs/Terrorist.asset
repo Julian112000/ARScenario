@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Terrorist
   m_EditorClassIdentifier: 
   name: Terrorist
-  description: De beschrijving van de Terrorist
+  name_Dutch: Terrorist
+  description: The description for the terrorist.
+  description_Dutch: De beschrijving van de Terrorist
   artwork: {fileID: 21300000, guid: 86c0e9679504e3f4a950bedf58f67d3e, type: 3}
   ConnectedModel: {fileID: 749590870397113098, guid: fc25a8c0709e9b445bb9a92f0f83aaf5,
     type: 3}
+  ConnectedShowCase: {fileID: 8400000, guid: b19f66de108e22044bffea189f956d99, type: 2}

@@ -30,6 +30,10 @@ TagManager:
   - None
   - Waypoint
   - StartWaypointing
+  - EnglishLang
+  - DutchLang
+  - SettingsMain
+  - CloseSettings
   layers:
   - Default
   - TransparentFX

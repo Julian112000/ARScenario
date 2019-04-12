@@ -16,13 +16,28 @@
 
         public Camera mainCamera;
 
+
+        [Header("Buttons")]
         [SerializeField]
         private GameObject newOverlay;
         [SerializeField]
         private GameObject loadOverlay;
+        [SerializeField]
+        private GameObject settingsOverlay;
 
+        [Header("Screens")]
+        [SerializeField]
+        private GameObject settings;
+        [SerializeField]
+        private GameObject mainMenu;
+
+        [Header("Animator")]
         [SerializeField]
         private Animator animator;
+        [SerializeField]
+        private Animator settingsAni;
+        [SerializeField]
+        private Animator mainAni;
 
         void Update()
         {
@@ -44,6 +59,11 @@
                             {
                                 loadOverlay.SetActive(false);
                             }
+                            else if (hit.collider.tag == "SettingsMain")
+                            {
+                                settingsOverlay.SetActive(false);
+                            }
+
                             break;
 
                             case TouchPhase.Ended:
@@ -57,10 +77,21 @@
                                 Debug.Log("Loaded saved Scenario");
                                 loadOverlay.SetActive(true);
                             }
-                            else if(hit.collider.gameObject.tag != "NewScenario" && hit.collider.gameObject.tag != "LoadScenario") //Set buttons back to normal
+                            else if (hit.collider.gameObject.tag == "SettingsMain") //Open Settings
+                            {
+                                settings.SetActive(true);
+                                mainAni.SetTrigger("CloseMainMenu");
+                            }
+                            else if (hit.collider.gameObject.tag == "CloseSettings") //CloseSettings
+                            {
+                                mainMenu.SetActive(true);
+                                settingsAni.SetTrigger("CloseSettings");
+                            }
+                            else if(hit.collider.gameObject.tag != "NewScenario" && hit.collider.gameObject.tag != "LoadScenario" && hit.collider.gameObject.tag != "SettingsMain") //Set buttons back to normal
                             {
                                 newOverlay.SetActive(true);
                                 loadOverlay.SetActive(true);
+                                settingsOverlay.SetActive(true);
                             }
                             break;
                         }
