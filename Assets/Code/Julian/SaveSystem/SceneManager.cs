@@ -99,6 +99,14 @@ public class SceneManager : MonoBehaviour
                 }
             }
         }
+        float lastlat = PlayerPrefs.GetFloat("LastLat");
+        float lastlon = PlayerPrefs.GetFloat("LastLon");
+        _targetPosition = _map.Root.TransformPoint(Conversions.GeoToWorldPosition(lastlat, lastlon, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz());
+        for (int i = 0; i < m_MovedObjects.Length; i++)
+        {
+            m_MovedObjects[i].transform.position = _targetPosition;
+        }
+
     }
 
     public void Load(int number, string name, string time, int amount, float latitude, float longitude)
@@ -161,7 +169,7 @@ public class SceneManager : MonoBehaviour
         Unit.transform.localEulerAngles = new Vector3(rotx, roty, rotz);
         Unit.transform.localScale = new Vector3(scalex, scaley, scalez);
 
-        Vector3 position = _targetPosition + new Vector3((float)posx, posy, (float)posz);
+        Vector3 position = (m_MovedObjects[0].position + new Vector3((float)posx, posy, (float)posz));
         Unit.transform.position = position;
 
         Pose pose = new Pose(position, Quaternion.identity);
@@ -206,6 +214,9 @@ public class SceneManager : MonoBehaviour
         double lon = deviceLocation._currentLocation.LatitudeLongitude.y;
         m_Latitude = lat;
         m_Longitude = lon;
+        Debug.Log(m_Latitude + " " + m_Longitude);
+        PlayerPrefs.SetFloat("LastLat", (float)lat);
+        PlayerPrefs.SetFloat("LastLon", (float)lat);
 
         SaveSystem.SaveScenario(this.gameObject, m_UnitRealtime.Count, lat.ToString(), lon.ToString());
         Debug.LogWarning("SCENE SAVED...");
