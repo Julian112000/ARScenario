@@ -9,7 +9,12 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: pCube34
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AK_47
+    second: {fileID: 2100000, guid: 568fcc2c3f347344c909f181f0b47d98, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

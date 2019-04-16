@@ -7,16 +7,23 @@ public class Vehicle : AIBasics
     [Header("Vehicle Related")]
     [SerializeField]
     private GameObject AimingObject;
+    [SerializeField]
+    private ParticleSystem BrokenVehicleSmoke;
+    [SerializeField]
+    private ParticleSystem Muzzleflash;
 
     public override void Awake()
     {
         base.Awake();
-        unittype = UnitType.Fennek;
     }
 
     public override void Update()
     {
         base.Update();
+        if(aistate == AIStates.Dead)
+        {
+            BrokenVehicleSmoke.Play();
+        }
     }
     public override void LateUpdate()
     {
@@ -75,6 +82,10 @@ public class Vehicle : AIBasics
     private void StandStill()
     {
         //ResetParameters(animator);
+        if(Waypoints.Count > 1)
+        {
+            aistate = AIStates.GoTowards;
+        }
     }
     #endregion
     //Everything related to the Walktowards state
@@ -91,13 +102,22 @@ public class Vehicle : AIBasics
     {
         OnlyYLook(LookingObject, PointToAimAt);
         TrackTarget(FoundTargetScript.VisionPoint.position);
+        ShootDelayTimer += Time.deltaTime;
+        if (ShootDelayTimer >= FireRate)
+        {
+            Shoot(FoundTargetScript, Damage, Accuracy, Muzzleflash);
+            Debug.Log("Shot");
+            ShootDelayTimer = 0;
+        }
+        //Shoot every "So called seconds"
+
+        //Shoot(FoundTargetScript, Damage, Accuracy);
     }
     private void TrackTarget(Vector3 Targetpos)
     {
         OnlyYLook(LookingObject, Targetpos);
         AimingObject.transform.LookAt(Targetpos);
         //
-
         //Debug line
         Debug.DrawLine(VisionPoint.position, Targetpos, Color.green);
         //Check if target is still in range
@@ -110,6 +130,13 @@ public class Vehicle : AIBasics
     private void TargetAndMove()
     {
         TrackTarget(FoundTargetScript.VisionPoint.position);
+        ShootDelayTimer += Time.deltaTime;
+        if (ShootDelayTimer >= FireRate)
+        {
+            Shoot(FoundTargetScript, Damage, Accuracy, Muzzleflash);
+            Debug.Log("Shot");
+            ShootDelayTimer = 0;
+        }
     }
     #endregion
     ///

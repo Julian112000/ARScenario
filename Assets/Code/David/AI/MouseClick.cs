@@ -12,7 +12,7 @@ public class MouseClick : MonoBehaviour
     [SerializeField]
     LayerMask WaypointLayer;
     [SerializeField]
-    Fennek prefab;
+    AIBasics prefab;
     [SerializeField]
     WaypointScript waypoint;
     void Update()
@@ -38,7 +38,7 @@ public class MouseClick : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out hit, 100.0f, unitlayer))
                     {
-                        prefab = hit.collider.gameObject.GetComponent<Fennek>();
+                        prefab = hit.collider.gameObject.GetComponent<AIBasics>();
                         prefab.Selected = true;
                         prefab.TurnOnVisuals();
                         //prefab.PlaceWayPoint(hit.point);

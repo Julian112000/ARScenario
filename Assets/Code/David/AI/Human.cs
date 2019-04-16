@@ -2,33 +2,82 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponType
+{
+    AssaultRifle,
+    RPG,
+    Sniper
+}
+
 public class Human : AIBasics
 {
     [Header("Human Related")]
     [SerializeField]
     private Vector3 ChestOffset;
+    [SerializeField]
+    private bool UsingIkHandling = true;
+    [Header("Weapon Related")]
+    [SerializeField]
+    private WeaponType weaponType = WeaponType.AssaultRifle;
+    [SerializeField]
+    private List<GameObject> Weapons;
+    [SerializeField]
+    private List<int> WeaponDamageValues;
+    [SerializeField]
+    private List<float> WeaponFireRates;
+    [SerializeField]
+    private List<ParticleSystem> WeaponMuzzleFlashes;
+    [SerializeField]
+    private List<Transform> IkPositions;
+    [SerializeField]
+    private GameObject CurrentWeapon;
+    [Header("RPG Related")]
+    [SerializeField]
+    private RPGBulletScript RpgBullet;
 
     public override void Awake()
     {
         base.Awake();
         unittype = UnitType.Human;
+        WeaponUpdate();
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
+        //WeaponUpdate();
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //PlayExplosionImpact();
+            //MuzzleFlash.Flash();
             WantsToMove = true;
-        }
+        } 
+           
     }
     public override void LateUpdate()
     {
         base.LateUpdate();
         ActionUpdate();
     }
-
+    //
+    private void WeaponUpdate()
+    {
+        for (int i = 0; i < Weapons.Count; i++)
+        {
+            if(i == (int)weaponType)
+            {
+                //Debug.Log("Ok");
+                if (CurrentWeapon)
+                {
+                    CurrentWeapon.SetActive(false);
+                }
+                Weapons[i].SetActive(true);
+                CurrentWeapon = Weapons[i];
+                Damage = WeaponDamageValues[i];
+            }
+        }
+    }
     //Actions made for a human (not a vechicle)
     //Action Voids
     #region Actions
@@ -90,6 +139,10 @@ public class Human : AIBasics
     private void StandStill()
     {
         //ResetParameters(animator);
+        if (Waypoints.Count > 1)
+        {
+            aistate = AIStates.GoTowards;
+        }
     }
     #endregion
     //Everything related to the Walktowards state
@@ -106,6 +159,13 @@ public class Human : AIBasics
     {
         animator.SetBool("Aiming", true);
         TrackTarget(FoundTargetScript.VisionPoint.position);
+        ShootDelayTimer += Time.deltaTime;
+        if (ShootDelayTimer >= WeaponFireRates[(int)weaponType])
+        {
+            Shoot(FoundTargetScript, Damage, Accuracy, WeaponMuzzleFlashes[(int)weaponType], weaponType, RpgBullet);
+            Debug.Log("Shot");
+            ShootDelayTimer = 0;
+        }
     }
     private void TrackTarget(Vector3 Targetpos)
     {
@@ -127,8 +187,37 @@ public class Human : AIBasics
     private void TargetAndMove()
     {
         TrackTarget(FoundTargetScript.VisionPoint.position);
+        ShootDelayTimer += Time.deltaTime;
+        if (ShootDelayTimer >= WeaponFireRates[(int)weaponType])
+        {
+            Shoot(FoundTargetScript, Damage, Accuracy, WeaponMuzzleFlashes[(int)weaponType], weaponType, RpgBullet);
+            Debug.Log("Shot");
+            ShootDelayTimer = 0;
+        }
     }
     #endregion
     ///
+    #endregion
+    //Ik handling so that the hand is positioned at the gun
+    #region IkHandling
+
+    void OnAnimatorIK()
+    {
+        if (UsingIkHandling)
+        {
+            if (animator)
+            {
+                // Set the right hand target position and rotation, if one has been assigned
+                if (IkPositions[(int)weaponType] != null)
+                {
+                    animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+                    animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+                    animator.SetIKPosition(AvatarIKGoal.LeftHand, IkPositions[(int)weaponType].transform.position);
+                    animator.SetIKRotation(AvatarIKGoal.LeftHand, IkPositions[(int)weaponType].transform.rotation);
+                }
+            }
+        }
+    }
+
     #endregion
 }

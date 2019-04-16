@@ -20,7 +20,8 @@ public enum AIStates
     GoTowards,
     Patrol,
     TargetEnemy,
-    TargetAndMove
+    TargetAndMove,
+    Dead
 }
 public enum AIBehaviour
 {
@@ -56,26 +57,26 @@ public abstract class AIBasics : AIStats
     private LayerMask LineCastLayers;
     [SerializeField]
     private GameObject SelectedArrow;
+    [SerializeField]
+    private List<ParticleSystem> HitParticles;
+    [SerializeField]
+    private List<ParticleSystem> ExplosionParticles;
     //Basic Variables
     [Header("Basic Variables")]
     public bool Selected;
     [SerializeField]
-    private int ViewingAngle = 90;
-    //Stat based values
-    [SerializeField]
-    private float VisionRange = 15f;
-    [SerializeField]
-    private float MovementSpeed = 0.75f;
-    [SerializeField]
     protected GameObject FoundTarget;
     protected AIBasics FoundTargetScript;
+    protected float ShootDelayTimer;
+    [SerializeField]
+    protected bool PlayModeOn = false;
     //Variables For when the unit is selected to aim at a certain point
     //The offset when aiming (this is because the animation might not always work)
     protected Vector3 PointToAimAt;
     //Variables Based for the waypoint system
     [Header("Waypoint related")]
     [SerializeField]
-    private List<Vector3> Waypoints = new List<Vector3>();
+    protected List<Vector3> Waypoints = new List<Vector3>();
     [SerializeField]
     private List<WaypointScript> waypointscripts = new List<WaypointScript>();
     [SerializeField]
@@ -137,7 +138,7 @@ public abstract class AIBasics : AIStats
     {
         WantsToMove = true;
         TurnOffVisuals();
-        aistate = AIStates.GoTowards;
+        PlayModeOn = true;
         Debug.Log("Nice");
     }
     #endregion
@@ -145,8 +146,11 @@ public abstract class AIBasics : AIStats
     public virtual void Update()
     {
         //Different Types of Updates (peek definition of update to see what it does)
-        VisionUpdate();
-        NavigationUpdate();
+        if(aistate != AIStates.Dead)
+        {  
+            VisionUpdate();
+            NavigationUpdate();
+        }
     }
     public virtual void LateUpdate()
     {
@@ -169,29 +173,34 @@ public abstract class AIBasics : AIStats
     //This void, iterates through the list of enemies and friendlys (depending on type of the unit) and checks if they are in range 
     private void CheckWhoIsNear()
     {
-        AIBasics targetAIscript;
         switch (unitside)
         {
             case UnitSide.Terrorist:
                 for (int i = 0; i < AIsceneInfo.Friendlys.Count; i++)
                 {
-                    float DistanceBetween = Vector3.Distance(transform.position, AIsceneInfo.Friendlys[i].transform.position);
-
-                    if (DistanceBetween <= VisionRange)
+                    if (AIsceneInfo.FriendlysScripts[i].aistate != AIStates.Dead)
                     {
-                        Debug.Log("Friendly In Range");
-                        CheckAngle(AIsceneInfo.Friendlys[i], AIsceneInfo.FriendlysScripts[i]);
+                        float DistanceBetween = Vector3.Distance(transform.position, AIsceneInfo.Friendlys[i].transform.position);
+
+                        if (DistanceBetween <= VisionRange)
+                        {
+                            Debug.Log("Friendly In Range");
+                            CheckAngle(AIsceneInfo.Friendlys[i], AIsceneInfo.FriendlysScripts[i]);
+                        }
                     }
                 }
                 break;
             case UnitSide.Friendly:
                 for (int i = 0; i < AIsceneInfo.Enemies.Count; i++)
                 {
-                    float DistanceBetween = Vector3.Distance(transform.position, AIsceneInfo.Enemies[i].transform.position);
-                    if (DistanceBetween <= VisionRange)
+                    if (AIsceneInfo.EnemiesScripts[i].aistate != AIStates.Dead)
                     {
-                        Debug.Log("Enemy In Range");
-                        CheckAngle(AIsceneInfo.Enemies[i], AIsceneInfo.EnemiesScripts[i]);
+                        float DistanceBetween = Vector3.Distance(transform.position, AIsceneInfo.Enemies[i].transform.position);
+                        if (DistanceBetween <= VisionRange)
+                        {
+                            Debug.Log("Enemy In Range");
+                            CheckAngle(AIsceneInfo.Enemies[i], AIsceneInfo.EnemiesScripts[i]);
+                        }
                     }
                 }
                 break;
@@ -281,7 +290,7 @@ public abstract class AIBasics : AIStats
         }
 
     }
-    private void ResetTarget()
+    public void ResetTarget()
     {
         switch (aistate)
         {
@@ -289,7 +298,10 @@ public abstract class AIBasics : AIStats
                 aistate = AIStates.StandStill;
                 break;
             case AIStates.TargetAndMove:
-                aistate = AIStates.GoTowards;
+                if(Waypoints.Count > 1)
+                {
+                    aistate = AIStates.GoTowards;
+                }
                 break;
             default:
                 break;
@@ -320,8 +332,8 @@ public abstract class AIBasics : AIStats
                     case AIStates.TargetAndMove:
                         TargetAndMoveUpdate();
                         break;
-                    default:
-                        Debug.Log("Has Waypoints but no movement choice");
+                    case AIStates.Dead:
+                        WantsToMove = false;
                         break;
                 }
             }
@@ -392,6 +404,14 @@ public abstract class AIBasics : AIStats
         else
         {
             ClearWaypoints();
+            switch (aistate)
+            {
+                case AIStates.TargetAndMove:
+                    aistate = AIStates.TargetEnemy;
+                    break;
+                default:
+                    break;
+            }
         }
     }
     //Void that is almost the same as navigate throughpath but it resets and repeats the process when at the end
@@ -442,10 +462,13 @@ public abstract class AIBasics : AIStats
             case AIStates.TargetAndMove:
                 animator.SetBool("Aiming", true);
                 animator.SetBool("AimWalk", false);
+                aistate = AIStates.TargetEnemy;
                 break;
             default:
                 animator.SetBool("Walking", false);
                 animator.SetBool("AimWalk", false);
+                aistate = AIStates.StandStill;
+                //Debug.Log("HAPPEND");
                 break;
         }
         Debug.Log("Waypoints Cleared!");
@@ -501,7 +524,7 @@ public abstract class AIBasics : AIStats
     //Combat related voids for the AI
     #region Combat Related
     //Void called from the script damaging this object, parameters are given and damage is decided on given parameters
-    public void TakeDamage(UnitType ShooterType, int ShooterDamage)
+    public void TakeDamage(UnitType ShooterType, AIBasics Shooter, int ShooterDamage)
     {
         switch (unittype)
         {
@@ -509,10 +532,19 @@ public abstract class AIBasics : AIStats
                 switch (ShooterType)
                 {
                     case UnitType.Human:
-                        Debug.Log("Human Shot Human");
+                        RemoveHealth(ShooterDamage, Shooter);
+                        PlayBulletImpact();
+                        Debug.Log("Human Shot Human, Default Damage done");
                         break;
                     case UnitType.Tank:
-                        Debug.Log("Tank Shot Human");
+                        Debug.Log("Tank Shot Human, Human got obliterated");
+                        PlayExplosionImpact();
+                        RemoveHealth(Health, Shooter);
+                        break;
+                    case UnitType.Fennek:
+                        Debug.Log("Fennek Shot human, Human Died");
+                        PlayBulletImpact();
+                        RemoveHealth(Health, Shooter);
                         break;
                     default:
                         break;
@@ -526,6 +558,33 @@ public abstract class AIBasics : AIStats
                         break;
                     case UnitType.Tank:
                         Debug.Log("Tank Shot Tank");
+                        RemoveHealth(ShooterDamage, Shooter);
+                        break;
+                    case UnitType.Fennek:
+                        Debug.Log("Fennek shot Tank, Tank took 1/5 of the actual damage");
+                        RemoveHealth(ShooterDamage / 5, Shooter);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case UnitType.Fennek:
+                switch (ShooterType)
+                {
+                    case UnitType.Human:
+                        Debug.Log("Human Shot Fennek, 1/10 of damage done to fennek");
+                        RemoveHealth(ShooterDamage / 10, Shooter);
+                        PlayBulletImpact();
+                        break;
+                    case UnitType.Tank:
+                        Debug.Log("Tank Shot Fennek, Fennek blows up");
+                        RemoveHealth(Health, Shooter);
+                        PlayExplosionImpact();
+                        break;
+                    case UnitType.Fennek:
+                        Debug.Log("Fennek shot Fennek, Fennek took full damage");
+                        RemoveHealth(ShooterDamage, Shooter);
+                        PlayBulletImpact();
                         break;
                     default:
                         break;
@@ -535,15 +594,113 @@ public abstract class AIBasics : AIStats
                 break;
         }
     }
+    //
+    //
+    #region particlePlay Voids
+    
+    private void PlayBulletImpact()
+    {
+        int ParticleToPlay = Random.Range(0, HitParticles.Count);
+        for (int i = 0; i < HitParticles.Count; i++)
+        {
+            if (i == ParticleToPlay)
+            {
+                HitParticles[i].Play();
+            }
+        }
+    }
+    public void PlayExplosionImpact()
+    {
+        int ParticleToPlay = Random.Range(0, ExplosionParticles.Count);
+        for (int i = 0; i < ExplosionParticles.Count; i++)
+        {
+            if (i == ParticleToPlay)
+            {
+                ExplosionParticles[i].Play();
+            }
+        }
+    }
+    //
+    
+    #endregion
     //Actual removehealth this gets called inside the takedamage void
-    private void RemoveHealth(int RemoveAmount)
+    private void RemoveHealth(int RemoveAmount, AIBasics Shooter)
     {
         Health = Health - RemoveAmount;
+        if(Health <= 0)
+        {
+            ResetParameters(animator);
+            animator.SetTrigger("Dead");
+            aistate = AIStates.Dead;
+            Shooter.ResetTarget();
+            if(Waypoints.Count > 0)
+            {
+                Waypoints.Clear();
+            }
+            Debug.Log("Died");
+            //
+            Health = 0;
+        }
+
+
     }
     //Shoot void this is a General shoot void for every unit Parameters decide what ammo and damage is linked to the shoot
-    private void Shoot()
+    protected void Shoot(AIBasics Target, int Damage, int HitChancePercentage, ParticleSystem MuzzleFlash)
     {
+        MuzzleFlash.Play();
+        //
+        int Hitchance = Random.Range(0, 100);
+        if (Hitchance <= HitChancePercentage)
+        {
+            Target.TakeDamage(unittype, this, Damage);
+        }
+        else
+        {
+            Debug.Log("Shot Fired, but target missed");
+        }
 
+    }
+    protected void Shoot(AIBasics Target, int Damage, int HitChancePercentage, ParticleSystem MuzzleFlash, WeaponType weapontype, RPGBulletScript RPGBullet)
+    {
+        int Hitchance = Random.Range(0, 100);
+        switch (weapontype)
+        {
+            case WeaponType.AssaultRifle:
+                if (Hitchance <= HitChancePercentage)
+                {
+                    Target.TakeDamage(unittype, this, Damage);
+                }
+                else
+                {
+                    Debug.Log("Shot Fired, but target missed");
+                }
+                break;
+            case WeaponType.RPG:
+                RPGBullet.CanFly = true;
+                RPGBullet.Target = Target;
+                break;
+            case WeaponType.Sniper:
+                if (Hitchance <= HitChancePercentage)
+                {
+                    Target.TakeDamage(unittype, this, Damage);
+                }
+                else
+                {
+                    Debug.Log("Shot Fired, but target missed");
+                }
+                break;
+            default:
+                break;
+        }
+        //
+        MuzzleFlash.Play();
+        //
+
+    }
+    //
+    public void RPGDoDamage()
+    {
+        FoundTargetScript.TakeDamage(unittype, this, Damage);
     }
     //This void decides how to react on finding an enemy this is based on the Behaviour enum
     private void EnemySpotted()
@@ -580,7 +737,14 @@ public abstract class AIBasics : AIStats
     //The Attack void, this makes it so when spotting an enemy the AI instantly starts aiming and shooting at it
     private void Attack()
     {
-        aistate = AIStates.TargetAndMove;
+        if(Waypoints.Count > 1)
+        {
+            aistate = AIStates.TargetAndMove;
+        }
+        else
+        {
+            aistate = AIStates.TargetEnemy;
+        }
         ResetParameters(animator);
     }
     private void Destroy()
