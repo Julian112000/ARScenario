@@ -7,11 +7,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveScenario(GameObject sceneinfo, int amount, string lat, string lon)
+    public static void SaveScenario(GameObject sceneinfo, int amount, string lat, string lon, string isnew)
     {
         //Create new SceneStats and apply the data
         SceneStats mapstats = new SceneStats(sceneinfo);
-        SaveDatabase.Instance.OnSaveScenario(mapstats.scenarioName, DateTime.Now.ToString(), amount, lat, lon);
+        SaveDatabase.Instance.OnSaveScenario(mapstats.scenarioName, DateTime.Now.ToString(), amount, lat, lon, isnew);
     }
     public static void LoadScenarios(GameObject sceneinfo, int number)
     {
@@ -25,7 +25,7 @@ public static class SaveSystem
     {
         //Create new StandardUnitData script and add data to it
         StandardUnitData unitdata = new StandardUnitData(unit);
-        SaveDatabase.Instance.OnSaveUnit(unitdata.m_UnitId, scenenumber, unitdata.m_UnitName, unitdata.m_Latitude, unitdata.m_Longitude, unitdata.m_PosY, unitdata.m_Rotation, unitdata.m_Scale, number);
+        SaveDatabase.Instance.OnSaveUnit(unitdata.m_UnitId, scenenumber, unitdata.m_UnitName, unitdata.m_Latitude, unitdata.m_Longitude, unitdata.m_Latitude, unitdata.m_Rotation, unitdata.m_Scale, number);
     }
     [Serializable]
     public class SceneStats
@@ -52,8 +52,8 @@ public static class SaveSystem
         public int m_UnitId;
         public string m_UnitName;
         public string m_Latitude;
+        public string m_Luditude;
         public string m_Longitude;
-        public string m_PosY;
         public float[] m_Rotation;
         public float[] m_Scale;
 
@@ -67,7 +67,7 @@ public static class SaveSystem
             //Take over the position
             m_Latitude = data.latitude.ToString();
             m_Longitude = data.longitude.ToString();
-            m_PosY = data.GetPosition().y.ToString("0.000");
+            m_Luditude = data.luditude.ToString();
             //Take over the rotation
             m_Rotation = new float[3];
             m_Rotation[0] = data.GetEulerAngles().x;

@@ -9,13 +9,15 @@ public class SaveData : MonoBehaviour
     private int m_ID;
 
     //Snapped gameobject of the anchor
-    [SerializeField]
-    Vector3 m_SnappedPosition;
+
+    public Vector3 m_SnappedPosition;
 
     [HideInInspector]
-    public double latitude;
+    public float latitude;
     [HideInInspector]
-    public double longitude;
+    public float longitude;
+    [HideInInspector]
+    public float luditude;
 
     private void Start()
     {

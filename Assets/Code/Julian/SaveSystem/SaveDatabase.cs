@@ -25,13 +25,13 @@ public class SaveDatabase : MonoBehaviour
     {
         StartCoroutine(LoadScenarioUI(id));
     }
-    public void OnSaveScenario(string name, string time, int amount, string lat, string lon)
+    public void OnSaveScenario(string name, string time, int amount, string lat, string lon, string isnew)
     {
-        StartCoroutine(SaveScenario(name, time, amount, lat, lon));
+        StartCoroutine(SaveScenario(name, time, amount, lat, lon, isnew));
     }
-    public void OnSaveUnit(int id, int scenenumber, string name, string lat, string lon, string posy, float[] rotation, float[] scale, int newid)
+    public void OnSaveUnit(int id, int scenenumber, string name, string lat, string lon, string lud, float[] rotation, float[] scale, int newid)
     {
-        StartCoroutine(HandleSaveUnitAsync(id, scenenumber, name, lat, lon, posy, rotation, scale, newid));
+        StartCoroutine(HandleSaveUnitAsync(id, scenenumber, name, lat, lon, lud, rotation, scale, newid));
     }
     public void OnUpdateScenario(int amount, int sceneid, string time, string lat, string lon)
     {
@@ -60,10 +60,10 @@ public class SaveDatabase : MonoBehaviour
         form.AddField("timetext", time);
         form.AddField("amountunits", amount);
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         lat = lat.Replace(".", ","); //Replace , to . for the android build if standalone build
         lon = lon.Replace(".", ","); //Replace , to . for the android build if standalone build
-        #endif
+#endif
         form.AddField("latitude", lat);
         form.AddField("longitude", lon);
         //Link to connection php: createapi.php in the database
@@ -90,7 +90,7 @@ public class SaveDatabase : MonoBehaviour
             SceneManager.Instance.SaveStorageData(v1);
         }
     }
-    public IEnumerator HandleSaveUnitAsync(int id, int scenenumber, string name, string lat, string lon, string posy, float[] rotation, float[] scale, int newid)
+    public IEnumerator HandleSaveUnitAsync(int id, int scenenumber, string name, string lat, string lon, string lud, float[] rotation, float[] scale, int newid)
     {
         //Create new WWWForm and add the form data to it
         WWWForm form = new WWWForm();
@@ -100,8 +100,8 @@ public class SaveDatabase : MonoBehaviour
         form.AddField("scenarioid", scenenumber);                   //ID of the scenario linked to it
         form.AddField("unitname", name);                            //Name of the unit
         //Save Position with 5 decimals
-        form.AddField("posx", lat);       
-        form.AddField("posy", posy);
+        form.AddField("posx", lat);
+        form.AddField("posy", lud);
         form.AddField("posz", lon);
         //Save Rotation with 2 decimals
         form.AddField("rotx", rotation[0].ToString("0.00"));
@@ -136,7 +136,7 @@ public class SaveDatabase : MonoBehaviour
             SceneManager.Instance.LoadScenarios(v1, v2, v3);
         }
     }
-    public IEnumerator SaveScenario(string name, string time, int amount, string lat, string lon)
+    public IEnumerator SaveScenario(string name, string time, int amount, string lat, string lon, string isnew)
     {
         //Create new WWWForm and add the form data to it
         WWWForm form = new WWWForm();
@@ -145,12 +145,11 @@ public class SaveDatabase : MonoBehaviour
         WWW www = new WWW(url + "api.php", form);
         yield return www;
         Debug.Log(www.text + "UPDATE");
-        if (www.text == "create")
+        if (!string.IsNullOrEmpty(isnew) || www.text == "create")
         {
-            //No scenarios in database so save scenario as a new data
-            StartCoroutine(HandleSaveAsync(name, time, amount, lat, lon));
+            StartCoroutine(HandleSaveAsync(isnew, time, amount, lat, lon));
         }
-        else if (www.text != "create")
+        else if (string.IsNullOrEmpty(isnew) || www.text != "create")
         {
             //Already same scenario in database so override data
             int v1 = int.Parse(www.text);
@@ -254,7 +253,7 @@ public class SaveDatabase : MonoBehaviour
             float v5 = float.Parse(values[4]);      //Longitude (GPS) of the last saved position in the scenario
 
             //Load scenario with the parameters above
-            SceneManager.Instance.Load(sceneid, v1, v2, v3, v4, v5);
+            SceneManager.Instance.Load(sceneid, v1 /* name */, v2 /* time */, v3 /* amount */, v4 /* latitude */, v5 /* longitude */);
         }
     }
     public IEnumerator DeleteScenario(int sceneid)
