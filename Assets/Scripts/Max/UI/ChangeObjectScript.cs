@@ -5,6 +5,7 @@
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+    using UnityEngine.UI;
 
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
@@ -16,9 +17,6 @@
         public ObjectChangerScript change;
 
         public Camera mainCamera;
-
-        public TextTranslate translate;
-
 
         public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI;
 
@@ -37,18 +35,29 @@
 
         public GameObject selectModeUI;
 
+        public GameObject behaveStatsUI;
+
+        public GameObject behaveEquipmentUI;
+
+        public GameObject behaveReactUI;
+
         [SerializeField]
         private GameObject consoleModeUI;
         [SerializeField]
         private GameObject waypointPlacementUI;
+        [SerializeField]
+        private GameObject loadingModeUI;
 
-        [Header("Object")]
-        public GameObject CurrentSelectedObject;
+        public StatsUIScript BehaveController;
+
+        private Human currentHuman;
+        private AIBasics currentAI;
 
         private bool CanClick = true;
 
         void Update()
         {
+            //Debug.Log(change.currentObject + " Testing");
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -61,162 +70,75 @@
                         switch (touch.phase)
                         {
                             case TouchPhase.Began:
-                                Debug.Log("yeet");
                                 break;
 
                             case TouchPhase.Ended:
-                                Debug.Log("yoot");
-                                HandleAllButtons(hit);
+                                SelfMadeButton button;
+                                button = hit.collider.gameObject.GetComponent<SelfMadeButton>();
+
+                                if(button.myEvent != null)
+                                {
+                                    button.ButtonClicked();
+                                    Debug.Log("Clicked on Selfmade Button");
+                                }
                                 break;
                         }
                     }
                 }
             }
-        }
+            else if (Input.GetMouseButton(0))
+            {
+                var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (CanClick)
+                    {
+                                SelfMadeButton button;
+                                button = hit.collider.gameObject.GetComponent<SelfMadeButton>();
 
-        private void HandleAllButtons(RaycastHit hit)
-        {
-            if (hit.collider.tag == "RightArrow" && change.currentObject <= 7) //Right arrow
-            {
-                StartCoroutine(MoveArrow(1));
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "LeftArrow" && change.currentObject >= 2) //Left arrow
-            {
-                StartCoroutine(MoveArrow(-1));
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "DoneButton") //Close build mode
-            {
-                StartCoroutine(DoneButton());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ConfirmRotate") //Close rotate/scale mode
-            {
-                StartCoroutine(ConfirmEditing());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "BuildModeButton") //Open build selectment
-            {
-                StartCoroutine(OpenBuildMenu());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "PlayMode") //Start scenario
-            {
-                StartCoroutine(StartPlayMode());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "LookAtAni") //??
-            {
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "TargetModeButton") //Start build placement.
-            {
-                StartCoroutine(StartTargetMode());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "BackButton") //Go to home and close all other UI tabs.
-            {
-                StartCoroutine(HomeButton());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ConsoleButton") //Open & close console.
-            {
-                StartCoroutine(OpenConsole());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ScanModeButton") //Open scanmode
-            {
-                StartCoroutine(StartScanning());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ScanModeDoneButton") //Close scan mode
-            {
-                StartCoroutine(StopScanning());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ConfirmWaypoint") //Confirm waypointS
-            {
-                StartCoroutine(ConfirmWaypoint());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ClearWaypoint") //Clear all waypoints
-            {
-                StartCoroutine(ClearWaypoints());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "UndoWaypoint") //Undo last waypoint.
-            {
-                StartCoroutine(UndoWaypoint());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "ConfirmPlacement") //Go back to the build choose UI;
-            {
-                StartCoroutine(ConfirmPlacement());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "BehaviorSelect") //Open the select target menu.
-            {
-                StartCoroutine(BehaveSelection());
-                CanClick = false;
-            }
-            else if(hit.collider.gameObject.tag == "SkipSelect") //Om het selecten te skippen, TIJDELIJK.
-            {
-                StartCoroutine(SkipSelect());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "StartWaypointing") //Om het selecten te skippen, TIJDELIJK.
-            {
-                StartCoroutine(StartWaypointing());
-                CanClick = false;
-            }
-            else if (hit.collider.gameObject.tag == "DutchLang")
-            {
-                Debug.Log("Dutch");
-                translate.dutchLang = true;
-                translate.englishLang = false;
-            }
-            else if (hit.collider.gameObject.tag == "EnglishLang")
-            {
-                Debug.Log("English");
-                translate.englishLang = true;
-                translate.dutchLang = false;
+                                if (button.myEvent != null)
+                                {
+                                    button.ButtonClicked();
+                                    Debug.Log("Clicked on Selfmade Button");
+                                }
+                    }
+                }
             }
         }
-        #region All Enumerators
-
-        public IEnumerator SkipSelect()
+        #region All Button voids
+//
+        public void MoveArrow(int direction)
         {
-            changeSelectANI.CloseSelectANI();
-            behaveModeUI.SetActive(true);
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
+            if(change.currentObject <= 7 && change.currentObject >= 2)
+            {
+                change.currentObject += direction;
+                change.ChangeCurrentObject(change.currentObject);
+            }
+            if(change.currentObject == 8 && direction == -1)
+            {
+                change.currentObject += direction;
+                change.ChangeCurrentObject(change.currentObject);
+            }
+            if (change.currentObject == 1 && direction == 1)
+            {
+                change.currentObject += direction;
+                change.ChangeCurrentObject(change.currentObject);
+            }
         }
-
-        public IEnumerator MoveArrow(int direction)
-        {
-            change.currentObject += direction;
-            change.ChangeCurrentObject(change.currentObject);
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true; 
-        }
-        public IEnumerator DoneButton() //Confirm Build Selection.
+        public void DoneButton() //Confirm Build Selection.
         {
             changeBuildANI.CloseBuildANI();
             //
 
             placeModeUI.SetActive(true);
-            //mainModeUI.SetActive(true);
             //
 
             ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel);
             ARController.controllerstate = ControllerState.Placing;
             //
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
-            //
         }
-        public IEnumerator ConfirmEditing()
+        public void ConfirmEditing()
         {
             changeRotateANI.CloseRotateANI();
 
@@ -225,10 +147,8 @@
 
             //
             ARController.controllerstate = ControllerState.Placing;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator ConfirmPlacement()
+        public void ConfirmPlacement()
         {
             changePlaceANI.ClosePlaceAni();
 
@@ -237,23 +157,17 @@
 
             //
             ARController.controllerstate = ControllerState.Default;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator OpenBuildMenu()
+        public void OpenBuildMenu()
         {
             buildModeUI.SetActive(true);
 
             //
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
-
-            //
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
 
-        public IEnumerator BehaveSelection()
+        public void BehaveSelection()
         {
             selectModeUI.SetActive(true);
 
@@ -263,11 +177,9 @@
 
             //
             ARController.controllerstate = ControllerState.SelectingObject;
-            //
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator StartPlayMode()
+
+        public void StartPlayMode()
         {
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
@@ -276,18 +188,9 @@
             rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
             DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator StartTargetMode() 
-        {
-            placeModeUI.SetActive(true);
-            mainModeUI.SetActive(false);
-            ARController.controllerstate = ControllerState.Targeting;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
-        }
-        public IEnumerator HomeButton() //HOME BUTTON.
+
+        public void HomeButton() //HOME BUTTON.
         {
             changeBuildANI.CloseBuildANI();
             changePlaceANI.ClosePlaceAni();
@@ -303,63 +206,116 @@
 
             //
             ARController.controllerstate = ControllerState.Default;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
+            //
+            ARController.CurrentSelectedModel.GetComponent<AIBasics>().TurnOffVisuals();
         }
-        public IEnumerator OpenConsole()
+
+        public void OpenConsole()
         {
             ConsoleScript.Instance.ToggleConsole();
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator StartScanning()
+
+        public void StartScanning()
         {
             scanningModeUI.SetActive(true);
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
             consoleModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Scanning;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator UndoWaypoint()
+
+        public void UndoWaypoint()
         {
             Debug.Log("Undo");
             ARController.CurrentplacedObject.GetComponent<AIBasics>().UndoLastWaypoint();
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator ClearWaypoints()
+
+        public void ClearWaypoints()
         {
             Debug.Log("Cleared");
             ARController.CurrentplacedObject.GetComponent<AIBasics>().ClearWaypoints();
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
+
         }
-        public IEnumerator ConfirmWaypoint()
+
+        public void ConfirmWaypoint()
         {
             waypointPlacementUI.SetActive(false);
             behaveModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.FullyEditingObject;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator StopScanning()
+
+        public void StopScanning()
         {
             changeScanANI.CloseScanningANI();
             mainModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.Default;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
-        public IEnumerator StartWaypointing()
+
+        public void StartWaypointing()
         {
             behaveModeUI.SetActive(false);
             waypointPlacementUI.SetActive(true);
             ARController.controllerstate = ControllerState.Waypointing;
-            yield return new WaitForSeconds(0.25f);
-            CanClick = true;
         }
+
+        public void StartLoading()
+        {
+            loadingModeUI.SetActive(false);
+            mainModeUI.SetActive(true);
+        }
+        public void EditingObjectStats()
+        {
+            behaveStatsUI.SetActive(true);
+            ARController.controllerstate = ControllerState.EditingStats;
+            if(ARController.CurrentSelectedModel != null)
+            {
+                BehaveController.CurrentAIStats = ARController.CurrentSelectedModel.GetComponent<AIStats>();
+            }
+        }
+        public void ConfirmEditingObjectStats()
+        {
+            BehaveController.UpdateCurrentAiStats();
+            behaveStatsUI.SetActive(false);
+            ARController.controllerstate = ControllerState.FullyEditingObject;
+            BehaveController.CurrentAIStats = null;
+        }
+        public void StartSaving()
+        {
+            SceneManager.Instance.Save(null);
+        }
+        //
+        public void ChangeWeapon(int WeaponNumber)
+        {
+            currentHuman.WeaponUpdate(WeaponNumber);
+        }
+        public void OpenEquipment()
+        {
+            behaveEquipmentUI.SetActive(true);
+            currentHuman = ARController.CurrentSelectedModel.GetComponent<Human>();
+        }
+        public void CloseEquipment()
+        {
+            behaveEquipmentUI.SetActive(false);
+            ARController.controllerstate = ControllerState.FullyEditingObject;
+            currentHuman = null;
+        }
+        //
+        public void OpenReact()
+        {
+            behaveReactUI.SetActive(true);
+            currentAI = ARController.CurrentSelectedModel.GetComponent<AIBasics>();
+        }
+        public void CloseReact()
+        {
+            behaveReactUI.SetActive(false);
+            ARController.controllerstate = ControllerState.FullyEditingObject;
+            currentAI = null;
+        }
+        public void SetReactionEnum(int Number)
+        {
+            currentAI.Behaviour = (AIBehaviour)Number;
+        }
+
         #endregion
 
     }

@@ -29,6 +29,7 @@
         Editing,
         SelectingObject,
         FullyEditingObject,
+        EditingStats,
         Waypointing,
         Targeting,
         Playing
@@ -75,7 +76,10 @@
         [SerializeField]
         GameObject FullyEditingCanvas;
         [SerializeField]
-        GameObject CurrentSelectedModel;
+        GameObject StatsChangeCanvas;
+        [SerializeField]
+        public static GameObject CurrentSelectedModel;
+        public static bool SelectedAHuman = false;
 
         public bool canPlace = false;
 
@@ -99,7 +103,7 @@
                 StartCoroutine(SetBuildMode());
             }
             SessionHandling();
-            Debug.Log(controllerstate);
+            Debug.Log(controllerstate + " Controllerstate");
         }
 
         private void SessionHandling()
@@ -129,6 +133,9 @@
                     break;
                 case ControllerState.FullyEditingObject:
                     FullyEditingObject();
+                    break;
+                case ControllerState.EditingStats:
+                    EditingUnitStats();
                     break;
                 case ControllerState.Waypointing:
                     PlacingWaypoints();
@@ -205,6 +212,11 @@
             FullyEditingCanvas.SetActive(true);
             SelectingObjectCanvas.SetActive(false);
         }
+        //This void is the update of when you are editing a selected units Stats
+        private void EditingUnitStats()
+        {
+            //StatsChangeCanvas.SetActive(true);
+        }
         //This void is called when you are editing and have one finger on the touchscreen (Rotating)
         private void Rotating()
         {
@@ -260,7 +272,7 @@
                     GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
                     SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
                     CurrentplacedObject = SpawnedObject;
-                    ConsoleScript.Instance.SetFeedback(MessageType.BuildMessage, CurrentplacedObject.name);
+                    //ConsoleScript.Instance.SetFeedback(MessageType.BuildMessage, CurrentplacedObject.name);
                     //
                     Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
                     SpawnedObject.transform.parent = anchor.transform;
@@ -355,7 +367,7 @@
                 {
                     GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation);
                     WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
-                    CurrentplacedObject.GetComponent<Human>().PlaceWayPoint(hit.Pose.position, script);
+                    CurrentplacedObject.GetComponent<AIBasics>().PlaceWayPoint(hit.Pose.position, script);
                 }
             }
         }
@@ -376,6 +388,14 @@
             if (Physics.Raycast(ray, out hit, unitlayer))
             {
                 CurrentSelectedModel = hit.collider.gameObject;
+                if(hit.collider.gameObject.GetComponent<AIBasics>().unittype == UnitType.Human)
+                {
+                    SelectedAHuman = true;
+                }
+                else
+                {
+                    SelectedAHuman = false;
+                }
                 CurrentSelectedModel.GetComponent<AIBasics>().Selected = true;
                 CurrentSelectedModel.GetComponent<AIBasics>().TurnOnVisuals();
                 //

@@ -14,6 +14,7 @@
 
     public class TextTranslate : MonoBehaviour
     {
+
         public bool dutchLang;
         public bool englishLang;
 
@@ -31,6 +32,7 @@
             dutchLang = true;
             englishLang = false;
         }
+
         public void Update()
         {
             if (dutchLang)

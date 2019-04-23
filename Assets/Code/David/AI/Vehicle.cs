@@ -19,16 +19,22 @@ public class Vehicle : AIBasics
 
     public override void Update()
     {
-        base.Update();
-        if(aistate == AIStates.Dead)
+        if (PlayModeOn)
         {
-            BrokenVehicleSmoke.Play();
+            base.Update();
+            if (aistate == AIStates.Dead)
+            {
+                BrokenVehicleSmoke.Play();
+            }
         }
     }
     public override void LateUpdate()
     {
-        base.LateUpdate();
-        ActionUpdate();
+        if (PlayModeOn)
+        {
+            base.LateUpdate();
+            ActionUpdate();
+        }
     }
 
     //Actions made for a Vehicle (not a Vehicle)

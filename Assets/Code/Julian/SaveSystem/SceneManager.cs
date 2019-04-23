@@ -69,7 +69,9 @@ public class SceneManager : MonoBehaviour
     {
         //Find Units in the scene and add them to the 'm_UnitRealtime' list
         FindUnit();
-        StartCoroutine(SaveData(isnew.text));
+
+        if (isnew) StartCoroutine(SaveData(isnew.text));
+        else StartCoroutine(SaveData(""));
         //
         if (m_NewSavePanel.activeSelf)
             m_NewSavePanel.SetActive(false);

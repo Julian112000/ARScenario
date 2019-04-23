@@ -14,10 +14,9 @@ public class Fennek : Vehicle
     // Update is called once per frame
     public override void Update()
     {
-        base.Update();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (PlayModeOn)
         {
-            WantsToMove = true;
+            base.Update();
         }
     }
     //

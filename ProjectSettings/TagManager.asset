@@ -34,6 +34,9 @@ TagManager:
   - DutchLang
   - SettingsMain
   - CloseSettings
+  - LoadButton
+  - DeleteButton
+  - SaveButton
   layers:
   - Default
   - TransparentFX

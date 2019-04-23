@@ -207,7 +207,8 @@ namespace GoogleARCore.Examples.Common
         }
         public void ToggleMesh(bool toggle)
         {
-            GetComponent<MeshRenderer>().enabled = toggle;
+            if (m_MeshRenderer)
+                m_MeshRenderer.enabled = toggle;
         }
         private bool _AreVerticesListsEqual(List<Vector3> firstList, List<Vector3> secondList)
         {

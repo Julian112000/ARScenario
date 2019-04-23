@@ -42,10 +42,9 @@ public abstract class AIBasics : AIStats
     private UnitSide unitside;
     [SerializeField]
     public AIStates aistate;
+    public UnitType unittype;
     [SerializeField]
-    protected UnitType unittype;
-    [SerializeField]
-    protected AIBehaviour Behaviour;
+    public AIBehaviour Behaviour;
     [Header("Needed Objects")]
     [SerializeField]
     public Transform VisionPoint;
@@ -147,9 +146,12 @@ public abstract class AIBasics : AIStats
     {
         //Different Types of Updates (peek definition of update to see what it does)
         if(aistate != AIStates.Dead)
-        {  
-            VisionUpdate();
-            NavigationUpdate();
+        {
+            if (PlayModeOn)
+            {
+                VisionUpdate();
+                NavigationUpdate();
+            }
         }
     }
     public virtual void LateUpdate()

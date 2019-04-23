@@ -7,20 +7,19 @@ public class AIStats : MonoBehaviour
     //The STATS of the AI Unit
     [Header("The Unit Stats")]
     [SerializeField]
-    protected int Health = 100;
+    public int Health = 100;
     [SerializeField]
-    protected int Ammo = 100;
+    public int Ammo = 100;
     [SerializeField]
-    protected int Damage = 25;
+    public int ViewingAngle = 90;
     [SerializeField]
-    protected int ViewingAngle = 90;
+    public float VisionRange = 15f;
     [SerializeField]
-    protected float VisionRange = 15f;
-    [SerializeField]
-    protected float MovementSpeed = 0.75f;
+    public float MovementSpeed = 0.75f;
     [SerializeField]
     [Range(1, 100)]
-    protected int Accuracy = 75;
-    [SerializeField]
+    public int Accuracy = 75;
+    //
     protected float FireRate = 1;
+    protected int Damage = 25;
 }

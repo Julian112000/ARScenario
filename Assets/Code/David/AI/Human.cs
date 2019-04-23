@@ -39,20 +39,16 @@ public class Human : AIBasics
     {
         base.Awake();
         unittype = UnitType.Human;
-        WeaponUpdate();
+        WeaponUpdate((int)weaponType);
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        base.Update();
-        //WeaponUpdate();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (PlayModeOn)
         {
-            //PlayExplosionImpact();
-            //MuzzleFlash.Flash();
-            WantsToMove = true;
-        } 
+            base.Update();
+        }
            
     }
     public override void LateUpdate()
@@ -61,21 +57,30 @@ public class Human : AIBasics
         ActionUpdate();
     }
     //
-    private void WeaponUpdate()
+    public void WeaponUpdate(int WeaponNumber)
     {
-        for (int i = 0; i < Weapons.Count; i++)
+        if (WeaponNumber <= Weapons.Count)
         {
-            if(i == (int)weaponType)
+            weaponType = (WeaponType)WeaponNumber;
+            for (int i = 0; i < Weapons.Count; i++)
             {
-                //Debug.Log("Ok");
-                if (CurrentWeapon)
+                if (i == (int)weaponType)
                 {
-                    CurrentWeapon.SetActive(false);
+                    //Debug.Log("Ok");
+                    if (CurrentWeapon)
+                    {
+                        CurrentWeapon.SetActive(false);
+                    }
+                    Weapons[i].SetActive(true);
+                    CurrentWeapon = Weapons[i];
+                    Damage = WeaponDamageValues[i];
+                    FireRate = WeaponFireRates[i];
                 }
-                Weapons[i].SetActive(true);
-                CurrentWeapon = Weapons[i];
-                Damage = WeaponDamageValues[i];
             }
+        }
+        else
+        {
+            Debug.Log("Weapon Number is not valid weapon does not exist");
         }
     }
     //Actions made for a human (not a vechicle)
@@ -160,7 +165,7 @@ public class Human : AIBasics
         animator.SetBool("Aiming", true);
         TrackTarget(FoundTargetScript.VisionPoint.position);
         ShootDelayTimer += Time.deltaTime;
-        if (ShootDelayTimer >= WeaponFireRates[(int)weaponType])
+        if (ShootDelayTimer >= FireRate)
         {
             Shoot(FoundTargetScript, Damage, Accuracy, WeaponMuzzleFlashes[(int)weaponType], weaponType, RpgBullet);
             Debug.Log("Shot");
@@ -188,7 +193,7 @@ public class Human : AIBasics
     {
         TrackTarget(FoundTargetScript.VisionPoint.position);
         ShootDelayTimer += Time.deltaTime;
-        if (ShootDelayTimer >= WeaponFireRates[(int)weaponType])
+        if (ShootDelayTimer >= FireRate)
         {
             Shoot(FoundTargetScript, Damage, Accuracy, WeaponMuzzleFlashes[(int)weaponType], weaponType, RpgBullet);
             Debug.Log("Shot");

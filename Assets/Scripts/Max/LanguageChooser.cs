@@ -16,9 +16,10 @@
         [SerializeField]
         private Camera mainCamera;
 
+        public Animator animator;
+
         public TextTranslate translate;
 
-        public Animator animator;
 
         private void Start()
         {
