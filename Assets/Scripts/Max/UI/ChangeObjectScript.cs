@@ -187,7 +187,7 @@
             placeModeUI.SetActive(false);
             rotatingModeUI.SetActive(false);
             SceneHandler.EnablePlayMode();
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
         }
 
         public void HomeButton() //HOME BUTTON.

@@ -23,6 +23,7 @@ namespace GoogleARCore.Examples.Common
     using System.Collections.Generic;
     using GoogleARCore;
     using UnityEngine;
+    using HelloAR;
 
     /// <summary>
     /// Visualizes a single DetectedPlane in the Unity scene.
@@ -90,10 +91,18 @@ namespace GoogleARCore.Examples.Common
             }
             else if (m_DetectedPlane.TrackingState != TrackingState.Tracking)
             {
-                 return;
+                m_MeshRenderer.enabled = false;
+                return;
+            }
+            else if (!ARController.Scanning)
+            {
+                return;
             }
 
-            _UpdateMeshIfNeeded();
+            m_MeshRenderer.enabled = true;
+
+            if (ARController.Scanning)
+                _UpdateMeshIfNeeded();
         }
 
         /// <summary>
@@ -103,7 +112,8 @@ namespace GoogleARCore.Examples.Common
         public void Initialize(DetectedPlane plane)
         {
             m_DetectedPlane = plane;
-            m_MeshRenderer.material.SetColor("_GridColor", k_PlaneColors[s_PlaneCount++ % k_PlaneColors.Length]);
+            m_MeshRenderer.material.SetColor(
+                "_GridColor", k_PlaneColors[s_PlaneCount++ % k_PlaneColors.Length]);
             m_MeshRenderer.material.SetFloat("_UvRotation", Random.Range(0.0f, 360.0f));
 
             Update();
@@ -132,9 +142,9 @@ namespace GoogleARCore.Examples.Common
 
             int planePolygonCount = m_MeshVertices.Count;
 
-            // The following code converts a polygon to a mesh with two polygons, inner
-            // polygon renders with 100% opacity and fade out to outter polygon with opacity 0%, as shown below.
-            // The indices shown in the diagram are used in comments below.
+            // The following code converts a polygon to a mesh with two polygons, inner polygon
+            // renders with 100% opacity and fade out to outter polygon with opacity 0%, as shown
+            // below.  The indices shown in the diagram are used in comments below.
             // _______________     0_______________1
             // |             |      |4___________5|
             // |             |      | |         | |
@@ -205,11 +215,7 @@ namespace GoogleARCore.Examples.Common
             m_Mesh.SetTriangles(m_MeshIndices, 0);
             m_Mesh.SetColors(m_MeshColors);
         }
-        public void ToggleMesh(bool toggle)
-        {
-            if (m_MeshRenderer)
-                m_MeshRenderer.enabled = toggle;
-        }
+
         private bool _AreVerticesListsEqual(List<Vector3> firstList, List<Vector3> secondList)
         {
             if (firstList.Count != secondList.Count)

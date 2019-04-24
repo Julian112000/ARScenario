@@ -23,24 +23,54 @@ namespace GoogleARCore.Examples.Common
     using System.Collections.Generic;
     using GoogleARCore;
     using UnityEngine;
+    using HelloAR;
 
+    /// <summary>
+    /// Manages the visualization of detected planes in the scene.
+    /// </summary>
     public class DetectedPlaneGenerator : MonoBehaviour
     {
-        public static DetectedPlaneGenerator Instance;
+        public static DetectedPlaneGenerator instance = null; //RK
+        public List<GameObject> PLANES = new List<GameObject>(); //RK
+
+        /// <summary>
+        /// A prefab for tracking and visualizing detected planes.
+        /// </summary>
         public GameObject DetectedPlanePrefab;
+        public GameObject DetectedPlaneSavings;
 
         [SerializeField]
+        private Transform m_SavedVisualsParent;
+
+        /// <summary>
+        /// A list to hold new planes ARCore began tracking in the current frame. This object is used across
+        /// the application to avoid per-frame allocations.
+        /// </summary>
         private List<DetectedPlane> m_NewPlanes = new List<DetectedPlane>();
-        [SerializeField]
-        private List<DetectedPlaneVisualizer> m_Visualizers = new List<DetectedPlaneVisualizer>();
 
         [SerializeField]
-        private bool m_RequireSaving;
-
-        private void Awake()
+        private InstantPreviewTrackedPoseDriver m_TrackedPoseDriver;
+        /// <summary>
+        /// The Unity Update method.
+        /// </summary>
+        /// 
+        void Awake()//RK
         {
-            Instance = this;
+
+            if (instance == null)
+
+
+                instance = this;
+
+
+            else if (instance != this)
+
+                Destroy(gameObject);
+
+
         }
+
+
         public void Update()
         {
             // Check that motion tracking is tracking.
@@ -48,32 +78,32 @@ namespace GoogleARCore.Examples.Common
             {
                 return;
             }
-            Session.GetTrackables<DetectedPlane>(m_NewPlanes, TrackableQueryFilter.New);
-            for (int i = 0; i < m_NewPlanes.Count; i++)
+            m_TrackedPoseDriver.enabled = ARController.Scanning;
+            if (ARController.Scanning)
             {
-                GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity);
-                planeObject.transform.parent = transform;
-                planeObject.transform.localPosition = Vector3.zero;
+                // Iterate over planes found in this frame and instantiate corresponding GameObjects to visualize them.
+                Session.GetTrackables<DetectedPlane>(m_NewPlanes, TrackableQueryFilter.New);
+                for (int i = 0; i < m_NewPlanes.Count; i++)
+                {
+                    // Instantiate a plane visualization prefab and set it to track the new plane. The transform is set to
+                    // the origin with an identity rotation since the mesh for our prefab is updated in Unity World
+                    // coordinates.
+                    GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
+                    GameObject savedObject = Instantiate(DetectedPlaneSavings, Vector3.zero, Quaternion.identity, m_SavedVisualsParent);
 
-                DetectedPlaneVisualizer visualizer = planeObject.GetComponent<DetectedPlaneVisualizer>();
-                DetectedPlaneVisualizer visualizerchild = planeObject.transform.GetChild(0).GetComponent<DetectedPlaneVisualizer>();
+                    planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                    savedObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
 
-                visualizer.Initialize(m_NewPlanes[i]);
-                visualizerchild.Initialize(m_NewPlanes[i]);
-
-                m_Visualizers.Add(visualizer);
+                    PLANES.Add(planeObject); //RK
+                }
             }
         }
         public void ToggleVisualizers(bool toggle)
         {
-            for (int i = 0; i < m_Visualizers.Count; i++)
+            for (int i = 0; i < PLANES.Count; i++)
             {
-                m_Visualizers[i].ToggleMesh(toggle);
+                PLANES[i].gameObject.SetActive(toggle);
             }
-        }
-        public DetectedPlane GetRandomPlane()
-        {
-            return m_NewPlanes[0];
         }
     }
 }

@@ -19,6 +19,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using GoogleARCore;
+    using GoogleARCoreInternal;
     using GoogleARCore.Examples.Common;
     //
     public enum ControllerState
@@ -80,6 +81,7 @@
         [SerializeField]
         public static GameObject CurrentSelectedModel;
         public static bool SelectedAHuman = false;
+        public static bool Scanning = false;
 
         public bool canPlace = false;
 
@@ -120,7 +122,7 @@
                     Default();
                     break;
                 case ControllerState.Scanning:
-                    Scanning();
+                    ScanningUpdate();
                     break;
                 case ControllerState.Placing:
                     if (canPlace) Placing();
@@ -143,6 +145,7 @@
                 case ControllerState.Targeting:
                     break;
                 case ControllerState.Playing:
+                    DetectedPlaneGenerator.instance.ToggleVisualizers(false);
                     break;
                 default:
                     break;
@@ -153,21 +156,22 @@
         //Called when the enum is in Defaultmode
         private void Default()
         {
+            Scanning = false;
             //GridViewer.SetActive(true);
         }
         //Called when the enum is on Scanning (when you want to scan in the ARCore grid WITHOUT ANY PLACE INPUT)
-        private void Scanning()
+        private void ScanningUpdate()
         {
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            Scanning = true;
             //GridViewer.SetActive(true);
         }
         //Called when enum is on Placing (you can still scan while placing)
         private void Placing()
         {
+            Scanning = false;
             ScreenInputPlacing();
             //
             ObjectEditCanvas.SetActive(false);
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
             //GridViewer.SetActive(true);
         }
         //Called when enum is on Editing (this is when wanting to rotate or scale but no input has been found yet
@@ -175,7 +179,7 @@
         {
             BuildCanvas.SetActive(false);
             ObjectEditCanvas.SetActive(true);
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            Scanning = false;
             //GridViewer.SetActive(true);
             //
             if (Input.touchCount == 1)
@@ -200,7 +204,7 @@
             //
             SelectingObjectCanvas.SetActive(true);
             //
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            Scanning = false;
             //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(false);
             RotateFeedback.SetActive(false);
@@ -215,13 +219,14 @@
         //This void is the update of when you are editing a selected units Stats
         private void EditingUnitStats()
         {
+            Scanning = false;
             //StatsChangeCanvas.SetActive(true);
         }
         //This void is called when you are editing and have one finger on the touchscreen (Rotating)
         private void Rotating()
         {
             ScreenInputRotating();
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            Scanning = false;
             //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(false);
             RotateFeedback.SetActive(true);
@@ -230,7 +235,7 @@
         private void Scaling()
         {
             ScreenInputScaling();
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            Scanning = false;
             //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(true);
             RotateFeedback.SetActive(false);
@@ -238,7 +243,7 @@
         //This void is called when you are done editing and are ready to place waypoints for the Unit's path
         private void PlacingWaypoints()
         {
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(true);
+            Scanning = false;
             //GridViewer.SetActive(true);
             ScreenInputWaypointing();
         }
@@ -268,7 +273,6 @@
                 }
                 else
                 {
-
                     GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
                     SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
                     CurrentplacedObject = SpawnedObject;
@@ -429,7 +433,7 @@
         //Void that is subscribed to the playmode event
         public void Playmode()
         {
-            DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            //DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
             //GridViewer.SetActive(false);
             controllerstate = ControllerState.Playing;
         }

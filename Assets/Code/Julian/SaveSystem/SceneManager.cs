@@ -23,8 +23,6 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     private GameObject m_ScenarioPanel;
     [SerializeField]
-    private Text m_SaveInfoText;
-    [SerializeField]
     private GameObject m_NewSavePanel;
 
     //Publics
@@ -141,11 +139,6 @@ public class SceneManager : MonoBehaviour
     {
         //Update scenario time in the UI text panel
         m_CurrentScenario.UpdateScenarioData(time);
-    }
-    public void SetSaveInfo(string text)
-    {
-        //This is text for testing purposes... IGNORE
-        m_SaveInfoText.text = text;
     }
 
     public void LoadUnit(int id, string name, 
