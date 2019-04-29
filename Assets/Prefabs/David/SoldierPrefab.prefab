@@ -107,7 +107,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 2
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -4925,7 +4925,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 2
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -10001,12 +10001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Ammo: 100
-  Damage: 25
   ViewingAngle: 70
   VisionRange: 15
   MovementSpeed: 0.5
   Accuracy: 75
-  FireRate: 1
   unitside: 1
   aistate: 1
   unittype: 0
@@ -13141,14 +13139,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
-      propertyPath: m_Name
-      value: ForeGrip
-      objectReference: {fileID: 0}
-    - target: {fileID: 100452, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
-      propertyPath: m_Name
-      value: FrontOfGun
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0163
@@ -13193,6 +13183,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -35.428
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
+      propertyPath: m_Name
+      value: ForeGrip
+      objectReference: {fileID: 0}
+    - target: {fileID: 100452, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
+      propertyPath: m_Name
+      value: FrontOfGun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
 --- !u!4 &1633336268455845962 stripped
@@ -13220,14 +13218,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541578177458219}
     m_Modifications:
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect
-      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13319,9 +13317,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1741527381}
     m_Modifications:
-    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash5 (1)
+    - target: {fileID: 11483904, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13367,12 +13365,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash5 (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 183886, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483904, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13481,14 +13479,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541578210042655}
     m_Modifications:
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13580,14 +13578,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541577677368794}
     m_Modifications:
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13679,10 +13677,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541577067834458}
     m_Modifications:
-    - target: {fileID: 172038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
-      propertyPath: m_Name
-      value: MobileExplosion3D_5 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 472038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.03
@@ -13739,6 +13733,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.0617766
       objectReference: {fileID: 0}
+    - target: {fileID: 172038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
+      propertyPath: m_Name
+      value: MobileExplosion3D_5 (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
 --- !u!4 &5014541578091212863 stripped
@@ -13760,14 +13758,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541577113988041}
     m_Modifications:
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13932,10 +13930,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2074699227}
     m_Modifications:
-    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash5
-      objectReference: {fileID: 0}
     - target: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13979,6 +13973,10 @@ PrefabInstance:
     - target: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash5
       objectReference: {fileID: 0}
     - target: {fileID: 183886, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_IsActive
