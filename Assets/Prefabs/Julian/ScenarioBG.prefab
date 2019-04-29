@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 605190170088687701}
   - component: {fileID: 1188808076535057010}
   - component: {fileID: 6970544493637871715}
-  - component: {fileID: 395741435}
+  - component: {fileID: 6479576097083308654}
   m_Layer: 5
   m_Name: Delete
   m_TagString: DeleteButton
@@ -90,7 +90,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 228.9421, y: 35.043896, z: 0}
   m_Center: {x: -113.97107, y: 0.2514835, z: 0.49999964}
---- !u!114 &395741435
+--- !u!114 &6479576097083308654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,35 +99,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 887375158105115339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ce8eb5044bdd274d92f4eaed2ea5c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1188808076535057010}
-  m_OnClick:
+  myEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3897401154028481350}
@@ -141,7 +116,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2199320958489324237
 GameObject:
@@ -155,7 +130,7 @@ GameObject:
   - component: {fileID: 3739367742925698581}
   - component: {fileID: 4256644799996148018}
   - component: {fileID: 3152569554879527269}
-  - component: {fileID: 395741432}
+  - component: {fileID: 3442097310207193041}
   m_Layer: 5
   m_Name: Load
   m_TagString: LoadButton
@@ -233,7 +208,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 228.9421, y: 98.94, z: 0}
   m_Center: {x: -113.97107, y: 0.2514835, z: 0.49999964}
---- !u!114 &395741432
+--- !u!114 &3442097310207193041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,35 +217,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2199320958489324237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ce8eb5044bdd274d92f4eaed2ea5c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 4256644799996148018}
-  m_OnClick:
+  myEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3897401154028481350}
@@ -284,7 +234,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &3125893896568801195
 GameObject:

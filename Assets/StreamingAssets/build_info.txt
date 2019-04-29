@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 Build from STAGE01 at 29-4-2019 14:19:28
+=======
+Build from DESKTOP-OH00I2N at 29-4-2019 10:06:12
+>>>>>>> Stashed changes
