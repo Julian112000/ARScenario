@@ -31,7 +31,8 @@ namespace GoogleARCore.Examples.Common
     public class DetectedPlaneGenerator : MonoBehaviour
     {
         public static DetectedPlaneGenerator instance = null; //RK
-        public List<GameObject> PLANES = new List<GameObject>(); //RK
+        public List<DetectedPlaneVisualizer> PLANES = new List<DetectedPlaneVisualizer>(); //RK
+        public List<GameObject> GRIDPLANES = new List<GameObject>(); //RK
 
         /// <summary>
         /// A prefab for tracking and visualizing detected planes.
@@ -56,18 +57,11 @@ namespace GoogleARCore.Examples.Common
         /// 
         void Awake()//RK
         {
-
             if (instance == null)
-
-
                 instance = this;
-
-
             else if (instance != this)
 
                 Destroy(gameObject);
-
-
         }
 
 
@@ -94,15 +88,19 @@ namespace GoogleARCore.Examples.Common
                     planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
                     savedObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
 
-                    PLANES.Add(planeObject); //RK
+                    PLANES.Add(savedObject.GetComponent<DetectedPlaneVisualizer>()); //RK
                 }
             }
         }
-        public void ToggleVisualizers(bool toggle)
+        public void ToggleVisualizers(bool active)
         {
-            for (int i = 0; i < PLANES.Count; i++)
+            for (int i = 0; i < GRIDPLANES.Count; i++)
             {
-                PLANES[i].gameObject.SetActive(toggle);
+                GRIDPLANES[i].SetActive(active);
+            }
+            for (int j = 0; j < PLANES.Count; j++)
+            {
+                PLANES[j].EnableMeshRenderer();
             }
         }
     }

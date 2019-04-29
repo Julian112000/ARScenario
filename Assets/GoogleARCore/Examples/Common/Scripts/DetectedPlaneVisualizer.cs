@@ -64,6 +64,9 @@ namespace GoogleARCore.Examples.Common
 
         private Mesh m_Mesh;
 
+        [SerializeField]
+        private MeshCollider m_MeshCollider;
+
         private MeshRenderer m_MeshRenderer;
 
         /// <summary>
@@ -73,6 +76,8 @@ namespace GoogleARCore.Examples.Common
         {
             m_Mesh = GetComponent<MeshFilter>().mesh;
             m_MeshRenderer = GetComponent<UnityEngine.MeshRenderer>();
+            if (m_MeshCollider)
+                m_MeshCollider.enabled = false;
         }
 
         /// <summary>
@@ -214,8 +219,23 @@ namespace GoogleARCore.Examples.Common
             m_Mesh.SetVertices(m_MeshVertices);
             m_Mesh.SetTriangles(m_MeshIndices, 0);
             m_Mesh.SetColors(m_MeshColors);
-        }
 
+            //Mesh Collider Code
+            if (m_MeshCollider && m_DetectedPlane.PlaneType == DetectedPlaneType.Vertical)
+            {
+                m_MeshCollider.sharedMesh = null;
+                m_MeshCollider.sharedMesh = m_Mesh;
+            }
+        }
+        public void EnableMeshRenderer()
+        {
+            if (m_MeshCollider && m_DetectedPlane.PlaneType == DetectedPlaneType.Vertical)
+            {
+                m_MeshCollider.sharedMesh = null;
+                m_MeshCollider.sharedMesh = m_Mesh;
+                m_MeshCollider.enabled = true;
+            }
+        }
         private bool _AreVerticesListsEqual(List<Vector3> firstList, List<Vector3> secondList)
         {
             if (firstList.Count != secondList.Count)

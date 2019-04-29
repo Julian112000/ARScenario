@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7511255565341626532}
   - component: {fileID: 6768084855699201206}
   - component: {fileID: 4836901108049641246}
+  - component: {fileID: 663082166011862222}
   m_Layer: 0
   m_Name: DetectedPlaneVisualizerSavings
   m_TagString: Untagged
@@ -90,3 +91,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e3f20de6c2e405a93736a38f74b0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MeshCollider: {fileID: 663082166011862222}
+--- !u!64 &663082166011862222
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4796072133112940479}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
