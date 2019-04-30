@@ -70,9 +70,9 @@ public static class SaveSystem
             m_Luditude = data.luditude.ToString();
             //Take over the rotation
             m_Rotation = new float[3];
-            m_Rotation[0] = data.GetEulerAngles().x;
-            m_Rotation[1] = data.GetEulerAngles().y;
-            m_Rotation[2] = data.GetEulerAngles().z;
+            m_Rotation[0] = unit.transform.localEulerAngles.x;
+            m_Rotation[1] = (unit.transform.localEulerAngles.y);
+            m_Rotation[2] = unit.transform.localEulerAngles.z;
             //Take over the scale
             m_Scale = new float[3];
             m_Scale[0] = unit.transform.localScale.x;

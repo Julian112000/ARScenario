@@ -149,7 +149,6 @@ public class SceneManager : MonoBehaviour
         //Instantiate unit without position or rotation
         GameObject Unit = Instantiate(m_UnitPrefabs[id], Vector3.zero, Quaternion.identity);
         SaveData data = Unit.GetComponent<SaveData>();
-
         //Set Latitude of unit
         data.latitude = posx;
         //Set Luditude of unit

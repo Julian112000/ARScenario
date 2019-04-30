@@ -45,6 +45,6 @@ public class SaveData : MonoBehaviour
     public Vector3 GetEulerAngles()
     {
         //Get rotation of the unit
-        return transform.localEulerAngles;
+        return transform.eulerAngles;
     }
 }
