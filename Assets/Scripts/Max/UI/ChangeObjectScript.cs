@@ -8,7 +8,6 @@
     using UnityEngine.UI;
 
 #if UNITY_EDITOR
-    // Set up touch input propagation while using Instant Preview in the editor.
     using Input = InstantPreviewInput;
 #endif
 
@@ -54,6 +53,19 @@
         private AIBasics currentAI;
 
         private bool CanClick = true;
+
+        void Start()
+        {
+            if(SimpleLoadBool.willLoad == true)
+            {
+                loadingModeUI.SetActive(true);
+            }
+            else
+            {
+                mainModeUI.SetActive(true);
+            }
+
+        }
 
         void Update()
         {

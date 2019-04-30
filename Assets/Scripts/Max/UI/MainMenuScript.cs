@@ -39,6 +39,8 @@
         [SerializeField]
         private Animator mainAni;
 
+        public SimpleLoadBool loadScene;
+
         void Update()
         {
             if (Input.touchCount > 0)
@@ -70,11 +72,13 @@
                             if (hit.collider.tag == "NewScenario") //Start a new scenario
                             {
                                 animator.SetTrigger("FadeOutMain");
+                                SimpleLoadBool.willLoad = false;
                                 newOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario
                             {
-                                Debug.Log("Loaded saved Scenario");
+                                animator.SetTrigger("FadeOutMain");
+                                SimpleLoadBool.willLoad = true;
                                 loadOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "SettingsMain") //Open Settings
@@ -96,6 +100,42 @@
                             break;
                         }
                 
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.tag == "NewScenario") //Start a new scenario
+                            {
+                                animator.SetTrigger("FadeOutMain");
+                                SimpleLoadBool.willLoad = false;
+                                newOverlay.SetActive(true);
+                            }
+                            else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario
+                            {
+                                animator.SetTrigger("FadeOutMain");
+                                SimpleLoadBool.willLoad = true;
+                                loadOverlay.SetActive(true);
+                            }
+                            else if (hit.collider.gameObject.tag == "SettingsMain") //Open Settings
+                            {
+                                settings.SetActive(true);
+                                mainAni.SetTrigger("CloseMainMenu");
+                            }
+                            else if (hit.collider.gameObject.tag == "CloseSettings") //CloseSettings
+                            {
+                                mainMenu.SetActive(true);
+                                settingsAni.SetTrigger("CloseSettings");
+                            }
+                            else if (hit.collider.gameObject.tag != "NewScenario" && hit.collider.gameObject.tag != "LoadScenario" && hit.collider.gameObject.tag != "SettingsMain") //Set buttons back to normal
+                            {
+                                newOverlay.SetActive(true);
+                                loadOverlay.SetActive(true);
+                                settingsOverlay.SetActive(true);
+                            }
                 }
             }
         }
