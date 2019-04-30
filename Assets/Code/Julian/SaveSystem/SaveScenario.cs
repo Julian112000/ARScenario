@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using GoogleARCore.Examples.HelloAR;
 public class SaveScenario : MonoBehaviour
 {
     private int m_ScenarioID;
@@ -49,6 +49,7 @@ public class SaveScenario : MonoBehaviour
     {
         //Load scenario with the scenarioid
         SaveDatabase.Instance.OnLoadScenario(m_ScenarioID);
+        ChangeObjectScript.Instance.ToggleLoadingUI(false);
     }
     public void DeleteScenario()
     {

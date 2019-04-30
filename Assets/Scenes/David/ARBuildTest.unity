@@ -1043,7 +1043,7 @@ PrefabInstance:
     - target: {fileID: 6968159168808241539, guid: 12f090f504a193f4ca3bde10c1703968,
         type: 3}
       propertyPath: m_MovedObjects.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6968159168808241539, guid: 12f090f504a193f4ca3bde10c1703968,
         type: 3}
@@ -1064,7 +1064,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MovedObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2076385273037376201}
     - target: {fileID: 6968159168808241539, guid: 12f090f504a193f4ca3bde10c1703968,
         type: 3}
       propertyPath: m_MovedObjects.Array.data[1]
@@ -12221,6 +12221,12 @@ PrefabInstance:
 --- !u!224 &2076385273037376200 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8836323476199726302, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 2076385273037376199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2076385273037376201 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8239010541301645030, guid: 3b5417beef39ea947b0e421a7a033318,
     type: 3}
   m_PrefabInstance: {fileID: 2076385273037376199}
   m_PrefabAsset: {fileID: 0}

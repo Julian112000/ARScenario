@@ -13,6 +13,7 @@
 
     public class ChangeObjectScript : MonoBehaviour
     {
+        public static ChangeObjectScript Instance;
         public ObjectChangerScript change;
 
         public Camera mainCamera;
@@ -54,6 +55,10 @@
 
         private bool CanClick = true;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
         void Start()
         {
             if(SimpleLoadBool.willLoad == true)
@@ -327,7 +332,10 @@
         {
             currentAI.Behaviour = (AIBehaviour)Number;
         }
-
+        public void ToggleLoadingUI(bool toggle)
+        {
+            loadingModeUI.SetActive(toggle);
+        }
         #endregion
 
     }

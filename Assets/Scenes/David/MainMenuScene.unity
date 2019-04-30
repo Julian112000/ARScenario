@@ -307,6 +307,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8798609197808051158, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792877093682609759, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450561627094503988, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249079606697031034, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2176256929754679913, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 477609030257640948, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274143197192795476, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8181184759052332098, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_Enabled
@@ -433,41 +468,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7879510815698839621, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798609197808051158, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3792877093682609759, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2176256929754679913, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8274143197192795476, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5450561627094503988, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 477609030257640948, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6249079606697031034, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -678,6 +678,7 @@ MonoBehaviour:
   animator: {fileID: 596792954}
   settingsAni: {fileID: 1639572268}
   mainAni: {fileID: 957515206}
+  loadScene: {fileID: 0}
 --- !u!114 &577892255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,8 +692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 577892252}
-  translate: {fileID: 1320945074}
   animator: {fileID: 1712058679}
+  translate: {fileID: 1320945074}
 --- !u!95 &596792954 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1662290916099928110, guid: 16de10ad82217ba41b1daf859f0c80b5,
