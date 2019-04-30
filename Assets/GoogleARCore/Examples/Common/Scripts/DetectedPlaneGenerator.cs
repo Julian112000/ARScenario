@@ -88,6 +88,7 @@ namespace GoogleARCore.Examples.Common
                     planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
                     savedObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
 
+                    GRIDPLANES.Add(planeObject);
                     PLANES.Add(savedObject.GetComponent<DetectedPlaneVisualizer>()); //RK
                 }
             }
@@ -100,7 +101,7 @@ namespace GoogleARCore.Examples.Common
             }
             for (int j = 0; j < PLANES.Count; j++)
             {
-                PLANES[j].EnableMeshRenderer();
+                PLANES[j].EnableCollider();
             }
         }
     }

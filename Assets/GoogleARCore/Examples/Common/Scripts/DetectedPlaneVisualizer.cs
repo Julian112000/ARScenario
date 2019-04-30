@@ -227,7 +227,7 @@ namespace GoogleARCore.Examples.Common
                 m_MeshCollider.sharedMesh = m_Mesh;
             }
         }
-        public void EnableMeshRenderer()
+        public void EnableCollider()
         {
             if (m_MeshCollider && m_DetectedPlane.PlaneType == DetectedPlaneType.Vertical)
             {

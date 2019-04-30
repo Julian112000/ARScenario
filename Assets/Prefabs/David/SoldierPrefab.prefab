@@ -9831,6 +9831,7 @@ GameObject:
   - component: {fileID: 5014541577067834456}
   - component: {fileID: 5014541577067834457}
   - component: {fileID: 1838526525}
+  - component: {fileID: 5032155200447555957}
   m_Layer: 8
   m_Name: SoldierPrefab
   m_TagString: Friendly
@@ -10066,6 +10067,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.36636537, y: 1.8416729, z: 0.2601093}
   m_Center: {x: 0.010849923, y: 0.9194814, z: 0.0036996007}
+--- !u!114 &5032155200447555957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014541577067834460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdae27da231a8f349923750535dad61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ID: 0
+  m_SnappedPosition: {x: 0, y: 0, z: 0}
+  latitude: 0
+  longitude: 0
+  luditude: 0
 --- !u!1 &5014541577107350378
 GameObject:
   m_ObjectHideFlags: 0
@@ -13139,6 +13157,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
+      propertyPath: m_Name
+      value: ForeGrip
+      objectReference: {fileID: 0}
+    - target: {fileID: 100452, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
+      propertyPath: m_Name
+      value: FrontOfGun
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0163
@@ -13183,22 +13209,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -35.428
       objectReference: {fileID: 0}
-    - target: {fileID: 100020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
-      propertyPath: m_Name
-      value: ForeGrip
-      objectReference: {fileID: 0}
-    - target: {fileID: 100452, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
-      propertyPath: m_Name
-      value: FrontOfGun
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce, type: 3}
---- !u!4 &1633336268455845962 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce,
-    type: 3}
-  m_PrefabInstance: {fileID: 1633336268455983838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1633336268456017022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce,
@@ -13211,6 +13223,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1633336268455983838}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1633336268455845962 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400020, guid: 80f4be4dd3b45e44a9a5c4f622dfbbce,
+    type: 3}
+  m_PrefabInstance: {fileID: 1633336268455983838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5014541577457928318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13218,14 +13236,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541578177458219}
     m_Modifications:
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13317,6 +13335,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1741527381}
     m_Modifications:
+    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash5 (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 11483904, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -13365,25 +13387,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash5 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 183886, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
---- !u!4 &5014541577478596180 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a,
-    type: 3}
-  m_PrefabInstance: {fileID: 5014541577478898704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5014541577463391102 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19883886, guid: fa6d29df930056640bf15fb9b6a54e4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5014541577478898704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5014541577478596180 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a,
     type: 3}
   m_PrefabInstance: {fileID: 5014541577478898704}
   m_PrefabAsset: {fileID: 0}
@@ -13448,9 +13466,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd937313f28e7a147aa3cb8276e1a105, type: 3}
---- !u!4 &5014541577712369374 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: fd937313f28e7a147aa3cb8276e1a105,
+--- !u!1 &5014541577712788222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: fd937313f28e7a147aa3cb8276e1a105,
     type: 3}
   m_PrefabInstance: {fileID: 5014541577712755804}
   m_PrefabAsset: {fileID: 0}
@@ -13460,9 +13478,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5014541577712755804}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5014541577712788222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: fd937313f28e7a147aa3cb8276e1a105,
+--- !u!4 &5014541577712369374 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: fd937313f28e7a147aa3cb8276e1a105,
     type: 3}
   m_PrefabInstance: {fileID: 5014541577712755804}
   m_PrefabAsset: {fileID: 0}
@@ -13479,14 +13497,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541578210042655}
     m_Modifications:
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13559,15 +13577,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
---- !u!198 &5127441673846719961 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
-    type: 3}
-  m_PrefabInstance: {fileID: 5014541577828876633}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5015056163883920659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069,
+    type: 3}
+  m_PrefabInstance: {fileID: 5014541577828876633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5127441673846719961 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
     type: 3}
   m_PrefabInstance: {fileID: 5014541577828876633}
   m_PrefabAsset: {fileID: 0}
@@ -13578,14 +13596,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541577677368794}
     m_Modifications:
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13658,15 +13676,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
---- !u!4 &5015056163766300074 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069,
-    type: 3}
-  m_PrefabInstance: {fileID: 5014541577946235360}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5127441673729099104 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
+    type: 3}
+  m_PrefabInstance: {fileID: 5014541577946235360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5015056163766300074 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069,
     type: 3}
   m_PrefabInstance: {fileID: 5014541577946235360}
   m_PrefabAsset: {fileID: 0}
@@ -13758,14 +13776,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5014541577113988041}
     m_Modifications:
+    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+      propertyPath: m_Name
+      value: BulletImpactFleshBigEffect (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
-      propertyPath: m_Name
-      value: BulletImpactFleshBigEffect (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4000013252684874, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13930,6 +13948,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2074699227}
     m_Modifications:
+    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash5
+      objectReference: {fileID: 0}
     - target: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13973,10 +13995,6 @@ PrefabInstance:
     - target: {fileID: 483908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 183908, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash5
       objectReference: {fileID: 0}
     - target: {fileID: 183886, guid: fa6d29df930056640bf15fb9b6a54e4a, type: 3}
       propertyPath: m_IsActive

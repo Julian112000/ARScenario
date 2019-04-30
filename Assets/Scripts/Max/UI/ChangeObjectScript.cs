@@ -281,7 +281,7 @@
         }
         public void StartSaving()
         {
-            SceneManager.Instance.Save(null);
+            SceneManager.Instance.ToggleNewSave();
         }
         //
         public void ChangeWeapon(int WeaponNumber)
