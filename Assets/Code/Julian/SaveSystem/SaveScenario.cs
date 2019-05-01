@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,8 +49,13 @@ public class SaveScenario : MonoBehaviour
     {
         //Load scenario with the scenarioid
         SaveDatabase.Instance.OnLoadScenario(m_ScenarioID);
+    }
+
+    public void ConfirmLoadScenario()
+    {
         ChangeObjectScript.Instance.ToggleLoadingUI(false);
     }
+
     public void DeleteScenario()
     {
         //Delete scenario from database and unity world

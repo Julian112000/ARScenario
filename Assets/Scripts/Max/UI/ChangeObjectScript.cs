@@ -42,8 +42,6 @@
         public GameObject behaveReactUI;
 
         [SerializeField]
-        private GameObject consoleModeUI;
-        [SerializeField]
         private GameObject waypointPlacementUI;
         [SerializeField]
         private GameObject loadingModeUI;
@@ -237,7 +235,6 @@
             scanningModeUI.SetActive(true);
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
-            consoleModeUI.SetActive(false);
             ARController.controllerstate = ControllerState.Scanning;
         }
 
@@ -335,6 +332,7 @@
         public void ToggleLoadingUI(bool toggle)
         {
             loadingModeUI.SetActive(toggle);
+            mainModeUI.SetActive(true);
         }
         #endregion
 
