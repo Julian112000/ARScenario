@@ -12,6 +12,15 @@ public class Vehicle : AIBasics
     [SerializeField]
     private ParticleSystem Muzzleflash;
 
+    [SerializeField]
+    private Material[] m_BrokenMaterials;
+    [SerializeField]
+    private MeshRenderer[] m_BrokenParts_1;
+    [SerializeField]
+    private MeshRenderer[] m_BrokenParts_2;
+
+    private bool m_Broken;
+
     public override void Awake()
     {
         base.Awake();
@@ -22,9 +31,18 @@ public class Vehicle : AIBasics
         if (PlayModeOn)
         {
             base.Update();
-            if (aistate == AIStates.Dead)
+            if (aistate == AIStates.Dead && !m_Broken)
             {
                 BrokenVehicleSmoke.Play();
+                foreach (MeshRenderer m in m_BrokenParts_1)
+                {
+                    m.material = m_BrokenMaterials[0];
+                }
+                foreach (MeshRenderer m in m_BrokenParts_2)
+                {
+                    m.material = m_BrokenMaterials[1];
+                }
+                m_Broken = true;
             }
         }
     }

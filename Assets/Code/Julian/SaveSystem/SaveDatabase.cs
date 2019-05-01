@@ -86,8 +86,8 @@ public class SaveDatabase : MonoBehaviour
         {
             string data = www.text; //Store www.text to the data string
             //ID
-            int v1 = int.Parse(www.text); //Get ID from php script and save it to int
-            SceneManager.Instance.SaveStorageData(v1);
+            int db_id = int.Parse(www.text); //Get ID from php script and save it to int
+            SceneManager.Instance.SaveStorageData(db_id);
         }
     }
     public IEnumerator HandleSaveUnitAsync(int id, int scenenumber, string name, string lat, string lon, string lud, float[] rotation, float[] scale, int newid)
@@ -127,13 +127,13 @@ public class SaveDatabase : MonoBehaviour
             string data = www.text;
             string[] values = data.Split(","[0]);
             //ID
-            int v1 = int.Parse(values[0]);
+            int db_id = int.Parse(values[0]);
             //NAME
-            string v2 = values[1];
+            string db_name = values[1];
             //TIME
-            string v3 = values[2];
+            string db_time = values[2];
             //Load scenarios with ID,NAME,TIME as parameters
-            SceneManager.Instance.LoadScenarios(v1, v2, v3);
+            SceneManager.Instance.LoadScenarios(db_id, db_name, db_time);
         }
     }
     public IEnumerator SaveScenario(string name, string time, int amount, string lat, string lon, string isnew)
@@ -242,18 +242,18 @@ public class SaveDatabase : MonoBehaviour
             #endif
             string[] values = data.Split(";"[0]);   //Split all data with ; involved in it
             //Name
-            string v1 = values[0];                  //Name of the scenario    
+            string db_name = values[0];                  //Name of the scenario    
             //Time
-            string v2 = values[1];                  //Last updated time of the scenario
+            string db_time = values[1];                  //Last updated time of the scenario
             //Amount
-            int v3 = int.Parse(values[2]);          //Amount of units in the scenario
+            int db_amount = int.Parse(values[2]);          //Amount of units in the scenario
             //Lat
-            float v4 = float.Parse(values[3]);      //Latitude (GPS) of the last saved position in the scenario
+            float db_lat = float.Parse(values[3]);      //Latitude (GPS) of the last saved position in the scenario
             //Lon
-            float v5 = float.Parse(values[4]);      //Longitude (GPS) of the last saved position in the scenario
+            float db_lon = float.Parse(values[4]);      //Longitude (GPS) of the last saved position in the scenario
 
             //Load scenario with the parameters above
-            SceneManager.Instance.Load(sceneid, v1 /* name */, v2 /* time */, v3 /* amount */, v4 /* latitude */, v5 /* longitude */);
+            SceneManager.Instance.Load(sceneid, db_name /* name */, db_time /* time */, db_amount /* amount */, db_lat /* latitude */, db_lon /* longitude */);
         }
     }
     public IEnumerator DeleteScenario(int sceneid)

@@ -307,8 +307,8 @@
                 // Find the difference in the distances between each frame.
                 float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
                 //
-
-                CurrentplacedObject.transform.localScale += new Vector3(CurrentplacedObject.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
+                if (CurrentplacedObject.transform.localScale.x > 0)
+                    CurrentplacedObject.transform.localScale += new Vector3(CurrentplacedObject.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
 
                 // Clamp the field of view to make sure it's between 0 and 180.
                 FirstpersonCam.fieldOfView = Mathf.Clamp(FirstpersonCam.fieldOfView, 0.1f, 179.9f);

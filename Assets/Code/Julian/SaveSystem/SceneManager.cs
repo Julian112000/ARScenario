@@ -33,7 +33,6 @@ public class SceneManager : MonoBehaviour
     public double m_Longitude;
     public string m_CurrentName;
     public string m_CurrentTime;
-    public bool deviceAuthenticated = false;
 
     //Privates
     private List<GameObject> m_UnitRealtime = new List<GameObject>();       //list of realtime unit found by function 'FindUnit()'
@@ -41,9 +40,6 @@ public class SceneManager : MonoBehaviour
     private List<int> m_SavedScenarioIds = new List<int>();                 //List of saved scenario Ids
     private SaveScenario m_CurrentScenario;
     private bool m_PanelOpened;
-    private bool gotInitialAlignment = false;
-    private Vector3 _targetPosition;
-    private Component m_LastPlacedAnchor = null;
     private bool m_NewSaveToggle;
 
     private void Awake()
@@ -183,7 +179,7 @@ public class SceneManager : MonoBehaviour
     public void FindUnit()
     {
         //Find all gameobjects with the 'SaveData.cs' script attached to it
-        //Add them to the 'm_UnitRealtime''list
+        //Add them sto the 'm_UnitRealtime''list
         foreach (SaveData data in FindObjectsOfType(typeof(SaveData)))
         {
             if (!m_UnitRealtime.Contains(data.gameObject))

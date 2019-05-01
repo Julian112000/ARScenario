@@ -9,7 +9,6 @@ public class SaveData : MonoBehaviour
     private int m_ID;
 
     //Snapped gameobject of the anchor
-
     public Vector3 m_SnappedPosition;
 
     [HideInInspector]
