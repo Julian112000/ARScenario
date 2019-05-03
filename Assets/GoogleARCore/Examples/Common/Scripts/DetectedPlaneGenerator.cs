@@ -30,7 +30,7 @@ namespace GoogleARCore.Examples.Common
     /// </summary>
     public class DetectedPlaneGenerator : MonoBehaviour
     {
-        public static DetectedPlaneGenerator instance = null; //RK
+        public static DetectedPlaneGenerator instance; //RK
         public List<DetectedPlaneVisualizer> PLANES = new List<DetectedPlaneVisualizer>(); //RK
         public List<GameObject> GRIDPLANES = new List<GameObject>(); //RK
 
@@ -57,13 +57,8 @@ namespace GoogleARCore.Examples.Common
         /// 
         void Awake()//RK
         {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-
-                Destroy(gameObject);
+            instance = this;
         }
-
 
         public void Update()
         {
@@ -72,7 +67,7 @@ namespace GoogleARCore.Examples.Common
             {
                 return;
             }
-            m_TrackedPoseDriver.enabled = ARController.Scanning;
+            //m_TrackedPoseDriver.enabled = ARController.Scanning;
             if (ARController.Scanning)
             {
                 // Iterate over planes found in this frame and instantiate corresponding GameObjects to visualize them.
@@ -97,7 +92,10 @@ namespace GoogleARCore.Examples.Common
         {
             for (int i = 0; i < GRIDPLANES.Count; i++)
             {
-                GRIDPLANES[i].SetActive(active);
+                if (GRIDPLANES[i] != null)
+                {
+                    GRIDPLANES[i].SetActive(false);
+                }
             }
             for (int j = 0; j < PLANES.Count; j++)
             {

@@ -40,7 +40,6 @@
         public GameObject behaveEquipmentUI;
 
         public GameObject behaveReactUI;
-
         [SerializeField]
         private GameObject waypointPlacementUI;
         [SerializeField]
@@ -207,6 +206,10 @@
 
         public void HomeButton() //HOME BUTTON.
         {
+           if(ARController.controllerstate == ControllerState.FullyEditingObject)
+            {
+                ARController.CurrentSelectedModel.GetComponent<AIBasics>().TurnOffVisuals();
+            }
             changeBuildANI.CloseBuildANI();
             changePlaceANI.ClosePlaceAni();
             changeSelectANI.CloseSelectANI();
@@ -222,7 +225,6 @@
             //
             ARController.controllerstate = ControllerState.Default;
             //
-            ARController.CurrentSelectedModel.GetComponent<AIBasics>().TurnOffVisuals();
         }
 
         public void OpenConsole()

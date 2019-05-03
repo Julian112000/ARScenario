@@ -145,7 +145,6 @@
                 case ControllerState.Targeting:
                     break;
                 case ControllerState.Playing:
-                    DetectedPlaneGenerator.instance.ToggleVisualizers(false);
                     break;
                 default:
                     break;
@@ -371,7 +370,7 @@
                 {
                     GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation);
                     WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
-                    CurrentplacedObject.GetComponent<AIBasics>().PlaceWayPoint(hit.Pose.position, script);
+                    CurrentSelectedModel.GetComponent<AIBasics>().PlaceWayPoint(hit.Pose.position, script);
                 }
             }
         }
@@ -433,9 +432,10 @@
         //Void that is subscribed to the playmode event
         public void Playmode()
         {
-            //DetectedPlaneGenerator.Instance.ToggleVisualizers(false);
+            DetectedPlaneGenerator.instance.ToggleVisualizers(false);
             //GridViewer.SetActive(false);
             controllerstate = ControllerState.Playing;
+            //
         }
         //Static void to change model from another script
         public static void ChangeModel(GameObject modelpar)

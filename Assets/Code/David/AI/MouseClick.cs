@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleARCore.Examples.HelloAR;
 
 public class MouseClick : MonoBehaviour
 {
@@ -117,6 +118,10 @@ public class MouseClick : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             prefab.TurnOffVisuals();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneHandler.EnablePlayMode();
         }
     }
 }

@@ -138,7 +138,7 @@ public abstract class AIBasics : AIStats
         WantsToMove = true;
         TurnOffVisuals();
         PlayModeOn = true;
-        Debug.Log("Nice");
+        Debug.Log("HAPPENEEEEED!");
     }
     #endregion
     //The update that is inherited by the child class, Every Unit with an AI element will have this update
@@ -809,6 +809,7 @@ public abstract class AIBasics : AIStats
         }
         linerenderer.enabled = false;
         SelectedArrow.SetActive(false);
+        Selected = false;
     }
     //Void to turn on the visuals again
     public void TurnOnVisuals()
@@ -820,6 +821,7 @@ public abstract class AIBasics : AIStats
         }
         linerenderer.enabled = true;
         SelectedArrow.SetActive(true);
+        Selected = true;
     }
     #endregion
 }
