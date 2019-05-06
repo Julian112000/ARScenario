@@ -58,7 +58,7 @@
         }
         void Start()
         {
-            if(SimpleLoadBool.willLoad == true)
+            if (SimpleLoadBool.willLoad == true)
             {
                 loadingModeUI.SetActive(true);
             }
@@ -90,7 +90,7 @@
                                 SelfMadeButton button;
                                 button = hit.collider.gameObject.GetComponent<SelfMadeButton>();
 
-                                if(button.myEvent != null)
+                                if (button.myEvent != null)
                                 {
                                     button.ButtonClicked();
                                     Debug.Log("Clicked on Selfmade Button");
@@ -108,28 +108,28 @@
                 {
                     if (CanClick)
                     {
-                                SelfMadeButton button;
-                                button = hit.collider.gameObject.GetComponent<SelfMadeButton>();
+                        SelfMadeButton button;
+                        button = hit.collider.gameObject.GetComponent<SelfMadeButton>();
 
-                                if (button.myEvent != null)
-                                {
-                                    button.ButtonClicked();
-                                    Debug.Log("Clicked on Selfmade Button");
-                                }
+                        if (button.myEvent != null)
+                        {
+                            button.ButtonClicked();
+                            Debug.Log("Clicked on Selfmade Button");
+                        }
                     }
                 }
             }
         }
         #region All Button voids
-//
+        //
         public void MoveArrow(int direction)
         {
-            if(change.currentObject <= 7 && change.currentObject >= 2)
+            if (change.currentObject <= 7 && change.currentObject >= 2)
             {
                 change.currentObject += direction;
                 change.ChangeCurrentObject(change.currentObject);
             }
-            if(change.currentObject == 8 && direction == -1)
+            if (change.currentObject == 8 && direction == -1)
             {
                 change.currentObject += direction;
                 change.ChangeCurrentObject(change.currentObject);
@@ -206,7 +206,7 @@
 
         public void HomeButton() //HOME BUTTON.
         {
-           if(ARController.controllerstate == ControllerState.FullyEditingObject)
+            if (ARController.controllerstate == ControllerState.FullyEditingObject)
             {
                 ARController.CurrentSelectedModel.GetComponent<AIBasics>().TurnOffVisuals();
             }
@@ -283,7 +283,7 @@
         {
             behaveStatsUI.SetActive(true);
             ARController.controllerstate = ControllerState.EditingStats;
-            if(ARController.CurrentSelectedModel != null)
+            if (ARController.CurrentSelectedModel != null)
             {
                 BehaveController.CurrentAIStats = ARController.CurrentSelectedModel.GetComponent<AIStats>();
             }
@@ -335,6 +335,14 @@
         {
             loadingModeUI.SetActive(toggle);
             mainModeUI.SetActive(true);
+        }
+        public void RemoveUnit()
+        {
+            Destroy(ARController.CurrentSelectedModel);
+            ARController.controllerstate = ControllerState.Default;
+            mainModeUI.SetActive(true);
+            behaveModeUI.SetActive(false);
+            
         }
         #endregion
 

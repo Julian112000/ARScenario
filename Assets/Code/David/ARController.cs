@@ -368,7 +368,7 @@
                 }
                 else
                 {
-                    GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation);
+                    GameObject SpawnedObject = Instantiate(WaypointPrefab, hit.Pose.position, hit.Pose.rotation,CurrentSelectedModel.transform);
                     WaypointScript script = SpawnedObject.GetComponent<WaypointScript>();
                     CurrentSelectedModel.GetComponent<AIBasics>().PlaceWayPoint(hit.Pose.position, script);
                 }
