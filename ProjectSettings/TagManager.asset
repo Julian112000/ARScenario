@@ -37,6 +37,7 @@ TagManager:
   - LoadButton
   - DeleteButton
   - SaveButton
+  - StatSelect
   layers:
   - Default
   - TransparentFX

@@ -18,7 +18,7 @@
 
         public Camera mainCamera;
 
-        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI;
+        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI;
 
         [Header("UIModes")]
         public GameObject buildModeUI;
@@ -40,8 +40,8 @@
         public GameObject behaveEquipmentUI;
 
         public GameObject behaveReactUI;
-        [SerializeField]
-        private GameObject waypointPlacementUI;
+
+        public GameObject waypointPlacementUI;
         [SerializeField]
         private GameObject loadingModeUI;
 
@@ -255,7 +255,7 @@
 
         public void ConfirmWaypoint()
         {
-            waypointPlacementUI.SetActive(false);
+            changeWaypointANI.CloseWaypointsANI();
             behaveModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.FullyEditingObject;
         }
@@ -269,7 +269,7 @@
 
         public void StartWaypointing()
         {
-            behaveModeUI.SetActive(false);
+            changeBehaveANI.CloseBehaveANI();
             waypointPlacementUI.SetActive(true);
             ARController.controllerstate = ControllerState.Waypointing;
         }
@@ -291,7 +291,7 @@
         public void ConfirmEditingObjectStats()
         {
             BehaveController.UpdateCurrentAiStats();
-            behaveStatsUI.SetActive(false);
+            changeStatsANI.CloseBehaveStatsANI();
             ARController.controllerstate = ControllerState.FullyEditingObject;
             BehaveController.CurrentAIStats = null;
         }
@@ -311,7 +311,7 @@
         }
         public void CloseEquipment()
         {
-            behaveEquipmentUI.SetActive(false);
+            changeEquipmentANI.CloseBehaveReactANI();
             ARController.controllerstate = ControllerState.FullyEditingObject;
             currentHuman = null;
         }
@@ -323,7 +323,7 @@
         }
         public void CloseReact()
         {
-            behaveReactUI.SetActive(false);
+            changeReactANI.CloseBehaveReactANI();
             ARController.controllerstate = ControllerState.FullyEditingObject;
             currentAI = null;
         }

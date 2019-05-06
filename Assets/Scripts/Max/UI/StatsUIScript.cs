@@ -13,16 +13,40 @@ public class StatsUIScript : MonoBehaviour
 
     public AIStats CurrentAIStats;
 
+    private string currentSpeedState;
+
     public void Update()
     {
-        speedSlider.value = Mathf.Round(speedSlider.value * 100f) / 100f;
+        speedSlider.value = Mathf.Round(speedSlider.value * 2f) / 2f;
+
+        
+        if(speedSlider.value == 0)
+        {
+            currentSpeedState = "Stop";
+        }
+        else if(speedSlider.value == 0.5f)
+        {
+            currentSpeedState = "Slow";
+        }
+        else if(speedSlider.value == 1f)
+        {
+            currentSpeedState = "Normal";
+        }
+        else if (speedSlider.value == 1.5f)
+        {
+            currentSpeedState = "Fast";
+        }
+        else if (speedSlider.value == 2f)
+        {
+            currentSpeedState = "Max. Speed";
+        }
 
         healthText.text = "Health: " + healthSlider.value;
-        ammoText.text = "Ammo: " + ammoSlider.value;
-        angleText.text = "Viewing angle: " + angleSlider.value;
-        rangeText.text = "Vision Range: " + rangeSlider.value;
-        speedText.text = "Movement Speed: " + speedSlider.value;
-        accuracyText.text = "Accuracy: " + accuracySlider.value;
+        ammoText.text = "Ammo: " + ammoSlider.value + " bullets";
+        angleText.text = "Viewing angle: " + angleSlider.value + "°";
+        rangeText.text = "Vision Range: " + rangeSlider.value + "m";
+        speedText.text = "Movement Speed: " + currentSpeedState;
+        accuracyText.text = "Accuracy: " + accuracySlider.value + "%";
     }
     public void UpdateCurrentAiStats()
     {

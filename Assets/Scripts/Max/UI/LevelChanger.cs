@@ -70,6 +70,15 @@
             objChanger.behaveModeUI.SetActive(false);
         }
 
+        public void OnCloseStatsComplete()
+        {
+            objChanger.behaveStatsUI.SetActive(false);
+            objChanger.behaveReactUI.SetActive(false);
+            objChanger.behaveEquipmentUI.SetActive(false);
+            objChanger.waypointPlacementUI.SetActive(false);
+        }
+
+        //83C05A
 
         //Animation Triggers
         public void CloseBuildANI()
@@ -110,6 +119,21 @@
         public void CloseBehaveANI()
         {
             animator.SetTrigger("CloseBehave");
+        }
+
+        public void CloseBehaveStatsANI()
+        {
+            animator.SetTrigger("CloseStats");
+        }
+
+        public void CloseBehaveReactANI()
+        {
+            animator.SetTrigger("CloseReact");
+        }
+
+        public void CloseWaypointsANI()
+        {
+            animator.SetTrigger("CloseWaypoints");
         }
 
 
