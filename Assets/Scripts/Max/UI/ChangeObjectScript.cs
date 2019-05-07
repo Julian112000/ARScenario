@@ -359,6 +359,7 @@
             Destroy(ARController.CurrentSelectedModel);
             ARController.controllerstate = ControllerState.Default;
             mainModeUI.SetActive(true);
+            RemovalUI.SetActive(false);
             behaveModeUI.SetActive(false);
             
         }

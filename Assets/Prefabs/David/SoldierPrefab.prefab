@@ -12419,7 +12419,7 @@ SkinnedMeshRenderer:
   - 0
   - 0
   - 0
-  m_RootBone: {fileID: 5014541578030101513}
+  m_RootBone: {fileID: 5014541578987376669}
   m_AABB:
     m_Center: {x: 0.0014453828, y: 0.3598708, z: 0.078122884}
     m_Extent: {x: 0.764415, y: 0.19754529, z: 0.14747876}
