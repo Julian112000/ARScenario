@@ -41,9 +41,9 @@
     public class ARController : MonoBehaviour
     {
         [SerializeField]
-        private float ScaleSpeed = 0.05f;
+        private float ScaleSpeed = 0.02f;
         [SerializeField]
-        private float RotateSpeed = 0.5f;
+        private float RotateSpeed = 1f;
         //
         [SerializeField]
         private Camera FirstpersonCam;

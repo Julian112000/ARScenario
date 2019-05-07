@@ -42,6 +42,8 @@
         public GameObject behaveReactUI;
 
         public GameObject waypointPlacementUI;
+
+        public GameObject RemovalUI;
         [SerializeField]
         private GameObject loadingModeUI;
 
@@ -51,6 +53,7 @@
         private AIBasics currentAI;
 
         private bool CanClick = true;
+        private bool ReScaling = false;
 
         private void Awake()
         {
@@ -157,10 +160,19 @@
             changeRotateANI.CloseRotateANI();
 
             //
-            placeModeUI.SetActive(true);
 
             //
-            ARController.controllerstate = ControllerState.Placing;
+            if (ReScaling)
+            {
+                ARController.controllerstate = ControllerState.FullyEditingObject;
+                ReScaling = false;
+                behaveModeUI.SetActive(true);
+            }
+            else if (!ReScaling)
+            {
+                ARController.controllerstate = ControllerState.Placing;
+                placeModeUI.SetActive(true);
+            }
         }
         public void ConfirmPlacement()
         {
@@ -286,6 +298,7 @@
             if (ARController.CurrentSelectedModel != null)
             {
                 BehaveController.CurrentAIStats = ARController.CurrentSelectedModel.GetComponent<AIStats>();
+                BehaveController.StartCurrentAIStats();
             }
         }
         public void ConfirmEditingObjectStats()
@@ -336,6 +349,11 @@
             loadingModeUI.SetActive(toggle);
             mainModeUI.SetActive(true);
         }
+        /// <summary>
+        /// Remove Related UI Voids
+        /// </summary>
+        /// 
+        ///UI Void that removes the actual Unit (called when pressed YES)
         public void RemoveUnit()
         {
             Destroy(ARController.CurrentSelectedModel);
@@ -343,6 +361,32 @@
             mainModeUI.SetActive(true);
             behaveModeUI.SetActive(false);
             
+        }
+        /// <summary>
+        /// UI Void that triggers the UI to press yes or no, If already active it turns to false if not it turns active.
+        /// </summary>
+        public void TriggerRemoveUI()
+        {
+            if (RemovalUI.active)
+            {
+                RemovalUI.SetActive(false);
+                behaveModeUI.SetActive(true);
+            }
+            else if (!RemovalUI.active)
+            {
+                RemovalUI.SetActive(true);
+                behaveModeUI.SetActive(false);
+            }
+        }
+        /// <summary>
+        /// Trigger the scaling mode when the scale button is pressed
+        /// </summary>
+        public void TriggerScaling()
+        {
+            ARController.controllerstate = ControllerState.Editing;
+            behaveModeUI.SetActive(false);
+            rotatingModeUI.SetActive(true);
+            ReScaling = true;
         }
         #endregion
 

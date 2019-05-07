@@ -60,4 +60,16 @@ public class StatsUIScript : MonoBehaviour
             CurrentAIStats.Accuracy = (int)accuracySlider.value;
         }
     }
+    public void StartCurrentAIStats()
+    {
+        if (CurrentAIStats != null)
+        {
+            healthSlider.value = CurrentAIStats.Health;
+            ammoSlider.value = CurrentAIStats.Ammo;
+            angleSlider.value = CurrentAIStats.ViewingAngle;
+            rangeSlider.value = CurrentAIStats.VisionRange;
+            speedSlider.value = CurrentAIStats.MovementSpeed;
+            accuracySlider.value = CurrentAIStats.Accuracy;
+        }
+    }
 }
