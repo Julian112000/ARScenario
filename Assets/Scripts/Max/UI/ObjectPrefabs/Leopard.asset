@@ -17,6 +17,5 @@ MonoBehaviour:
   description: The description for the Leopard 2A7
   description_Dutch: De beschrijving van de Leopard 2A7
   artwork: {fileID: 21300000, guid: 2420ac69f9122dc4f91220d09af377f2, type: 3}
-  ConnectedModel: {fileID: 38527647634649540, guid: 2cce3318e3870f644b161c5f761db3d4,
-    type: 3}
+  ConnectedModel: {fileID: 100026, guid: d957c7d902bb67647b1d42a35ff64534, type: 3}
   ConnectedShowCase: {fileID: 8400000, guid: 224bb5c60fce98f43966198e5de0d465, type: 2}
