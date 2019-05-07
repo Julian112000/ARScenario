@@ -2726,6 +2726,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2080328672097607391, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: RemovalUI
+      value: 
+      objectReference: {fileID: 2080328671696966934}
     - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
@@ -2819,6 +2824,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &2080328671696966934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1315302060, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 2080328671696966930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8048243597224634856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3165,5 +3176,15 @@ PrefabInstance:
       propertyPath: FullyEditingCanvas
       value: 
       objectReference: {fileID: 217990409}
+    - target: {fileID: 8223200011021302075, guid: 8e61edc2f4d179d419de9197d55616c0,
+        type: 3}
+      propertyPath: RotateSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223200011021302075, guid: 8e61edc2f4d179d419de9197d55616c0,
+        type: 3}
+      propertyPath: ScaleSpeed
+      value: 0.0025
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e61edc2f4d179d419de9197d55616c0, type: 3}

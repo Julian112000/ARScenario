@@ -41,9 +41,9 @@
     public class ARController : MonoBehaviour
     {
         [SerializeField]
-        private float ScaleSpeed = 0.02f;
+        private float ScaleSpeed = 0.0025f;
         [SerializeField]
-        private float RotateSpeed = 1f;
+        private float RotateSpeed = 1.5f;
         //
         [SerializeField]
         private Camera FirstpersonCam;
@@ -275,6 +275,7 @@
                     GameObject SpawnedObject = Instantiate(Model, hit.Pose.position, hit.Pose.rotation);
                     SpawnedObject.transform.Rotate(0, 180, 0, Space.Self);
                     CurrentplacedObject = SpawnedObject;
+                    CurrentSelectedModel = CurrentplacedObject;
                     //ConsoleScript.Instance.SetFeedback(MessageType.BuildMessage, CurrentplacedObject.name);
                     //
                     Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
@@ -306,8 +307,8 @@
                 // Find the difference in the distances between each frame.
                 float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
                 //
-                if (CurrentplacedObject.transform.localScale.x > 0)
-                    CurrentplacedObject.transform.localScale += new Vector3(CurrentplacedObject.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentplacedObject.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
+                if (CurrentSelectedModel.transform.localScale.x > 0.03f && CurrentSelectedModel.transform.localScale.x < 2f)
+                    CurrentSelectedModel.transform.localScale += new Vector3(CurrentSelectedModel.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
 
                 // Clamp the field of view to make sure it's between 0 and 180.
                 FirstpersonCam.fieldOfView = Mathf.Clamp(FirstpersonCam.fieldOfView, 0.1f, 179.9f);
@@ -332,13 +333,13 @@
                     if (FirstPos.x < LastPos.x)
                     {
                         Debug.Log("Swiping right");
-                        CurrentplacedObject.transform.Rotate(new Vector3(0, RotateSpeed, 0));
+                        CurrentSelectedModel.transform.Rotate(new Vector3(0, RotateSpeed, 0));
 
                     }
                     else if (LastPos.x < FirstPos.x)
                     {
                         Debug.Log("Swiping Left");
-                        CurrentplacedObject.transform.Rotate(new Vector3(0, -RotateSpeed, 0));
+                        CurrentSelectedModel.transform.Rotate(new Vector3(0, -RotateSpeed, 0));
 
                     }
                 }
