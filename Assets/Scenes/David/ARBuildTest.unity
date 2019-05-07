@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -576,7 +576,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SavingFeedback
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1324056245}
     - target: {fileID: 6968159168808241538, guid: 12f090f504a193f4ca3bde10c1703968,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1797,6 +1797,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43bd127f4bd2cf74e9a3a03d3ac1613a, type: 3}
+--- !u!114 &1324056245 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7939254030218353649, guid: 43bd127f4bd2cf74e9a3a03d3ac1613a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324056244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1360088450 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: d2c61667deb8cbc449b70c001d9f4e8a,
@@ -2743,6 +2755,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ARCore Device 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2080328671762092059, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3231358664760356022, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2798,27 +2825,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8553925863404097101, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080328671762092059, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7340800189391219717, guid: 3b5417beef39ea947b0e421a7a033318,
+    - target: {fileID: 1644892332314211241, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: translate
       value: 
       objectReference: {fileID: 361669979}
-    - target: {fileID: 1644892332314211241, guid: 3b5417beef39ea947b0e421a7a033318,
+    - target: {fileID: 7340800189391219717, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: translate
       value: 
@@ -2828,16 +2840,6 @@ PrefabInstance:
       propertyPath: translate
       value: 
       objectReference: {fileID: 361669979}
-    - target: {fileID: 4466074491232121772, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: translate
-      value: 
-      objectReference: {fileID: 361669979}
-    - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8690069877012112098, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: myEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2848,6 +2850,16 @@ PrefabInstance:
       propertyPath: myEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 229559417}
+    - target: {fileID: 4466074491232121772, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: translate
+      value: 
+      objectReference: {fileID: 361669979}
+    - target: {fileID: 8553925863404097101, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7776752206792636058, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
