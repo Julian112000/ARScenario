@@ -56,7 +56,7 @@ public class ConsoleScript : MonoBehaviour
                 ToggleFeedback(name1 + " [killed] " + name2);
                 break;
             case MessageType.TargetMessage:
-                ToggleFeedback(name1 + " [targeting] " + name2);
+                ToggleFeedback(name1 + " [spotted] " + name2);
                 break;
             case MessageType.ShotMessage:
                 ToggleFeedback(name1 + " [fired to] " + name2);
@@ -68,10 +68,10 @@ public class ConsoleScript : MonoBehaviour
         switch (messagetype)
         {
             case MessageType.BuildMessage:
-                ToggleFeedback("[placed] " + name1);
+                ToggleFeedback(" [placed] " + name1);
                 break;  
             case MessageType.SelectMessage:
-                ToggleFeedback("[selected] " + name1);
+                ToggleFeedback(" [selected] " + name1);
                 break;
         }
     }

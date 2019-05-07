@@ -108,10 +108,12 @@ public class SaveDatabase : MonoBehaviour
         form.AddField("roty", rotation[1].ToString("0.00"));
         form.AddField("rotz", rotation[2].ToString("0.00"));
         //Save Scale with 2 decimals
-        form.AddField("scalex", scale[0].ToString("0.00"));
+        form.AddField("scalex", scale[0].ToString("0.00")); 
         form.AddField("scaley", scale[1].ToString("0.00"));
         form.AddField("scalez", scale[2].ToString("0.00"));
         WWW www = new WWW(url + "createunitapi.php", form);
+        SceneManager.Instance.SetSavingFeedback("SCENARIO SAVED", false);
+        StartCoroutine(SceneManager.Instance.ToggleOffUI());
         yield return www;
     }
     public IEnumerator LoadScenarioUI(int id)
@@ -144,7 +146,6 @@ public class SaveDatabase : MonoBehaviour
         form.AddField("scenarioname", name);
         WWW www = new WWW(url + "api.php", form);
         yield return www;
-        Debug.Log(www.text + "UPDATE");
         if (!string.IsNullOrEmpty(isnew) || www.text == "create")
         {
             StartCoroutine(HandleSaveAsync(isnew, time, amount, lat, lon));
@@ -238,15 +239,15 @@ public class SaveDatabase : MonoBehaviour
             //Store data from www.text into local string parameter
             string data = www.text;
             #if UNITY_EDITOR
-            data = data.Replace(".", ","); //Replace , to . for the android build if standalone build
+            data = data.Replace(".", ",");              //Replace , to . for the android build if standalone build
             #endif
-            string[] values = data.Split(";"[0]);   //Split all data with ; involved in it
+            string[] values = data.Split(";"[0]);       //Split all data with ; involved in it
             //Name
-            string db_name = values[0];                  //Name of the scenario    
+            string db_name = values[0];                 //Name of the scenario    
             //Time
-            string db_time = values[1];                  //Last updated time of the scenario
+            string db_time = values[1];                 //Last updated time of the scenario
             //Amount
-            int db_amount = int.Parse(values[2]);          //Amount of units in the scenario
+            int db_amount = int.Parse(values[2]);       //Amount of units in the scenario
             //Lat
             float db_lat = float.Parse(values[3]);      //Latitude (GPS) of the last saved position in the scenario
             //Lon

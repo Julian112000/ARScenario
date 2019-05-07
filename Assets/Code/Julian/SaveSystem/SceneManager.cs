@@ -24,6 +24,8 @@ public class SceneManager : MonoBehaviour
     private GameObject m_ScenarioPanel;
     [SerializeField]
     private GameObject m_NewSavePanel;
+    [SerializeField]
+    private Text m_SavingFeedback;
 
     //Publics
     [SerializeField]
@@ -69,6 +71,8 @@ public class SceneManager : MonoBehaviour
         //
         if (m_NewSavePanel.activeSelf)
             m_NewSavePanel.SetActive(false);
+
+        SetSavingFeedback("Saving...       ", true);
     }
     public void ToggleNewSave()
     {
@@ -169,7 +173,12 @@ public class SceneManager : MonoBehaviour
         Unit.transform.localEulerAngles = new Vector3(rotx, roty, rotz);    //Set Rotation in eulerangles of the saved rotation
         Unit.transform.localScale = new Vector3(scalex, scaley, scalez);    //Set Scale of the unit
     }
-
+    public void SetSavingFeedback(string text, bool toggle)
+    {
+        m_SavingFeedback.gameObject.SetActive(true);
+        m_SavingFeedback.transform.GetChild(0).gameObject.SetActive(toggle);
+        m_SavingFeedback.text = text;
+    }
     public void SaveUnit(GameObject unit, int id)
     {
         //Start coroutine for the saved unit
@@ -214,7 +223,6 @@ public class SceneManager : MonoBehaviour
             m_CurrentName = isnew;
 
         SaveSystem.SaveScenario(this.gameObject, m_UnitRealtime.Count, "52.5324234", "5.4532432", m_CurrentName);
-        Debug.LogWarning("SCENE SAVED...");
     }
     public void SaveStorageData(int sceneid)
     {
@@ -228,6 +236,12 @@ public class SceneManager : MonoBehaviour
             //For every unit found save the data of that unit
             StartCoroutine(SaveUnitData(m_UnitRealtime[i], i));
         }
+        if (m_UnitRealtime.Count <= 0)
+        {
+            SetSavingFeedback("SCENARIO SAVED", false);
+            StartCoroutine(ToggleOffUI());
+        }
+
         if (!m_SavedScenarioIds.Contains(sceneid))
         {
             //Load scenario when there are no saved scenarios in the list
@@ -237,8 +251,12 @@ public class SceneManager : MonoBehaviour
         {
             SaveDatabase.Instance.OnUpdateScenario(m_UnitRealtime.Count, sceneid, DateTime.Now.ToString(), "52.5324234", "5.4532432");
         }
-        Debug.LogWarning("STORAGE SAVED...");
         m_UnitRealtime.Clear();
+    }
+    public IEnumerator ToggleOffUI()
+    {
+        yield return new WaitForSeconds(3f);
+        m_SavingFeedback.gameObject.SetActive(false);
     }
     public void TogglePanel()
     {
