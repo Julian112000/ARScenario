@@ -17,6 +17,5 @@ MonoBehaviour:
   description: The description for the soldier.
   description_Dutch: De beschrijving van de Soldaat.
   artwork: {fileID: 21300000, guid: ab12bfa6f267a764c8297f67cd1fa8ca, type: 3}
-  ConnectedModel: {fileID: 5014541577067834460, guid: 22606dad577d4674b8a2bcd00f25c33f,
-    type: 3}
-  ConnectedShowCase: {fileID: 8400000, guid: b19f66de108e22044bffea189f956d99, type: 2}
+  ConnectedModel: {fileID: 1890266061, guid: d7212efa1cbc9554081a1bb52da5fe11, type: 3}
+  ConnectedShowCase: {fileID: 0}
