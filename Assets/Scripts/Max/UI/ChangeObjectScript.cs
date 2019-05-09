@@ -103,7 +103,7 @@
                     }
                 }
             }
-            else if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButtonUp(0))
             {
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
