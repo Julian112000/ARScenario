@@ -18,7 +18,7 @@
 
         public Camera mainCamera;
 
-        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI;
+        public LevelChanger changeBuildANI, changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI, changeRemoveANI;
 
         [Header("UIModes")]
         public GameObject buildModeUI;
@@ -46,6 +46,7 @@
         public GameObject routeButtonUI;
 
         public GameObject RemovalUI;
+
         [SerializeField]
         private GameObject loadingModeUI;
 
@@ -377,9 +378,9 @@
             Destroy(ARController.CurrentSelectedModel.transform.root.gameObject);
             ARController.controllerstate = ControllerState.Default;
             mainModeUI.SetActive(true);
-            RemovalUI.SetActive(false);
-            behaveModeUI.SetActive(false);
-            
+            changeRemoveANI.CloseBehaveReactANI();
+            changeBehaveANI.CloseBehaveANI();
+
         }
         /// <summary>
         /// UI Void that triggers the UI to press yes or no, If already active it turns to false if not it turns active.
@@ -388,13 +389,13 @@
         {
             if (RemovalUI.active)
             {
-                RemovalUI.SetActive(false);
-                behaveModeUI.SetActive(true);
+                changeRemoveANI.CloseBehaveReactANI();
+                //behaveModeUI.SetActive(true);
             }
             else if (!RemovalUI.active)
             {
                 RemovalUI.SetActive(true);
-                behaveModeUI.SetActive(false);
+                //behaveModeUI.SetActive(false);
             }
         }
         /// <summary>
@@ -403,7 +404,7 @@
         public void TriggerScaling()
         {
             ARController.controllerstate = ControllerState.Editing;
-            behaveModeUI.SetActive(false);
+            changeBehaveANI.CloseBehaveANI();
             rotatingModeUI.SetActive(true);
             ReScaling = true;
         }

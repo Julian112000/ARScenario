@@ -3491,6 +3491,11 @@ PrefabInstance:
       propertyPath: routeButtonUI
       value: 
       objectReference: {fileID: 2080328671696966935}
+    - target: {fileID: 2080328672097607391, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: changeRemoveANI
+      value: 
+      objectReference: {fileID: 2080328671696966952}
     - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
@@ -3509,7 +3514,7 @@ PrefabInstance:
     - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
@@ -4068,6 +4073,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2080328671696966952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1315302063, guid: 3b5417beef39ea947b0e421a7a033318,
+    type: 3}
+  m_PrefabInstance: {fileID: 2080328671696966930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080328671696966934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992fc4a9ef1d9054581c0d7f7d50991a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8048243597224634856

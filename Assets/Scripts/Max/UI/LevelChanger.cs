@@ -76,6 +76,7 @@
             objChanger.behaveReactUI.SetActive(false);
             objChanger.behaveEquipmentUI.SetActive(false);
             objChanger.waypointPlacementUI.SetActive(false);
+            objChanger.RemovalUI.SetActive(false);
         }
 
         //83C05A
