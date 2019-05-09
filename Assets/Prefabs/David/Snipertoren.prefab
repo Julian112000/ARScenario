@@ -61725,7 +61725,6 @@ Transform:
   - {fileID: 1550975436167538998}
   - {fileID: 414489789575627814}
   - {fileID: 1471000136279344258}
-  - {fileID: 949920038253724965}
   - {fileID: 1173613212971845736}
   m_Father: {fileID: 7557477677135045958}
   m_RootOrder: 0
@@ -85624,9 +85623,9 @@ GameObject:
   - component: {fileID: 4509272226828459087}
   - component: {fileID: 472153531177308182}
   - component: {fileID: 1078357828783254094}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Snipertoren
-  m_TagString: Untagged
+  m_TagString: Snipertoren
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85643,6 +85642,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4580785755888501945}
+  - {fileID: 949920038253724965}
   m_Father: {fileID: 7557477676618205437}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -114425,7 +114425,7 @@ Transform:
   - {fileID: 1838058491062257271}
   - {fileID: 6233028189852169283}
   m_Father: {fileID: 4580785755888501945}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &8922163041916522809
 ParticleSystem:
@@ -133364,15 +133364,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980881799269044152}
-  m_LocalRotation: {x: -0, y: 0.079536535, z: -0, w: 0.99683195}
-  m_LocalPosition: {x: 0.001, y: 1.492, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.99683195, z: -0, w: -0.079536535}
+  m_LocalPosition: {x: 0, y: 3.426, z: 0}
+  m_LocalScale: {x: 2.4506683, y: 2.4506683, z: 2.4506683}
   m_Children:
   - {fileID: 3465675206830619839}
   - {fileID: 136314596927938696}
   - {fileID: 2557328448988326610}
-  m_Father: {fileID: 4580785755888501945}
-  m_RootOrder: 3
+  m_Father: {fileID: 7557477677135045958}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &995134227873579328
 Animator:

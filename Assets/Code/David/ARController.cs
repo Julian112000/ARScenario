@@ -401,8 +401,15 @@
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, unitlayer))
             {
-                CurrentSelectedModel = hit.collider.gameObject;
-                if(hit.collider.gameObject.GetComponent<AIBasics>().unittype == UnitType.Human)
+                ChangeObjectScript.Instance.UpdateRouteUI(hit.transform.gameObject);
+
+                if (hit.transform.gameObject.tag == "Snipertoren")
+                    CurrentSelectedModel = hit.collider.transform.GetChild(0).gameObject;
+                else CurrentSelectedModel = hit.collider.gameObject;
+
+                AIBasics selectedscript = CurrentSelectedModel.GetComponent<AIBasics>();
+
+                if (selectedscript.unittype == UnitType.Human)
                 {
                     SelectedAHuman = true;
                 }
@@ -410,8 +417,11 @@
                 {
                     SelectedAHuman = false;
                 }
-                CurrentSelectedModel.GetComponent<AIBasics>().Selected = true;
-                CurrentSelectedModel.GetComponent<AIBasics>().TurnOnVisuals();
+                //
+
+
+                selectedscript.Selected = true;
+                selectedscript.TurnOnVisuals();
                 //
                 controllerstate = ControllerState.FullyEditingObject;
             }

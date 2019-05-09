@@ -43,6 +43,8 @@
 
         public GameObject waypointPlacementUI;
 
+        public GameObject routeButtonUI;
+
         public GameObject RemovalUI;
         [SerializeField]
         private GameObject loadingModeUI;
@@ -200,11 +202,27 @@
             //
             changeMainANI.CloseMainANI();
             changePlayANI.ClosePlayANI();
+            //
 
             //
             ARController.controllerstate = ControllerState.SelectingObject;
         }
+        public void UpdateRouteUI(GameObject selectedobject)
+        {
+            BoxCollider collider = routeButtonUI.GetComponent<BoxCollider>();
+            SpriteRenderer SpriteRenderer = routeButtonUI.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
+            if (selectedobject.tag != "Snipertoren")
+            {
+                collider.enabled = true;
+                SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 1);
+            }
+            else
+            {
+                collider.enabled = false;
+                SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 0.2f);
+            }
+        }
         public void StartPlayMode()
         {
             changeMainANI.CloseMainANI();
@@ -356,7 +374,7 @@
         ///UI Void that removes the actual Unit (called when pressed YES)
         public void RemoveUnit()
         {
-            Destroy(ARController.CurrentSelectedModel);
+            Destroy(ARController.CurrentSelectedModel.transform.root.gameObject);
             ARController.controllerstate = ControllerState.Default;
             mainModeUI.SetActive(true);
             RemovalUI.SetActive(false);
