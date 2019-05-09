@@ -15,8 +15,6 @@
     public class TextTranslate : MonoBehaviour
     {
 
-        public bool dutchLang;
-        public bool englishLang;
 
         [SerializeField]
         private List<Text> m_TextRealtime = new List<Text>();
@@ -27,22 +25,16 @@
         [SerializeField]
         private List<string> m_TextEnglish = new List<string>();
 
-        private void Start()
-        {
-            dutchLang = true;
-            englishLang = false;
-        }
-
         public void Update()
         {
-            if (dutchLang)
+            if (AppStartBools.dutchLanguage)
             {
                 for (int i = 0; i < m_TextRealtime.Count; i++)
                 {
                     m_TextRealtime[i].text = m_TextDutch[i];
                 }
             }
-            else if (englishLang)
+            else if (AppStartBools.englishLanguage)
             {
                 for (int i = 0; i < m_TextRealtime.Count; i++)
                 {

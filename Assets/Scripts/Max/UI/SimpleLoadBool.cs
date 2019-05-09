@@ -11,8 +11,11 @@
     using Input = InstantPreviewInput;
 #endif
 
-    public class SimpleLoadBool : MonoBehaviour
+    public class AppStartBools : MonoBehaviour
     {
         public static bool willLoad;
+
+        public static bool dutchLanguage;
+        public static bool englishLanguage;
     }
 }

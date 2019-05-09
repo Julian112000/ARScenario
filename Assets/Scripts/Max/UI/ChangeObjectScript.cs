@@ -63,7 +63,7 @@
         }
         void Start()
         {
-            if (SimpleLoadBool.willLoad == true)
+            if (AppStartBools.willLoad == true)
             {
                 loadingModeUI.SetActive(true);
             }
@@ -129,12 +129,12 @@
         //
         public void MoveArrow(int direction)
         {
-            if (change.currentObject <= 7 && change.currentObject >= 2)
+            if (change.currentObject <= 6 && change.currentObject >= 2)
             {
                 change.currentObject += direction;
                 change.ChangeCurrentObject(change.currentObject);
             }
-            if (change.currentObject == 8 && direction == -1)
+            if (change.currentObject == 7 && direction == -1)
             {
                 change.currentObject += direction;
                 change.ChangeCurrentObject(change.currentObject);

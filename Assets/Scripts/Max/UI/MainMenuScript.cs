@@ -39,7 +39,7 @@
         [SerializeField]
         private Animator mainAni;
 
-        public SimpleLoadBool loadScene;
+        public AppStartBools loadScene;
 
         void Update()
         {
@@ -72,13 +72,13 @@
                             if (hit.collider.tag == "NewScenario") //Start a new scenario
                             {
                                 animator.SetTrigger("FadeOutMain");
-                                SimpleLoadBool.willLoad = false;
+                                AppStartBools.willLoad = false;
                                 newOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario
                             {
                                 animator.SetTrigger("FadeOutMain");
-                                SimpleLoadBool.willLoad = true;
+                                AppStartBools.willLoad = true;
                                 loadOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "SettingsMain") //Open Settings
@@ -111,13 +111,13 @@
                     if (hit.collider.tag == "NewScenario") //Start a new scenario
                             {
                                 animator.SetTrigger("FadeOutMain");
-                                SimpleLoadBool.willLoad = false;
+                                AppStartBools.willLoad = false;
                                 newOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario
                             {
                                 animator.SetTrigger("FadeOutMain");
-                                SimpleLoadBool.willLoad = true;
+                                AppStartBools.willLoad = true;
                                 loadOverlay.SetActive(true);
                             }
                             else if (hit.collider.gameObject.tag == "SettingsMain") //Open Settings

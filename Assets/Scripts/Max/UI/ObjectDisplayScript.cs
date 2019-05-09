@@ -32,12 +32,12 @@
 
             showCase.material.mainTexture = UIObject.ConnectedShowCase;
 
-            if (translate.dutchLang)
+            if (AppStartBools.dutchLanguage)
             {
                 descriptionText.text = UIObject.description_Dutch;
                 nameText.text = UIObject.name_Dutch;
             }
-            else if (translate.englishLang)
+            else if (AppStartBools.englishLanguage)
             {
                 descriptionText.text = UIObject.description;
                 nameText.text = UIObject.name;

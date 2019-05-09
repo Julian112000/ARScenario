@@ -20,17 +20,16 @@
 
         public TextTranslate translate;
 
-
         private void Start()
         {
-            translate.dutchLang = true;
-            translate.englishLang = false;
+            AppStartBools.englishLanguage = true;
+            AppStartBools.dutchLanguage = false;
         }
 
         void Update()
         {
-            animator.SetBool("ToEnglishBool", translate.englishLang);
-            animator.SetBool("ToDutchBool", translate.dutchLang);
+            animator.SetBool("ToEnglishBool", AppStartBools.englishLanguage);
+            animator.SetBool("ToDutchBool", AppStartBools.dutchLanguage);
 
             if (Input.touchCount > 0)
             {
@@ -41,13 +40,31 @@
                 {
                     if (hit.collider.tag == "DutchLang")
                     {
-                        translate.dutchLang = true;
-                        translate.englishLang = false;
+                        AppStartBools.dutchLanguage = true;
+                        AppStartBools.englishLanguage = false;
                     }
                     else if (hit.collider.tag == "EnglishLang")
                     {
-                        translate.englishLang = true;
-                        translate.dutchLang = false;
+                        AppStartBools.dutchLanguage = false;
+                        AppStartBools.englishLanguage = true;
+                    }
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.tag == "DutchLang")
+                    {
+                        AppStartBools.dutchLanguage = true;
+                        AppStartBools.englishLanguage = false;
+                    }
+                    else if (hit.collider.tag == "EnglishLang")
+                    {
+                        AppStartBools.dutchLanguage = false;
+                        AppStartBools.englishLanguage = true;
                     }
                 }
             }
