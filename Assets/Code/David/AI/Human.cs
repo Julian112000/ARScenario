@@ -48,6 +48,7 @@ public class Human : AIBasics
         if (PlayModeOn)
         {
             base.Update();
+            //ActionUpdate();
         }
            
     }
@@ -55,6 +56,11 @@ public class Human : AIBasics
     {
         base.LateUpdate();
         ActionUpdate();
+    }
+    public void FixedUpdate()
+    {
+        //ActionUpdate();
+        
     }
     //
     public void WeaponUpdate(int WeaponNumber)
@@ -177,14 +183,24 @@ public class Human : AIBasics
         Transform Chest;
         Chest = animator.GetBoneTransform(HumanBodyBones.Chest);
         Chest.LookAt(Targetpos);
+        //
+        //Vector3 DirectionChest = Targetpos - Chest.transform.position;
+        //Quaternion lookRotationChest = Quaternion.LookRotation(DirectionChest);
+        //Chest.transform.rotation = Quaternion.Lerp(Chest.transform.rotation, lookRotationChest, Time.deltaTime * (2000 / 360.0f));
         Chest.rotation = Chest.rotation * Quaternion.Euler(ChestOffset);
         //
         Transform Head;
         Head = animator.GetBoneTransform(HumanBodyBones.Head);
+        //Vector3 Direction = Targetpos - Head.transform.position;
+        //Quaternion lookRotation = Quaternion.LookRotation(Direction);
+        //Head.transform.rotation = Quaternion.Lerp(Head.transform.rotation, lookRotation, Time.deltaTime * (2000 / 360.0f));
         Head.LookAt(Targetpos);
+        //
+
         //Debug line
         Debug.DrawLine(VisionPoint.position, Targetpos, Color.green);
         //Check if target is still in range
+        Debug.Log("NICEEEE");
     }
     #endregion
     //Everything related to the Target and Move state

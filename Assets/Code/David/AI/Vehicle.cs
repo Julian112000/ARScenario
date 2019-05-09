@@ -124,7 +124,7 @@ public class Vehicle : AIBasics
     #region Target Enemy Related
     private void TargetEnemy()
     {
-        OnlyYLook(LookingObject, PointToAimAt);
+        //OnlyYLook(LookingObject, PointToAimAt);
         TrackTarget(FoundTargetScript.VisionPoint.position);
         ShootDelayTimer += Time.deltaTime;
         if (ShootDelayTimer >= FireRate)
@@ -139,8 +139,18 @@ public class Vehicle : AIBasics
     }
     private void TrackTarget(Vector3 Targetpos)
     {
-        OnlyYLook(LookingObject, Targetpos);
-        AimingObject.transform.LookAt(Targetpos);
+        //OnlyYLook(LookingObject, Targetpos);
+        //
+        Vector3 DirectionLookingObject = Targetpos - LookingObject.transform.position;
+        DirectionLookingObject.y = 0.0f;
+        Quaternion LookRotationLookingObject = Quaternion.LookRotation(DirectionLookingObject);
+        LookingObject.transform.rotation = Quaternion.Lerp(LookingObject.transform.rotation, LookRotationLookingObject, Time.deltaTime * (2000 / 360.0f));
+        //
+        Vector3 Direction = Targetpos - AimingObject.transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(Direction);
+        AimingObject.transform.rotation = Quaternion.Lerp(AimingObject.transform.rotation, lookRotation, Time.deltaTime * (2000 / 360.0f));
+        //
+        //AimingObject.transform.LookAt(Targetpos);
         //
         //Debug line
         Debug.DrawLine(VisionPoint.position, Targetpos, Color.green);

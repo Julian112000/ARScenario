@@ -433,8 +433,12 @@ public abstract class AIBasics : AIStats
     //Void that gets called when you are moving towards a waypoint (this void moves the character forward)
     private void MoveTowardsPoint(Vector3 TargetPoint)
     {
+        Vector3 Direction = TargetPoint - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(Direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * (2000 / 360.0f));
+        //
         //Make character look at target so that forward is towards the point
-        transform.LookAt(TargetPoint);
+        //transform.LookAt(TargetPoint);
         //Actual movement
         transform.position += transform.forward * MovementSpeed * Time.deltaTime;
         //Make line get swallowed by player

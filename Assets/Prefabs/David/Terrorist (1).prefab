@@ -10593,7 +10593,7 @@ MonoBehaviour:
   unitside: 0
   aistate: 1
   unittype: 0
-  Behaviour: 2
+  Behaviour: 3
   VisionPoint: {fileID: 5845674222800254724}
   LookingObject: {fileID: 5845674221190450803}
   WaypointPrefab: {fileID: 4077880475681992460, guid: 70d2e46716c08654484afce1835de83e,
@@ -10616,9 +10616,9 @@ MonoBehaviour:
   waypointscripts: []
   CurrentWaypoint: 0
   WantsToMove: 0
-  ChestOffset: {x: 10, y: 40, z: 25}
+  ChestOffset: {x: 10, y: 40, z: 10}
   UsingIkHandling: 1
-  weaponType: 1
+  weaponType: 0
   Weapons:
   - {fileID: 5845674222586298131}
   - {fileID: 948395393}
@@ -11938,6 +11938,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5845674221190025733}
     m_Modifications:
+    - target: {fileID: 172038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
+      propertyPath: m_Name
+      value: MobileExplosion3D_5
+      objectReference: {fileID: 0}
     - target: {fileID: 472038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.021999955
@@ -11981,10 +11985,6 @@ PrefabInstance:
     - target: {fileID: 472038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 172038, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
-      propertyPath: m_Name
-      value: MobileExplosion3D_5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1390b264343f114581c7abb18bb4c57, type: 3}
@@ -12072,7 +12072,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5023482308249119200, guid: d90d9153b4793144bbe66932a1506938,
+    - target: {fileID: 5023482308249119206, guid: d90d9153b4793144bbe66932a1506938,
         type: 3}
       propertyPath: m_Layer
       value: 8
@@ -12082,7 +12082,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 5023482308249119206, guid: d90d9153b4793144bbe66932a1506938,
+    - target: {fileID: 5023482308249119200, guid: d90d9153b4793144bbe66932a1506938,
         type: 3}
       propertyPath: m_Layer
       value: 8
