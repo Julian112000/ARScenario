@@ -68,6 +68,8 @@ public abstract class AIBasics : AIStats
     protected AIBasics FoundTargetScript;
     protected float ShootDelayTimer;
     [SerializeField]
+    private float TargetDelayTimer;
+    [SerializeField]
     protected bool PlayModeOn = false;
     //Variables For when the unit is selected to aim at a certain point
     //The offset when aiming (this is because the animation might not always work)
@@ -233,25 +235,31 @@ public abstract class AIBasics : AIStats
         else
         {
             Debug.Log("Target In Sight");
-            //Switchcase for debugging and also for deciding what to do when enemy is spotted
-            switch (unitside)
+            TargetDelayTimer += Time.deltaTime;
+            if (TargetDelayTimer >= 0.5f)
             {
-                case UnitSide.Terrorist:
-                    Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.red);
-                    EnemySpotted();
-                    FoundTarget = Target;
-                    FoundTargetScript = TargetScript;
-                    //LookingObject.transform.LookAt(Target.transform.position);
-                    break;
-                case UnitSide.Friendly:
-                    Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.blue);
-                    EnemySpotted();
-                    FoundTarget = Target;
-                    FoundTargetScript = TargetScript;
-                    //LookingObject.transform.LookAt(TargetScript.VisionPoint.position);
-                    break;
-                default:
-                    break;
+                //Switchcase for debugging and also for deciding what to do when enemy is spotted
+                switch (unitside)
+                {
+                    case UnitSide.Terrorist:
+                        Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.red);
+                        EnemySpotted();
+                        FoundTarget = Target;
+                        FoundTargetScript = TargetScript;
+                        TargetDelayTimer = 0;
+                        //LookingObject.transform.LookAt(Target.transform.position);
+                        break;
+                    case UnitSide.Friendly:
+                        Debug.DrawLine(VisionPoint.position, TargetScript.VisionPoint.position, Color.blue);
+                        EnemySpotted();
+                        FoundTarget = Target;
+                        FoundTargetScript = TargetScript;
+                        TargetDelayTimer = 0;
+                        //LookingObject.transform.LookAt(TargetScript.VisionPoint.position);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
