@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6968159168808241536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6968159168808241538}
+  - component: {fileID: 6968159168808241539}
+  - component: {fileID: 6968159168808241541}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6968159168808241538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968159168808241536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0004375577, y: 0.56623536, z: 0.19651791}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6968159168808241539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968159168808241536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce44ce3cf76d6844ba5977a6de534dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UnitRealtime: []
+  m_ScenarioContent: {fileID: 0}
+  m_ScenarioPrefab: {fileID: 8121566142121614051, guid: bb52212d2145b72418121b6fd381761f,
+    type: 3}
+  m_ScenarioPanel: {fileID: 0}
+  m_UnitPrefabs:
+  - {fileID: 1746994467, guid: f74024d3993712847b9823b5a7385c56, type: 3}
+  m_MaxSaves: 100
+  m_SaveInfoText: {fileID: 0}
+  m_MovedObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_CurrentID: 0
+  m_CurrentName: 
+  m_CurrentTime: 
+--- !u!114 &6968159168808241541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968159168808241536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8610d3b632ade4bbdfdbfa9e056921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  url: http://juliankorevaar.nl/ARScenario/

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
+  m_Name: Fennek
+  m_EditorClassIdentifier: 
+  name: Fennek
+  name_Dutch: Fennek
+  description: The description for the Fennek.
+  description_Dutch: De beschrijving van de Fennek.
+  artwork: {fileID: 21300000, guid: f552658668ca1c34d9d6d4e950488307, type: 3}
+  ConnectedModel: {fileID: 962628047848176538, guid: 73c149dab7deae84e822ec81b6b5a86a,
+    type: 3}
+  ConnectedShowCase: {fileID: 8400000, guid: 2818484a694826e4384016d05bad96c4, type: 2}

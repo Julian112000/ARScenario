@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
+    path: Assets/Packages/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: 5eb72b68a4d60364db86707a46814044
   - enabled: 0
     path: Assets/Scenes/SaveSystemTestScene.unity

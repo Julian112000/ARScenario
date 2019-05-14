@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df682724b7aa0e4479804e698fd48746, type: 3}
+  m_Name: Soldaat
+  m_EditorClassIdentifier: 
+  name: Soldier
+  name_Dutch: Soldaat
+  description: The description for the soldier.
+  description_Dutch: De beschrijving van de Soldaat.
+  artwork: {fileID: 21300000, guid: ab12bfa6f267a764c8297f67cd1fa8ca, type: 3}
+  ConnectedModel: {fileID: 1890266061, guid: d7212efa1cbc9554081a1bb52da5fe11, type: 3}
+  ConnectedShowCase: {fileID: 8400000, guid: c7a0dab29602710488a50e28465d38a5, type: 2}

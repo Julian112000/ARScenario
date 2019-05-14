@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3479,7 +3479,7 @@ PrefabInstance:
     - target: {fileID: 2080328672099835133, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000045776367
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 2080328672097607391, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
@@ -3496,12 +3496,21 @@ PrefabInstance:
       propertyPath: changeRemoveANI
       value: 
       objectReference: {fileID: 2080328671696966952}
+    - target: {fileID: 688221087, guid: 3b5417beef39ea947b0e421a7a033318, type: 3}
+      propertyPath: m_Text
+      value: Are you sure you want to remove this object?
+      objectReference: {fileID: 0}
     - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2080328672815268861, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080328672910264630, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3514,12 +3523,27 @@ PrefabInstance:
     - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7482322981478985268, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Text
+      value: Stats
       objectReference: {fileID: 0}
     - target: {fileID: 2080328672641734777, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
@@ -3815,10 +3839,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreateSaveLABEL
       objectReference: {fileID: 0}
-    - target: {fileID: 688221087, guid: 3b5417beef39ea947b0e421a7a033318, type: 3}
-      propertyPath: m_Text
-      value: Are you sure you want to remove this object?
-      objectReference: {fileID: 0}
     - target: {fileID: 2080328671439121492, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3918,21 +3938,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_FontData.m_BestFit
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_FontData.m_MaxSize
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080328671549811501, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Text
-      value: Stats
       objectReference: {fileID: 0}
     - target: {fileID: 2080328672202663773, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
