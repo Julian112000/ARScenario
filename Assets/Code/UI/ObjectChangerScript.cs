@@ -1,4 +1,4 @@
-﻿namespace GoogleARCore.Examples.HelloAR
+namespace GoogleARCore.Examples.HelloAR
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -14,15 +14,25 @@
 
     public class ObjectChangerScript : MonoBehaviour
     {
-
+        /// <summary>
+        /// All the conected scripts.
+        /// </summary>
+        [Header("Scripts")]
         public List<MainObjectScript> AllObjects;
-        //Middle object
+        public ObjectDisplayScript o_main_display;
+
+        /// <summary>
+        /// The 3 objects you can see in the build menu.
+        /// </summary>
+        [Header("ObjectDisplayers")]
         public ObjectDisplayScript o_main;
         public ObjectDisplayScript o_left;
         public ObjectDisplayScript o_right;
 
-        public ObjectDisplayScript o_main_display;
-
+        /// <summary>
+        /// The current object that is "o_main"
+        /// </summary>
+        [Header("Middle Object")]
         public int currentObject = 3;
 
         private void Awake()
@@ -30,7 +40,10 @@
             ChangeCurrentObject(currentObject);
         }
 
-
+        /// <summary>
+        /// The current selected model will be changed by the arrows in the build change menu.
+        /// </summary>
+        #region Change the current selected object.
         public void ChangeCurrentObject(int CurrentObject)
         {
             int left = currentObject - 1;
@@ -44,5 +57,7 @@
             o_main_display.UIObject = AllObjects[CurrentObject];
 
         }
+        #endregion
+
     }
 }

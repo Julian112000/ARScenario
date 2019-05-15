@@ -14,20 +14,38 @@
 
     public class LevelChanger : MonoBehaviour
     {
-
+        ///<summary>
+        /// The animator that will play its animation.
+        ///</summary>
+        [Header("Animator")]
         public Animator animator;
 
-        private int levelToLoad;
-
+        ///<summary>
+        /// The UIController wich has the script on it that activates the animation.
+        ///</summary>
+        [Header("Scripts")]
         public ChangeObjectScript objChanger;
 
+        ///<summary>
+        ///The int for the level you want to load next.
+        ///</summary>
+        private int levelToLoad;
+
+        ///<summary>
+        ///The function that switches to the next scene.
+        ///</summary>
+        #region SceneSwitchAnimation
         public void OnFadeComplete()
         {
             int i = Application.loadedLevel;
             Application.LoadLevel(i + 1);
         }
+        #endregion
 
-
+        ///<summary>
+        ///All the functions that will happen after the animation is done (such as disable a canvas after remove animation)
+        ///</summary>
+        #region OnCompletedAnimation
         //After Animations
         public void LetMeDannyDeletoFade()
         {
@@ -78,9 +96,12 @@
             objChanger.waypointPlacementUI.SetActive(false);
             objChanger.RemovalUI.SetActive(false);
         }
+        #endregion
 
-        //83C05A
-
+        ///<summary>
+        ///All the fucntions that will set the trigger to play the specific called animation (called in 'objChanger').
+        ///</summary>
+        #region StartAnimations
         //Animation Triggers
         public void CloseBuildANI()
         {
@@ -136,6 +157,8 @@
         {
             animator.SetTrigger("CloseWaypoints");
         }
+        #endregion
+
 
 
     }

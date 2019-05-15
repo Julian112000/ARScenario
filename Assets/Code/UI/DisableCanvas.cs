@@ -1,4 +1,4 @@
-﻿namespace GoogleARCore.Examples.HelloAR
+namespace GoogleARCore.Examples.HelloAR
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -13,17 +13,20 @@
 
     public class DisableCanvas : MonoBehaviour
     {
+        /// <summary>
+        /// Every canvas in the scene.
+        /// </summary>
         [Header("Screens")]
         [SerializeField]
         private GameObject settings;
         [SerializeField]
         private GameObject mainMenu;
 
-        public void OnSettingsClosed()
+        public void OnSettingsClosed()  //The void for closing the settings canvas.
         {
-            settings.SetActive(false);
+            settings.SetActive(false);  
         }
-        public void OnMainClosed()
+        public void OnMainClosed()      //The void for closing the main canvas.
         {
             mainMenu.SetActive(false);
         }
