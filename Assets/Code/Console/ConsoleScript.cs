@@ -16,26 +16,26 @@ public class ConsoleScript : MonoBehaviour
     public static ConsoleScript Instance;           //Static instance to call from other classes (AIBasics.cs, Arcontroller.cs etc.)
 
     [SerializeField]
-    private Image m_ConsolePanel;                   //Image component of Consoleview gameobject to change color when selected
+    private Image consolePanel;                   //Image component of Consoleview gameobject to change color when selected
     [SerializeField]
-    private ScrollRect m_ConsoleRect;               //Console Recttransform component of ConsoleView to enable - disable touch input
+    private ScrollRect consoleRect;               //Console Recttransform component of ConsoleView to enable - disable touch input
     [SerializeField]
-    private RectTransform m_ConsoleRectTransform;   //Console Recttransform component of ConsoleView to change size when selected
+    private RectTransform consoleRectTransform;   //Console Recttransform component of ConsoleView to change size when selected
     [SerializeField]
-    private Transform m_FeedbackParent;             //Transform parent of all feedback messages instantiated
+    private Transform feedbackParent;             //Transform parent of all feedback messages instantiated
     [SerializeField]
-    private GameObject m_FeedbackPrefab;            //Main Feedback prefab with ConsoleMessage.cs attached to it.
+    private GameObject feedbackPrefab;            //Main Feedback prefab with ConsoleMessage.cs attached to it.
     [SerializeField]
-    private int m_MaxMessages;                      //Max messages instantiated in the pooling system
+    private int maxMessages;                      //Max messages instantiated in the pooling system
     [SerializeField]
-    private bool m_ConsoleEnabled;                  //Bool to check either the console details is enabled or not.
+    private bool consoleEnabled;                  //Bool to check either the console details is enabled or not.
     [SerializeField]
-    private Vector2[] m_ConsoleScaling;             //Array of sizes of the console when selected [default 3,3 / 4,4]
+    private Vector2[] consoleScaling;             //Array of sizes of the console when selected [default 3,3 / 4,4]
 
-    private List<ConsoleMessageScript> m_MessageList = new List<ConsoleMessageScript>();
+    private List<ConsoleMessageScript> messageList = new List<ConsoleMessageScript>();
 
-    private int m_CurrentMessage;                   //latest message of the object pool  
-    private MessageType m_MessageType;              //Link to enum to call the type of the message [Killmessage, Buildmessage etc.]
+    private int currentMessage;                   //latest message of the object pool  
+    private MessageType messageType;              //Link to enum to call the type of the message [Killmessage, Buildmessage etc.]
 
     private void Awake()
     {
@@ -43,11 +43,11 @@ public class ConsoleScript : MonoBehaviour
     }
     private void Start()
     {
-        for (int i = 0; i < m_MaxMessages; i++)
+        for (int i = 0; i < maxMessages; i++)
         {
             //Instantiate all messages at the start of the game and add them to the pool
-            ConsoleMessageScript message = Instantiate(m_FeedbackPrefab, m_FeedbackParent).GetComponent<ConsoleMessageScript>();
-            m_MessageList.Add(message);
+            ConsoleMessageScript message = Instantiate(feedbackPrefab, feedbackParent).GetComponent<ConsoleMessageScript>();
+            messageList.Add(message);
         }
     }
     //<summery> SetFeedback()
@@ -96,29 +96,29 @@ public class ConsoleScript : MonoBehaviour
     public void ToggleConsole()
     {
         //Enable console if console isn't opened - disable console if console is opened
-        m_ConsoleEnabled = !m_ConsoleEnabled;
-        m_ConsoleRect.enabled = m_ConsoleEnabled;
+        consoleEnabled = !consoleEnabled;
+        consoleRect.enabled = consoleEnabled;
 
         //Show - Hide messages in console panel
-        for (int i = 0; i < m_MessageList.Count; i++)
+        for (int i = 0; i < messageList.Count; i++)
         {
-            if (m_MessageList[i].m_IsEnabled)
+            if (messageList[i].isEnabled)
             {
-                m_MessageList[i].ToggleMessage(m_ConsoleEnabled);
+                messageList[i].ToggleMessage(consoleEnabled);
             }
         }
         //Show - Hide console panel color
-        if (m_ConsoleEnabled)
+        if (consoleEnabled)
         {
             //Set new color to background of the console and change scale
-            m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 255);
-            m_ConsoleRectTransform.localScale = m_ConsoleScaling[1];
+            consolePanel.color = new Color(consolePanel.color.r, consolePanel.color.g, consolePanel.color.b, 255);
+            consoleRectTransform.localScale = consoleScaling[1];
         }
         else
         {
             //Set new color to background of the console and change scale
-            m_ConsolePanel.color = new Color(m_ConsolePanel.color.r, m_ConsolePanel.color.g, m_ConsolePanel.color.b, 0);
-            m_ConsoleRectTransform.localScale = m_ConsoleScaling[0];
+            consolePanel.color = new Color(consolePanel.color.r, consolePanel.color.g, consolePanel.color.b, 0);
+            consoleRectTransform.localScale = consoleScaling[0];
         }
     }
     //<summery> ToggleFeedback()
@@ -126,15 +126,15 @@ public class ConsoleScript : MonoBehaviour
     //</summery>
     private void ToggleFeedback(string message)
     {
-        m_MessageList[m_CurrentMessage].SetMessage(message);
+        messageList[currentMessage].SetMessage(message);
 
         //Count the currentmessages up to check if it is lower than the list count
-        m_CurrentMessage++;
+        currentMessage++;
 
         //If currentmessage count is highter than the list itself reset the number and list
-        if (m_CurrentMessage > m_MessageList.Count - 1)
+        if (currentMessage > messageList.Count - 1)
         {
-            m_CurrentMessage = 0;
+            currentMessage = 0;
         }
     }
 }

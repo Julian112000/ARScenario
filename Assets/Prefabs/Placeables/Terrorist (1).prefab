@@ -10611,6 +10611,7 @@ MonoBehaviour:
   - {fileID: 5845674222187371484}
   Selected: 0
   FoundTarget: {fileID: 0}
+  TargetDelayTimer: 0
   PlayModeOn: 0
   Waypoints: []
   waypointscripts: []
@@ -10663,8 +10664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdae27da231a8f349923750535dad61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ID: 1
-  m_SnappedPosition: {x: 0, y: 0, z: 0}
+  id: 1
+  snappedPosition: {x: 0, y: 0, z: 0}
   latitude: 0
   longitude: 0
   luditude: 0
@@ -12077,12 +12078,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 5023482308249119202, guid: d90d9153b4793144bbe66932a1506938,
+    - target: {fileID: 5023482308249119200, guid: d90d9153b4793144bbe66932a1506938,
         type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 5023482308249119200, guid: d90d9153b4793144bbe66932a1506938,
+    - target: {fileID: 5023482308249119202, guid: d90d9153b4793144bbe66932a1506938,
         type: 3}
       propertyPath: m_Layer
       value: 8

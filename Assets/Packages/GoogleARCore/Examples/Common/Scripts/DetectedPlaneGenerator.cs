@@ -31,26 +31,26 @@ namespace GoogleARCore.Examples.Common
     public class DetectedPlaneGenerator : MonoBehaviour
     {
         public static DetectedPlaneGenerator instance; //RK
-        public List<DetectedPlaneVisualizer> PLANES = new List<DetectedPlaneVisualizer>(); //RK
-        public List<GameObject> GRIDPLANES = new List<GameObject>(); //RK
+        public List<DetectedPlaneVisualizer> planes = new List<DetectedPlaneVisualizer>(); //RK
+        public List<GameObject> gridplanes = new List<GameObject>(); //RK
 
         /// <summary>
         /// A prefab for tracking and visualizing detected planes.
         /// </summary>
-        public GameObject DetectedPlanePrefab;
-        public GameObject DetectedPlaneSavings;
+        public GameObject detectedPlanePrefab;
+        public GameObject detectedPlaneSavings;
 
         [SerializeField]
-        private Transform m_SavedVisualsParent;
+        private Transform savedVisualsParent;
 
         /// <summary>
         /// A list to hold new planes ARCore began tracking in the current frame. This object is used across
         /// the application to avoid per-frame allocations.
         /// </summary>
-        private List<DetectedPlane> m_NewPlanes = new List<DetectedPlane>();
+        private List<DetectedPlane> newPlanes = new List<DetectedPlane>();
 
         [SerializeField]
-        private InstantPreviewTrackedPoseDriver m_TrackedPoseDriver;
+        private InstantPreviewTrackedPoseDriver trackedPoseDriver;
         /// <summary>
         /// The Unity Update method.
         /// </summary>
@@ -71,35 +71,35 @@ namespace GoogleARCore.Examples.Common
             if (ARController.Scanning)
             {
                 // Iterate over planes found in this frame and instantiate corresponding GameObjects to visualize them.
-                Session.GetTrackables<DetectedPlane>(m_NewPlanes, TrackableQueryFilter.New);
-                for (int i = 0; i < m_NewPlanes.Count; i++)
+                Session.GetTrackables<DetectedPlane>(newPlanes, TrackableQueryFilter.New);
+                for (int i = 0; i < newPlanes.Count; i++)
                 {
                     // Instantiate a plane visualization prefab and set it to track the new plane. The transform is set to
                     // the origin with an identity rotation since the mesh for our prefab is updated in Unity World
                     // coordinates.
-                    GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
-                    GameObject savedObject = Instantiate(DetectedPlaneSavings, Vector3.zero, Quaternion.identity, m_SavedVisualsParent);
+                    GameObject planeObject = Instantiate(detectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
+                    GameObject savedObject = Instantiate(detectedPlaneSavings, Vector3.zero, Quaternion.identity, savedVisualsParent);
 
-                    planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
-                    savedObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                    planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(newPlanes[i]);
+                    savedObject.GetComponent<DetectedPlaneVisualizer>().Initialize(newPlanes[i]);
 
-                    GRIDPLANES.Add(planeObject);
-                    PLANES.Add(savedObject.GetComponent<DetectedPlaneVisualizer>()); //RK
+                    gridplanes.Add(planeObject);
+                    planes.Add(savedObject.GetComponent<DetectedPlaneVisualizer>()); //RK
                 }
             }
         }
         public void ToggleVisualizers(bool active)
         {
-            for (int i = 0; i < GRIDPLANES.Count; i++)
+            for (int i = 0; i < gridplanes.Count; i++)
             {
-                if (GRIDPLANES[i] != null)
+                if (gridplanes[i] != null)
                 {
-                    GRIDPLANES[i].SetActive(false);
+                    gridplanes[i].SetActive(false);
                 }
             }
-            for (int j = 0; j < PLANES.Count; j++)
+            for (int j = 0; j < planes.Count; j++)
             {
-                PLANES[j].EnableCollider();
+                planes[j].EnableCollider();
             }
         }
     }

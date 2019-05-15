@@ -407,11 +407,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c58a87f3c9e9c40988049b9a7980bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TimeText: {fileID: 1024620190880675703}
-  m_NameText: {fileID: 8592464531297313535}
-  m_ScenarioBGImage: {fileID: 3936471954454259380}
-  m_SelectedColors:
-  - {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
+  timeText: {fileID: 1024620190880675703}
+  nameText: {fileID: 8592464531297313535}
+  scenariobgImage: {fileID: 3936471954454259380}
+  selectedColors:
+  - {r: 0.7725491, g: 0.7725491, b: 0.7725491, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4818693243980828601
 GameObject:

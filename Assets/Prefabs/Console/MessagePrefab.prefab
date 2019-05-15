@@ -240,10 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7277ce5df2afc44e8b69e83c574145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Text: {fileID: 4846044870881815190}
-  m_Animator: {fileID: 4656131100338604065}
-  m_CanvasAlpha: {fileID: 8837094978452098166}
-  m_IsEnabled: 0
+  Text: {fileID: 4846044870881815190}
+  animator: {fileID: 4656131100338604065}
+  canvasAlpha: {fileID: 8837094978452098166}
+  isEnabled: 0
 --- !u!95 &4656131100338604065
 Animator:
   serializedVersion: 3

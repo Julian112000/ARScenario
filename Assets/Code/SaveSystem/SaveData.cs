@@ -5,9 +5,9 @@ using UnityEngine;
 public class SaveData : MonoBehaviour
 {
     [SerializeField]
-    private int m_ID;                       //ID unit type
+    private int id;                       //ID unit type
 
-    public Vector3 m_SnappedPosition;       //Snapped gameobject of the anchor
+    public Vector3 snappedPosition;       //Snapped gameobject of the anchor
 
     [HideInInspector]
     public float latitude;                  //Latitude (GPS) x
@@ -19,20 +19,20 @@ public class SaveData : MonoBehaviour
     private void Start()
     {
         //Get anchor of the gameobject
-        m_SnappedPosition = transform.parent.position;
+        snappedPosition = transform.parent.position;
     }
     private void Update()
     {
         //Reset position of the anchor and snap position to that position
-        if (transform.parent.position != m_SnappedPosition)
+        if (transform.parent.position != snappedPosition)
         {
-            transform.parent.position = m_SnappedPosition;
+            transform.parent.position = snappedPosition;
         }
     }
     //Return ID of the unit type
     public int GetID()
     {
-        return m_ID;
+        return id;
     }
     //Get position of the anchor
     public Vector3 GetPosition()

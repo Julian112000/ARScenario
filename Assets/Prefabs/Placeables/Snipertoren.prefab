@@ -61882,6 +61882,7 @@ MonoBehaviour:
   - {fileID: 8922163041916522809}
   Selected: 0
   FoundTarget: {fileID: 0}
+  TargetDelayTimer: 0
   PlayModeOn: 0
   Waypoints: []
   waypointscripts: []
@@ -128822,8 +128823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdae27da231a8f349923750535dad61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ID: 2
-  m_SnappedPosition: {x: 0, y: 0, z: 0}
+  id: 2
+  snappedPosition: {x: 0, y: 0, z: 0}
   latitude: 0
   longitude: 0
   luditude: 0

@@ -16,7 +16,7 @@ public static class SaveSystem
     {
         //Create new SceneStats and apply the data
         SceneStats mapstats = new SceneStats(sceneinfo);
-        SaveDatabase.Instance.OnSaveScenario(mapstats.m_ScenarioName, DateTime.Now.ToString(), amount, lat, lon, isnew);
+        SaveDatabase.Instance.OnSaveScenario(mapstats.scenarioName, DateTime.Now.ToString(), amount, lat, lon, isnew);
     }
     /// <summary>
     /// Void to call if the player desides to load the scenario
@@ -42,59 +42,59 @@ public static class SaveSystem
     {
         //Create new StandardUnitData script and add data to it
         StandardUnitData unitdata = new StandardUnitData(unit);
-        SaveDatabase.Instance.OnSaveUnit(unitdata.m_UnitId, scenenumber, unitdata.m_UnitName, unitdata.m_Latitude, unitdata.m_Longitude, unitdata.m_Luditude, unitdata.m_Rotation, unitdata.m_Scale, number);
+        SaveDatabase.Instance.OnSaveUnit(unitdata.unitId, scenenumber, unitdata.unitName, unitdata.latitude, unitdata.longitude, unitdata.luditude, unitdata.rotation, unitdata.scale, number);
     }
     [Serializable]
     public class SceneStats
     {
-        public List<int> m_Unitdata;    //List of all unit ids
-        public int m_ScenarioID;        //ID of scenario
-        public string m_ScenarioName;   //Name of scenario
-        public string m_ScenarioTime;   //Normal UCL +1 time of scenario
+        public List<int> unitData;    //List of all unit ids
+        public int scenarioId;        //ID of scenario
+        public string scenarioName;   //Name of scenario
+        public string scenarioTime;   //Normal UCL +1 time of scenario
 
         public SceneStats(GameObject sceneinfo)
         {
             SceneManager manager = sceneinfo.GetComponent<SceneManager>();
             //Take over the id
-            m_ScenarioID = manager.m_CurrentID;
+            scenarioId = manager.currentId;
             //Take over the name of the scenario
-            m_ScenarioName = manager.m_CurrentName;
+            scenarioName = manager.currentName;
             //Take over the last updated time
-            m_ScenarioTime = manager.m_CurrentTime;
+            scenarioTime = manager.currentTime;
         }
     }
     [Serializable]
     public class StandardUnitData
     {
-        public int m_UnitId;        //Type of unit [0 = soldier, 1 = fennek etc.]
-        public string m_UnitName;   //Name of unit in unityworld
-        public string m_Latitude;   //Distance in x from fps camera to unit
-        public string m_Luditude;   //Distance in y from fps camera to unit
-        public string m_Longitude;  //Distance in z from fps camera to unit
-        public float[] m_Rotation;  //Array of localeulerangles of the unit
-        public float[] m_Scale;     //Array of localscale of the unit
+        public int unitId;        //Type of unit [0 = soldier, 1 = fennek etc.]
+        public string unitName;   //Name of unit in unityworld
+        public string latitude;   //Distance in x from fps camera to unit
+        public string luditude;   //Distance in y from fps camera to unit
+        public string longitude;  //Distance in z from fps camera to unit
+        public float[] rotation;  //Array of localeulerangles of the unit
+        public float[] scale;     //Array of localscale of the unit
 
         public StandardUnitData(GameObject unit)
         {
             SaveData data = unit.GetComponent<SaveData>();
 
-            m_UnitId = data.GetID();
+            unitId = data.GetID();
             //Take over the name
-            m_UnitName = unit.name;
+            unitName = unit.name;
             //Take over the position
-            m_Latitude = data.latitude.ToString();
-            m_Longitude = data.longitude.ToString();
-            m_Luditude = data.luditude.ToString(); 
+            latitude = data.latitude.ToString();
+            longitude = data.longitude.ToString();
+            luditude = data.luditude.ToString();
             //Take over the rotation
-            m_Rotation = new float[3];
-            m_Rotation[0] = unit.transform.localEulerAngles.x;
-            m_Rotation[1] = (unit.transform.localEulerAngles.y);
-            m_Rotation[2] = unit.transform.localEulerAngles.z;
+            rotation = new float[3];
+            rotation[0] = unit.transform.localEulerAngles.x;
+            rotation[1] = (unit.transform.localEulerAngles.y);
+            rotation[2] = unit.transform.localEulerAngles.z;
             //Take over the scale
-            m_Scale = new float[3];
-            m_Scale[0] = unit.transform.localScale.x;
-            m_Scale[1] = unit.transform.localScale.y;
-            m_Scale[2] = unit.transform.localScale.z;
+            scale = new float[3];
+            scale[0] = unit.transform.localScale.x;
+            scale[1] = unit.transform.localScale.y;
+            scale[2] = unit.transform.localScale.z;
         }
     }
 }

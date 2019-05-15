@@ -6,32 +6,32 @@ using UnityEngine.UI;
 public class ConsoleMessageScript : MonoBehaviour
 {
     [SerializeField]
-    private Text m_Text;                    //Text component of the message prefab
+    private Text Text;                    //Text component of the message prefab
     [SerializeField]
-    private Animator m_Animator;            //Animator component of the message prefab
+    private Animator animator;            //Animator component of the message prefab
     [SerializeField]
-    private CanvasGroup m_CanvasAlpha;      //Canvasgroup to handle the fade out animation
+    private CanvasGroup canvasAlpha;      //Canvasgroup to handle the fade out animation
 
-    public bool m_IsEnabled;
+    public bool isEnabled;
 
     //Set text and animations from ConsoleScript.cs script
     public void SetMessage(string text)
     {
         gameObject.SetActive(true);
-        m_Text.text = text;
-        m_Animator.SetBool("In", true);
+        Text.text = text;
+        animator.SetBool("In", true);
     }
     //Delete message to call fade out
     public void Delete()
     {
-        m_IsEnabled = true;
+        isEnabled = true;
     }
     //Enable - Disable the animation of the message prefab.
     public void ToggleMessage(bool toggle)
     {
         //Disbale - enable animator and reset alpha fade of canvasalpha
-        m_Animator.enabled = toggle;
+        animator.enabled = toggle;
 
-        if (toggle) m_CanvasAlpha.alpha = 1;
+        if (toggle) canvasAlpha.alpha = 1;
     }
 }

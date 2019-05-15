@@ -12,7 +12,7 @@ public class SaveDatabase : MonoBehaviour
     [SerializeField]
     private string url;                     //URL connections to the online database (https://)
 
-    private int m_ID = -1;                  //ID is standard -1, otherwise it will conflict with ids on 0
+    private int id = -1;                  //ID is standard -1, otherwise it will conflict with ids on 0
 
     private void Awake()
     {
