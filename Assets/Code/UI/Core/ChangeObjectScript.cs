@@ -16,7 +16,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// <summary>
         /// Al the scripts that are linked to this script.
         /// </summary>
-        [Header("Scripts")]
+        [Header("Scripts")] 
         public static ChangeObjectScript Instance;  
         public ObjectChangerScript change;       
         public StatsUIScript BehaveController;   
@@ -180,8 +180,8 @@ namespace GoogleARCore.Examples.HelloAR
         public void StartScanning()
         {
             scanningModeUI.SetActive(true);                             //Opens the scanning canvas.
-            changeMainANI.CloseMainANI();                               //Starts the animation to close the main menu canvas.
-            changePlayANI.ClosePlayANI();                               //Starts the animation to close the play button.
+            changeMainANI.CloseANI("CloseM");                               //Starts the animation to close the main menu canvas.
+            changePlayANI.CloseANI("CloseP");                               //Starts the animation to close the play button.
             ARController.controllerstate = ControllerState.Scanning;    //Sets the ability to scan the area to true.
         }
 
@@ -190,7 +190,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void StopScanning()
         {
-            changeScanANI.CloseScanningANI();                           //Starts the animation to close the scanning canvas.
+            changeScanANI.CloseANI("CloseScanning");                           //Starts the animation to close the scanning canvas.
             mainModeUI.SetActive(true);                                 //Opens the main menu canvas.
             ARController.controllerstate = ControllerState.Default;     //Sets the ability to scan the area to false.
         }
@@ -209,8 +209,8 @@ namespace GoogleARCore.Examples.HelloAR
             buildModeUI.SetActive(true);
 
             //
-            changeMainANI.CloseMainANI();
-            changePlayANI.ClosePlayANI();
+            changeMainANI.CloseANI("CloseM");
+            changePlayANI.CloseANI("CloseP");
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void ConfirmPlacement()
         {
-            changePlaceANI.ClosePlaceAni();
+            changePlaceANI.CloseANI("ClosePlacing");
 
             //
             buildModeUI.SetActive(true);
@@ -261,7 +261,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void ConfirmEditing()
         {
-            changeRotateANI.CloseRotateANI();
+            changeRotateANI.CloseANI("CloseRotate");
 
             //
             if (ReScaling)                                                          //If you are rescaling instead of first time scaling, go back to the behaviour screen of the selected object.
@@ -285,7 +285,7 @@ namespace GoogleARCore.Examples.HelloAR
         public void TriggerScaling()
         {
             ARController.controllerstate = ControllerState.Editing;
-            changeBehaveANI.CloseBehaveANI();
+            changeBehaveANI.CloseANI("CloseBehave");
             rotatingModeUI.SetActive(true);
             ReScaling = true;
         }
@@ -300,7 +300,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void DoneButton()
         {
-            changeBuildANI.CloseBuildANI();
+            changeBuildANI.CloseANI("Close");
 
             placeModeUI.SetActive(true);
 
@@ -313,8 +313,8 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void StartPlayMode()
         {
-            changeMainANI.CloseMainANI();
-            changePlayANI.ClosePlayANI();
+            changeMainANI.CloseANI("CloseM");
+            changePlayANI.CloseANI("CloseP");
             buildModeUI.SetActive(false);
             placeModeUI.SetActive(false);
             rotatingModeUI.SetActive(false);
@@ -331,12 +331,12 @@ namespace GoogleARCore.Examples.HelloAR
             {
                 ARController.CurrentSelectedModel.GetComponent<AIBasics>().TurnOffVisuals();    //Turn off all extra visuals of the object
             }
-            changeBuildANI.CloseBuildANI();             //
-            changePlaceANI.ClosePlaceAni();             //
-            changeSelectANI.CloseSelectANI();           //
-            changeBehaveANI.CloseBehaveANI();           //  Close every canvas there is by a animation(ony closes it if the canvas is active at the time)
-            changeScanANI.CloseScanningANI();           //
-            changeWaypointANI.CloseWaypointsANI();      //
+            changeBuildANI.CloseANI("Close");             //
+            changePlaceANI.CloseANI("ClosePlacing");             //
+            changeSelectANI.CloseANI("CloseSelect");           //
+            changeBehaveANI.CloseANI("CloseBehave");           //  Close every canvas there is by a animation(ony closes it if the canvas is active at the time)
+            changeScanANI.CloseANI("CloseScanning");           //
+            changeWaypointANI.CloseANI("CloseWaypoints");      //
 
             mainModeUI.SetActive(true);
 
@@ -356,8 +356,8 @@ namespace GoogleARCore.Examples.HelloAR
             selectModeUI.SetActive(true);
 
             //
-            changeMainANI.CloseMainANI();
-            changePlayANI.ClosePlayANI();
+            changeMainANI.CloseANI("CloseM");
+            changePlayANI.CloseANI("CloseP");
             //
 
             //
@@ -402,7 +402,7 @@ namespace GoogleARCore.Examples.HelloAR
         public void ConfirmEditingObjectStats()
         {
             BehaveController.UpdateCurrentAiStats();
-            changeStatsANI.CloseBehaveStatsANI();
+            changeStatsANI.CloseANI("CloseStats");
             ARController.controllerstate = ControllerState.FullyEditingObject;  //Set the state back to behaviourmode.
             BehaveController.CurrentAIStats = null;
         }
@@ -421,7 +421,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void CloseEquipment()
         {
-            changeEquipmentANI.CloseBehaveReactANI();
+            changeEquipmentANI.CloseANI("CloseReact");
             ARController.controllerstate = ControllerState.FullyEditingObject;
             currentHuman = null;                                                //Set the current human back to nothing.
         }
@@ -440,7 +440,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void CloseReact()
         {
-            changeReactANI.CloseBehaveReactANI();
+            changeReactANI.CloseANI("CloseReact");
             ARController.controllerstate = ControllerState.FullyEditingObject;
             currentAI = null;                                                   //Set the current AI back to nothing.
         }
@@ -455,8 +455,8 @@ namespace GoogleARCore.Examples.HelloAR
             Destroy(ARController.CurrentSelectedModel.transform.root.gameObject);   //Destroys the current selected model.
             ARController.controllerstate = ControllerState.Default;
             mainModeUI.SetActive(true);
-            changeRemoveANI.CloseBehaveReactANI();
-            changeBehaveANI.CloseBehaveANI();
+            changeRemoveANI.CloseANI("CloseReact");
+            changeBehaveANI.CloseANI("CloseBehave");
 
         }
 
@@ -467,7 +467,7 @@ namespace GoogleARCore.Examples.HelloAR
         {
             if (RemovalUI.active)
             {
-                changeRemoveANI.CloseBehaveReactANI();
+                changeRemoveANI.CloseANI("CloseReact");
             }
             else if (!RemovalUI.active)
             {
@@ -501,7 +501,7 @@ namespace GoogleARCore.Examples.HelloAR
          /// </summary>
         public void StartWaypointing()
         {
-            changeBehaveANI.CloseBehaveANI();
+            changeBehaveANI.CloseANI("CloseBehave");
             waypointPlacementUI.SetActive(true);
             ARController.controllerstate = ControllerState.Waypointing;
         }
@@ -527,7 +527,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void ConfirmWaypoint()
         {
-            changeWaypointANI.CloseWaypointsANI();
+            changeWaypointANI.CloseANI("CloseWaypoints");
             behaveModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.FullyEditingObject;
         }

@@ -99,63 +99,13 @@
         #endregion
 
         ///<summary>
-        ///All the fucntions that will set the trigger to play the specific called animation (called in 'objChanger').
+        ///The function that triggers the specific animation for the canvas switch.
         ///</summary>
         #region StartAnimations
         //Animation Triggers
-        public void CloseBuildANI()
+        public void CloseANI(string animname)
         {
-            animator.SetTrigger("Close");
-        }
-
-        public void CloseMainANI()
-        {
-            animator.SetTrigger("CloseM");
-        }
-
-        public void ClosePlayANI()
-        {
-            animator.SetTrigger("CloseP");
-        }
-
-        public void ClosePlaceAni()
-        {
-            animator.SetTrigger("ClosePlacing");
-        }
-
-        public void CloseRotateANI()
-        {
-            animator.SetTrigger("CloseRotate");
-        }
-
-        public void CloseScanningANI()
-        {
-            animator.SetTrigger("CloseScanning");
-        }
-
-        public void CloseSelectANI()
-        {
-            animator.SetTrigger("CloseSelect");
-        }
-
-        public void CloseBehaveANI()
-        {
-            animator.SetTrigger("CloseBehave");
-        }
-
-        public void CloseBehaveStatsANI()
-        {
-            animator.SetTrigger("CloseStats");
-        }
-
-        public void CloseBehaveReactANI()
-        {
-            animator.SetTrigger("CloseReact");
-        }
-
-        public void CloseWaypointsANI()
-        {
-            animator.SetTrigger("CloseWaypoints");
+            animator.SetTrigger(animname);
         }
         #endregion
 
