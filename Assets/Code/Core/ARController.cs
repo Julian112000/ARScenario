@@ -73,8 +73,6 @@
         [SerializeField]
         GameObject RotateFeedback;
         [SerializeField]
-        GameObject SelectingObjectCanvas;
-        [SerializeField]
         GameObject FullyEditingCanvas;
         [SerializeField]
         GameObject StatsChangeCanvas;
@@ -201,8 +199,6 @@
         {
             ScreenInputSelectingObject();
             //
-            SelectingObjectCanvas.SetActive(true);
-            //
             Scanning = false;
             //GridViewer.SetActive(false);
             ScalingFeedback.SetActive(false);
@@ -213,7 +209,6 @@
         private void FullyEditingObject()
         {
             FullyEditingCanvas.SetActive(true);
-            SelectingObjectCanvas.SetActive(false);
         }
         //This void is the update of when you are editing a selected units Stats
         private void EditingUnitStats()

@@ -38,7 +38,6 @@ namespace GoogleARCore.Examples.HelloAR
         public GameObject buildModeUI;          // The canvas where you can CHOOSE your spawnable object.
         public GameObject placeModeUI;          // The canvas where you can PLACE the spawnable object.
         public GameObject rotatingModeUI;       // The canvas where you can ROTATE your spawned object.
-        public GameObject selectModeUI;         // The canvas where you can SELECT a spawned object that you'd like to edit.
         public GameObject behaveModeUI;         // The canvas where you can deside what to do with the current selected object.
         public GameObject behaveStatsUI;        // The canvas where you can edit the STATISTICS of the current selected object.
         public GameObject behaveEquipmentUI;    // The canvas where you can edit the EQUIPMENT of the current selected object.
@@ -53,14 +52,14 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         [Header("Animations")]
         public LevelChanger changeBuildANI;
-        public LevelChanger changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeSelectANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI, changeRemoveANI;
+        public LevelChanger changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI, changeRemoveANI;
 
         /// <summary>
         /// All the booleans that are used.
         /// </summary>
         [Header("Bools")]
         private bool CanClick = true; // The bool that desides if you are able to click yet (to prevent spamming).
-        private bool ReScaling = false; // The bool that desides of you are going to rescale the object that you have selected.
+        public bool ReScaling = false; // The bool that desides of you are going to rescale the object that you have selected.
 
         
         /// <summary>
@@ -258,19 +257,6 @@ namespace GoogleARCore.Examples.HelloAR
         {
             changeRotateANI.CloseANI("CloseRotate");
 
-            //
-            if (ReScaling)                                                          //If you are rescaling instead of first time scaling, go back to the behaviour screen of the selected object.
-            {
-                ARController.controllerstate = ControllerState.FullyEditingObject;
-                ReScaling = false;
-                behaveModeUI.SetActive(true);
-            }
-            else if (!ReScaling)                                                    //If you are not rescaling but first time scaling, go back to the placing screen of the spawnable object.
-            {
-                ARController.controllerstate = ControllerState.Placing;
-                placeModeUI.SetActive(true);
-            }
-
 
         }
 
@@ -281,7 +267,6 @@ namespace GoogleARCore.Examples.HelloAR
         {
             ARController.controllerstate = ControllerState.Editing;
             changeBehaveANI.CloseANI("CloseBehave");
-            rotatingModeUI.SetActive(true);
             ReScaling = true;
         }
         #endregion
@@ -330,7 +315,6 @@ namespace GoogleARCore.Examples.HelloAR
             }
             changeBuildANI.CloseANI("Close");             //
             changePlaceANI.CloseANI("ClosePlacing");             //
-            changeSelectANI.CloseANI("CloseSelect");           //
             changeBehaveANI.CloseANI("CloseBehave");           //  Close every canvas there is by a animation(ony closes it if the canvas is active at the time)
             changeScanANI.CloseANI("CloseScanning");           //
             changeWaypointANI.CloseANI("CloseWaypoints");      //
@@ -350,17 +334,6 @@ namespace GoogleARCore.Examples.HelloAR
         ///<summary>
         /// Triggers the selection mode in wich you can select a object to edit.
         /// </summary>
-        public void BehaveSelection()
-        {
-            selectModeUI.SetActive(true);
-
-            //
-            changeMainANI.CloseANI("CloseM");
-            changePlayANI.CloseANI("CloseP");
-            //
-
-            //
-        }
         #endregion
 
         /// <summary>

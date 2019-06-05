@@ -93,6 +93,20 @@
         public void OnCloseRotateComplete()
         {
             objChanger.rotatingModeUI.SetActive(false);
+
+            //
+            if (objChanger.ReScaling)                                                          //If you are rescaling instead of first time scaling, go back to the behaviour screen of the selected object.
+            {
+                ARController.controllerstate = ControllerState.FullyEditingObject;
+                objChanger.ReScaling = false;
+                objChanger.behaveModeUI.SetActive(true);
+            }
+            else if (!objChanger.ReScaling)                                                    //If you are not rescaling but first time scaling, go back to the placing screen of the spawnable object.
+            {
+                ARController.controllerstate = ControllerState.Placing;
+                objChanger.placeModeUI.SetActive(true);
+            }
+
         }
 
         public void OnCloseScanningComplete()
@@ -101,14 +115,10 @@
             objChanger.mainModeUI.SetActive(true);
         }
 
-        public void OnCloseSelectComplete()
-        {
-            objChanger.selectModeUI.SetActive(false);
-        }
-
         public void OnCloseBehaveComplete()
         {
             objChanger.behaveModeUI.SetActive(false);
+            objChanger.rotatingModeUI.SetActive(true);
         }
 
         public void OnCloseStatsComplete()
