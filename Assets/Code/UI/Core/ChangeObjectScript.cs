@@ -159,7 +159,6 @@ namespace GoogleARCore.Examples.HelloAR
                 }
             }
             #endregion
-
         }
         #endregion
 
@@ -179,9 +178,9 @@ namespace GoogleARCore.Examples.HelloAR
             /// </summary>
         public void StartScanning()
         {
-            scanningModeUI.SetActive(true);                             //Opens the scanning canvas.
             changeMainANI.CloseANI("CloseM");                               //Starts the animation to close the main menu canvas.
             changePlayANI.CloseANI("CloseP");                               //Starts the animation to close the play button.
+            changeMainANI.scanning = true;
             ARController.controllerstate = ControllerState.Scanning;    //Sets the ability to scan the area to true.
         }
 
@@ -191,8 +190,8 @@ namespace GoogleARCore.Examples.HelloAR
         public void StopScanning()
         {
             changeScanANI.CloseANI("CloseScanning");                           //Starts the animation to close the scanning canvas.
-            mainModeUI.SetActive(true);                                 //Opens the main menu canvas.
-            ARController.controllerstate = ControllerState.Default;     //Sets the ability to scan the area to false.
+            changeMainANI.scanning = false;
+            ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)
         }
         #endregion
 
@@ -206,11 +205,10 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void OpenBuildMenu()
         {
-            buildModeUI.SetActive(true);
-
             //
             changeMainANI.CloseANI("CloseM");
             changePlayANI.CloseANI("CloseP");
+            changeMainANI.building = true;
         }
 
         /// <summary>
@@ -244,10 +242,7 @@ namespace GoogleARCore.Examples.HelloAR
             changePlaceANI.CloseANI("ClosePlacing");
 
             //
-            buildModeUI.SetActive(true);
-
-            //
-            ARController.controllerstate = ControllerState.Default;
+            ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)
         }
         #endregion
 
@@ -298,13 +293,15 @@ namespace GoogleARCore.Examples.HelloAR
         ///<summary>
         ///Confirms the object you want to spawn and changes the canvas to placing.
         /// </summary>
-        public void DoneButton()
+        public void DoneButton(GameObject newObject)
         {
             changeBuildANI.CloseANI("Close");
+            changeBuildANI.placing = true;
+            changeBuildANI.main = false;
+            changeBuildANI.building = false;
 
-            placeModeUI.SetActive(true);
-
-            ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel); //Changes the model that you will place to the model that is connected to the spawnable object you just chose.
+            ARController.ChangeModel(newObject.GetComponent<ObjectDisplayScript>().UIObject.ConnectedModel);
+            //ARController.ChangeModel(change.AllObjects[change.currentObject].ConnectedModel); //Changes the model that you will place to the model that is connected to the spawnable object you just chose.
             ARController.controllerstate = ControllerState.Placing;
         }
 
@@ -338,9 +335,11 @@ namespace GoogleARCore.Examples.HelloAR
             changeScanANI.CloseANI("CloseScanning");           //
             changeWaypointANI.CloseANI("CloseWaypoints");      //
 
-            mainModeUI.SetActive(true);
+            changeMainANI.building = false;
+            changeBuildANI.main = true;
+            changeMainANI.placing = false;
 
-            ARController.controllerstate = ControllerState.Default;                   
+            ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)                
         }
         #endregion
 
@@ -361,7 +360,6 @@ namespace GoogleARCore.Examples.HelloAR
             //
 
             //
-            ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)
         }
         #endregion
 
@@ -453,7 +451,7 @@ namespace GoogleARCore.Examples.HelloAR
         public void RemoveUnit()
         {
             Destroy(ARController.CurrentSelectedModel.transform.root.gameObject);   //Destroys the current selected model.
-            ARController.controllerstate = ControllerState.Default;
+            ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)
             mainModeUI.SetActive(true);
             changeRemoveANI.CloseANI("CloseReact");
             changeBehaveANI.CloseANI("CloseBehave");

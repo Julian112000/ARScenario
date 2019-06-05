@@ -16,7 +16,7 @@ MonoBehaviour:
   name_Dutch: CV-90
   description: The description for the CV-90.
   description_Dutch: De beschrijving van de CV-90.
-  artwork: {fileID: 21300000, guid: 3f59648de6810ee43bcde9db1aed74b7, type: 3}
+  artwork: {fileID: 21300000, guid: 4c65de34ae1bdab468b36c6cb6f453d5, type: 3}
   ConnectedModel: {fileID: 898156721982984904, guid: 22df207a6a0615b49b5108d9368569de,
     type: 3}
   ConnectedShowCase: {fileID: 8400000, guid: 8c2935d59ed33f34eb42bf8c96701d29, type: 2}

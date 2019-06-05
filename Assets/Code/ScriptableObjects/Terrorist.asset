@@ -16,7 +16,7 @@ MonoBehaviour:
   name_Dutch: Terrorist
   description: The description for the terrorist.
   description_Dutch: De beschrijving van de Terrorist
-  artwork: {fileID: 21300000, guid: 86c0e9679504e3f4a950bedf58f67d3e, type: 3}
+  artwork: {fileID: 21300000, guid: da1e893b6b6d20745910d1232a0c4787, type: 3}
   ConnectedModel: {fileID: 5845674221190450725, guid: 9cd50ba72c51f7b40a8d3a0fa47733e4,
     type: 3}
   ConnectedShowCase: {fileID: 8400000, guid: b19f66de108e22044bffea189f956d99, type: 2}

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -76,7 +76,7 @@ public class SceneManager : MonoBehaviour
             newsavePanel.SetActive(false);
 
         //Give player feedback that the scenario is saving...
-        SetSavingFeedback("Saving...       ", true);
+        SetSavingFeedback("Saving...", true);
     }
     //Toggle Panel of creating a new save
     public void ToggleNewSave()
@@ -195,9 +195,15 @@ public class SceneManager : MonoBehaviour
     /// <param Toggle="toggle">determine if it has to be closed or not</param>
     public void SetSavingFeedback(string text, bool toggle)
     {
-        savingFeedback.gameObject.SetActive(true);
+        if (toggle) savingFeedback.transform.parent.gameObject.SetActive(true);
+        else StartCoroutine(FadeOutFeedback());
         savingFeedback.transform.GetChild(0).gameObject.SetActive(toggle);
         savingFeedback.text = text;
+    }
+    IEnumerator FadeOutFeedback()
+    {
+        yield return new WaitForSeconds(1f);
+        savingFeedback.transform.parent.gameObject.SetActive(false);
     }
     /// <summary>
     /// Main function to save a unit

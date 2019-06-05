@@ -16,7 +16,7 @@ MonoBehaviour:
   name_Dutch: SniperToren
   description: The description for the sniper tower.
   description_Dutch: De beschrijvijng van de toren.
-  artwork: {fileID: 21300000, guid: 189e2641d5eb6cc458a3e481298eb9d7, type: 3}
+  artwork: {fileID: 21300000, guid: 704045bae21baa1429f0287cbba48417, type: 3}
   ConnectedModel: {fileID: 7557477676618205434, guid: 495bd25943e3caf48bd49b1993a18419,
     type: 3}
   ConnectedShowCase: {fileID: 8400000, guid: 6cb1ce35698eb2544b5b65a8c7970ecf, type: 2}

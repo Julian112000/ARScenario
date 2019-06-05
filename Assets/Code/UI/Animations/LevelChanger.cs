@@ -31,6 +31,11 @@
         ///</summary>
         private int levelToLoad;
 
+        public bool scanning;
+        public bool building;
+        public bool main;
+        public bool placing;
+
         ///<summary>
         ///The function that switches to the next scene.
         ///</summary>
@@ -56,16 +61,33 @@
         {
 
             objChanger.buildModeUI.SetActive(false);
+            if (main)
+            {
+                objChanger.mainModeUI.SetActive(true);
+            }
+            else if (placing)
+            {
+                objChanger.placeModeUI.SetActive(true);
+            }
         }
 
         public void OnCloseMainComplete()
         {
             objChanger.mainModeUI.SetActive(false);
+            if (scanning)
+            {
+                objChanger.scanningModeUI.SetActive(true);
+            }
+            else if (building)
+            {
+                objChanger.buildModeUI.SetActive(true);
+            }
         }
 
         public void OnClosePlaceComplete()
         {
             objChanger.placeModeUI.SetActive(false);
+            objChanger.buildModeUI.SetActive(true);
         }
 
         public void OnCloseRotateComplete()
@@ -76,6 +98,7 @@
         public void OnCloseScanningComplete()
         {
             objChanger.scanningModeUI.SetActive(false);
+            objChanger.mainModeUI.SetActive(true);
         }
 
         public void OnCloseSelectComplete()

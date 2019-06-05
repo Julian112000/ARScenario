@@ -16,6 +16,6 @@ MonoBehaviour:
   name_Dutch: Verlaten Pand
   description: A abandoned building with open windows.
   description_Dutch: Een verlaten pand met open ramen.
-  artwork: {fileID: 21300000, guid: a6d12c5e1b0b182449592444a14951ef, type: 3}
+  artwork: {fileID: 21300000, guid: 47751ff7862b24440af3d1684562bfd7, type: 3}
   ConnectedModel: {fileID: 100000, guid: 5bef27c6cee56554d95749dd8ae0e4f1, type: 3}
   ConnectedShowCase: {fileID: 8400000, guid: 9b68c274f423b384b9c843fb05306e40, type: 2}

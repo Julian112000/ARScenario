@@ -19,19 +19,19 @@ namespace GoogleARCore.Examples.HelloAR
         ///The text labels that will be changeable by language.
         ///</summary>
         [SerializeField]
-        private List<Text> m_TextRealtime = new List<Text>();
+        private List<Text> textRealtime = new List<Text>();
 
         ///<summary>
         ///The dutch text list of all the changeable labels.
         ///</summary>
         [SerializeField]
-        private List<string> m_TextDutch = new List<string>();
+        private List<string> textDutch = new List<string>();
 
         ///<summary>
         ///The english text list of all the changeable labels.
         ///</summary>
         [SerializeField]
-        private List<string> m_TextEnglish = new List<string>();
+        private List<string> textEnglish = new List<string>();
 
 
         ///<summary>
@@ -42,16 +42,16 @@ namespace GoogleARCore.Examples.HelloAR
         {
             if (AppStartBools.dutchLanguage)                    //If the dutchlanguage variable (wich is selected in the settingsscreen from the main menu) is true.
             {
-                for (int i = 0; i < m_TextRealtime.Count; i++)  //For every label that has been selected.
+                for (int i = 0; i < textRealtime.Count; i++)  //For every label that has been selected.
                 {
-                    m_TextRealtime[i].text = m_TextDutch[i];    //Replace it by the dutch version in the right order.
+                    textRealtime[i].text = textDutch[i];    //Replace it by the dutch version in the right order.
                 }
             }
             else if (AppStartBools.englishLanguage)             //If the englishlanguage variable (wich is selected in the settingsscreen from the main menu) is true.
             {
-                for (int i = 0; i < m_TextRealtime.Count; i++)  //For every label that has been selected.
+                for (int i = 0; i < textRealtime.Count; i++)  //For every label that has been selected.
                 {
-                    m_TextRealtime[i].text = m_TextEnglish[i];  //Replace it by the english version in the right order.
+                    textRealtime[i].text = textEnglish[i];  //Replace it by the english version in the right order.
                 }
             }
         }
