@@ -6,6 +6,7 @@
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
@@ -44,8 +45,7 @@
         #region SceneSwitchAnimation
         public void OnFadeComplete()
         {
-            int i = Application.loadedLevel;
-            Application.LoadLevel(i + 1);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         }
         #endregion
 

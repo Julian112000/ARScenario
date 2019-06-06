@@ -75,12 +75,12 @@
                             {
                                 if (hit.collider.tag == "NewScenario") //Start a new scenario.
                                 {
-                                    animator.SetTrigger("FadeOutMain"); //Activate the animation that will switch scenes at the end.
+                                    startMenu.SetTrigger("LoadNew");
                                     AppStartBools.willLoad = false;     //Set the bool to FALSE wich will indicate that the loading screen will NOT be loaded.
                                 }
                                 else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario.
                                 {
-                                    animator.SetTrigger("FadeOutMain"); //Activate the animation that will switch scenes at the end.
+                                    startMenu.SetTrigger("LoadNew");
                                     AppStartBools.willLoad = true;      //Set the bool to TRUE wich will indicate that the loading screen WILL be loaded.
                                 }
                             }
@@ -113,12 +113,12 @@
                     {
                         if (hit.collider.tag == "NewScenario") //Start a new scenario
                         {
-                            animator.SetTrigger("FadeOutMain");
+                            startMenu.SetTrigger("LoadNew");
                             AppStartBools.willLoad = false;
                         }
                         else if (hit.collider.gameObject.tag == "LoadScenario") //Load a saved scenario
                         {
-                            animator.SetTrigger("FadeOutMain");
+                            startMenu.SetTrigger("LoadNew");
                             AppStartBools.willLoad = true;
                         }
                     }
