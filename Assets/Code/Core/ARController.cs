@@ -175,7 +175,6 @@
         private void Editing()
         {
             BuildCanvas.SetActive(false);
-            ObjectEditCanvas.SetActive(true);
             Scanning = false;
             //GridViewer.SetActive(true);
             //
@@ -208,7 +207,7 @@
         //This void is when you have an object selected and now want to choose what to do with it.
         private void FullyEditingObject()
         {
-            FullyEditingCanvas.SetActive(true);
+            //FullyEditingCanvas.SetActive(true);
         }
         //This void is the update of when you are editing a selected units Stats
         private void EditingUnitStats()

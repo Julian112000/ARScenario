@@ -35,6 +35,8 @@
         public bool building;
         public bool main;
         public bool placing;
+        public bool waypointing;
+        public bool scaling;
 
         ///<summary>
         ///The function that switches to the next scene.
@@ -118,7 +120,18 @@
         public void OnCloseBehaveComplete()
         {
             objChanger.behaveModeUI.SetActive(false);
-            objChanger.rotatingModeUI.SetActive(true);
+            if (scaling)
+            {
+                objChanger.rotatingModeUI.SetActive(true);
+            }
+            else if (waypointing)
+            {
+                objChanger.waypointPlacementUI.SetActive(true);
+            }
+            else if (main)
+            {
+                objChanger.mainModeUI.SetActive(true);
+            }
         }
 
         public void OnCloseStatsComplete()
@@ -128,6 +141,13 @@
             objChanger.behaveEquipmentUI.SetActive(false);
             objChanger.waypointPlacementUI.SetActive(false);
             objChanger.RemovalUI.SetActive(false);
+            objChanger.behaveModeUI.SetActive(true);
+        }
+
+        public void OnCloseLoadComplete()
+        {
+            objChanger.loadingModeUI.SetActive(false);
+            objChanger.mainModeUI.SetActive(true);
         }
         #endregion
 

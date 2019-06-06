@@ -52,7 +52,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         [Header("Animations")]
         public LevelChanger changeBuildANI;
-        public LevelChanger changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI, changeRemoveANI;
+        public LevelChanger changeMainANI, changePlayANI, changePlaceANI, changeRotateANI, changeScanANI, changeBehaveANI, changeStatsANI, changeReactANI, changeEquipmentANI, changeWaypointANI, changeRemoveANI, changeLoadANI;
 
         /// <summary>
         /// All the booleans that are used.
@@ -256,8 +256,6 @@ namespace GoogleARCore.Examples.HelloAR
         public void ConfirmEditing()
         {
             changeRotateANI.CloseANI("CloseRotate");
-
-
         }
 
         /// <summary>
@@ -268,6 +266,8 @@ namespace GoogleARCore.Examples.HelloAR
             ARController.controllerstate = ControllerState.Editing;
             changeBehaveANI.CloseANI("CloseBehave");
             ReScaling = true;
+            changeBehaveANI.scaling = true;
+            changeBehaveANI.waypointing = false;
         }
         #endregion
 
@@ -322,6 +322,9 @@ namespace GoogleARCore.Examples.HelloAR
             changeMainANI.building = false;
             changeBuildANI.main = true;
             changeMainANI.placing = false;
+            changeBehaveANI.main = true;
+            changeBehaveANI.scaling = false;
+            changeBehaveANI.waypointing = false;
 
             ARController.controllerstate = ControllerState.SelectingObject;     //(Click on a object to select it)                
         }
@@ -473,7 +476,8 @@ namespace GoogleARCore.Examples.HelloAR
         public void StartWaypointing()
         {
             changeBehaveANI.CloseANI("CloseBehave");
-            waypointPlacementUI.SetActive(true);
+            changeBehaveANI.waypointing = true;
+            changeBehaveANI.scaling = false;
             ARController.controllerstate = ControllerState.Waypointing;
         }
 
@@ -485,6 +489,7 @@ namespace GoogleARCore.Examples.HelloAR
             ARController.CurrentplacedObject.GetComponent<AIBasics>().UndoLastWaypoint();
         }
 
+        /// Ryan
         /// <summary>
         /// Resets all the waypoints. (Deletes every waypoint)
         /// </summary>
@@ -499,7 +504,6 @@ namespace GoogleARCore.Examples.HelloAR
         public void ConfirmWaypoint()
         {
             changeWaypointANI.CloseANI("CloseWaypoints");
-            behaveModeUI.SetActive(true);
             ARController.controllerstate = ControllerState.FullyEditingObject;
         }
 
@@ -551,8 +555,14 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public void ToggleLoadingUI(bool toggle)
         {
-            loadingModeUI.SetActive(toggle);
-            mainModeUI.SetActive(true);
+            if(toggle == false)
+            {
+                changeLoadANI.CloseANI("CloseLoad");
+            }
+            else
+            {
+                loadingModeUI.SetActive(toggle);
+            }
         }
         #endregion
 
