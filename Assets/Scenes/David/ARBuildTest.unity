@@ -430,6 +430,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1662290916099928110, guid: 16de10ad82217ba41b1daf859f0c80b5,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6bfafea0c380f8c4b986ee0d4f14b84e, type: 2}
     - target: {fileID: 1662290916099928111, guid: 16de10ad82217ba41b1daf859f0c80b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -530,11 +535,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1662290916099928110, guid: 16de10ad82217ba41b1daf859f0c80b5,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 6bfafea0c380f8c4b986ee0d4f14b84e, type: 2}
     - target: {fileID: 2679790663137033478, guid: 16de10ad82217ba41b1daf859f0c80b5,
         type: 3}
       propertyPath: objChanger
@@ -3507,6 +3507,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ARCore Device 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7457724695021852822, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_Name
+      value: Confirm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -337.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00002670288
+      objectReference: {fileID: 0}
     - target: {fileID: 7457724694851787320, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3642,21 +3662,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -337.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7457724693195251075, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00002670288
-      objectReference: {fileID: 0}
     - target: {fileID: 7457724693918936709, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -3726,11 +3731,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.x
       value: 192.732
-      objectReference: {fileID: 0}
-    - target: {fileID: 7457724695021852822, guid: 3b5417beef39ea947b0e421a7a033318,
-        type: 3}
-      propertyPath: m_Name
-      value: Confirm
       objectReference: {fileID: 0}
     - target: {fileID: 7457724695021852823, guid: 3b5417beef39ea947b0e421a7a033318,
         type: 3}
@@ -4343,5 +4343,10 @@ PrefabInstance:
       propertyPath: ScaleSpeed
       value: 0.0025
       objectReference: {fileID: 0}
+    - target: {fileID: 8223200011021302075, guid: 8e61edc2f4d179d419de9197d55616c0,
+        type: 3}
+      propertyPath: ScalingCanvas
+      value: 
+      objectReference: {fileID: 1136137967}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e61edc2f4d179d419de9197d55616c0, type: 3}

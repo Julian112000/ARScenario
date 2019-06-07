@@ -65,6 +65,8 @@
         [SerializeField]
         GameObject BuildCanvas;
         [SerializeField]
+        GameObject ScalingCanvas;
+        [SerializeField]
         GameObject SelectBuildCanvas;
         [SerializeField]
         GameObject ObjectEditCanvas;
@@ -174,6 +176,7 @@
         //Called when enum is on Editing (this is when wanting to rotate or scale but no input has been found yet
         private void Editing()
         {
+            ScalingCanvas.SetActive(true);
             BuildCanvas.SetActive(false);
             Scanning = false;
             //GridViewer.SetActive(true);
