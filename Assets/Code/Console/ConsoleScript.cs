@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +48,13 @@ public class ConsoleScript : MonoBehaviour
             //Instantiate all messages at the start of the game and add them to the pool
             ConsoleMessageScript message = Instantiate(feedbackPrefab, feedbackParent).GetComponent<ConsoleMessageScript>();
             messageList.Add(message);
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetFeedback(MessageType.BuildMessage, "test1");
         }
     }
     //<summery> SetFeedback()
@@ -102,10 +109,8 @@ public class ConsoleScript : MonoBehaviour
         //Show - Hide messages in console panel
         for (int i = 0; i < messageList.Count; i++)
         {
-            if (messageList[i].isEnabled)
-            {
-                messageList[i].ToggleMessage(consoleEnabled);
-            }
+            if (!consoleEnabled) messageList[i].ToggleMessage(true);
+            else messageList[i].ToggleMessage(false);
         }
         //Show - Hide console panel color
         if (consoleEnabled)

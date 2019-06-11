@@ -32,6 +32,6 @@ public class ConsoleMessageScript : MonoBehaviour
         //Disbale - enable animator and reset alpha fade of canvasalpha
         animator.enabled = toggle;
 
-        if (toggle) canvasAlpha.alpha = 1;
+        if (!toggle) canvasAlpha.alpha = 1;
     }
 }
