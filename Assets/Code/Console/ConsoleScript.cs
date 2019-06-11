@@ -13,7 +13,7 @@ public enum MessageType
 };
 public class ConsoleScript : MonoBehaviour
 {
-    public static ConsoleScript Instance;           //Static instance to call from other classes (AIBasics.cs, Arcontroller.cs etc.)
+    public static ConsoleScript Instance;         //Static instance to call from other classes (AIBasics.cs, Arcontroller.cs etc.)
 
     [SerializeField]
     private Image consolePanel;                   //Image component of Consoleview gameobject to change color when selected

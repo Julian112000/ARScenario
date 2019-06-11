@@ -39,7 +39,9 @@ public class MouseClick : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out hit, 100.0f, unitlayer))
                     {
-                        prefab = hit.collider.gameObject.GetComponent<AIBasics>();
+                        if (hit.collider.gameObject.tag == "Snipertoren") prefab = hit.collider.transform.GetChild(0).GetComponent<AIBasics>();
+                        else prefab = hit.collider.gameObject.GetComponent<AIBasics>();
+
                         prefab.Selected = true;
                         prefab.TurnOnVisuals();
                         //prefab.PlaceWayPoint(hit.point);

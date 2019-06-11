@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SaveData : MonoBehaviour
 {
     [SerializeField]
-    private int id;                       //ID unit type
+    private int id;                         //ID unit type
 
-    public Vector3 snappedPosition;       //Snapped gameobject of the anchor
+    public Vector3 snappedPosition;         //Snapped gameobject of the anchor
 
     [HideInInspector]
     public float latitude;                  //Latitude (GPS) x

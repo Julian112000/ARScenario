@@ -89,7 +89,7 @@ public abstract class AIBasics : AIStats
     //Constructor of this class
     public AIBasics()
     {
-
+        
     }
     //The Awake that is inherited by the child class, Every Unit with an AI element will have this Awake
     public virtual void Awake()
@@ -457,6 +457,9 @@ public abstract class AIBasics : AIStats
                 linerenderer.SetPosition(i, transform.position);
             }
         }
+
+        if (unittype == UnitType.Fennek) SoundManager.Instance.PlayAudioClip("Fennek_Moving", transform);
+        //else if (unittype == UnitType.Human) SoundManager.Instance.PlayAudioClip("Human_Walk", 1f);
     }
     //Void that is used when you are done with all the waypoints, Or you want to make a new path so u have to clear the old one
     public void ClearWaypoints()
@@ -549,16 +552,19 @@ public abstract class AIBasics : AIStats
                         RemoveHealth(ShooterDamage, Shooter);
                         PlayBulletImpact();
                         Debug.Log("Human Shot Human, Default Damage done");
+                        SoundManager.Instance.PlayAudioClip("Grund_" + Random.Range(1, 3), transform);
                         break;
                     case UnitType.Tank:
                         Debug.Log("Tank Shot Human, Human got obliterated");
                         PlayExplosionImpact();
+                        SoundManager.Instance.PlayAudioClip("Explosion", transform);
                         RemoveHealth(Health, Shooter);
                         break;
                     case UnitType.Fennek:
                         Debug.Log("Fennek Shot human, Human Died");
                         PlayBulletImpact();
                         RemoveHealth(Health, Shooter);
+                        SoundManager.Instance.PlayAudioClip("DeadSound_" + Random.Range(1, 2), transform);
                         break;
                     default:
                         break;
@@ -594,6 +600,7 @@ public abstract class AIBasics : AIStats
                         Debug.Log("Tank Shot Fennek, Fennek blows up");
                         RemoveHealth(Health, Shooter);
                         PlayExplosionImpact();
+                        SoundManager.Instance.PlayAudioClip("Explosion", transform);
                         break;
                     case UnitType.Fennek:
                         Debug.Log("Fennek shot Fennek, Fennek took full damage");
@@ -620,7 +627,8 @@ public abstract class AIBasics : AIStats
             if (i == ParticleToPlay)
             {
                 HitParticles[i].Play();
-            }
+                SoundManager.Instance.PlayAudioClip(HitParticles[i].name + "_" + Random.Range(1, 4), transform);
+            }  
         }
     }
     public void PlayExplosionImpact()
@@ -631,6 +639,7 @@ public abstract class AIBasics : AIStats
             if (i == ParticleToPlay)
             {
                 ExplosionParticles[i].Play();
+                SoundManager.Instance.PlayAudioClip("Explosion", transform);
             }
         }
     }
@@ -639,7 +648,7 @@ public abstract class AIBasics : AIStats
     #endregion
     //Actual removehealth this gets called inside the takedamage void
     private void RemoveHealth(int RemoveAmount, AIBasics Shooter)
-    {
+    { 
         Health = Health - RemoveAmount;
         if(Health <= 0)
         {
@@ -662,6 +671,7 @@ public abstract class AIBasics : AIStats
     protected void Shoot(AIBasics Target, int Damage, int HitChancePercentage, ParticleSystem MuzzleFlash)
     {
         MuzzleFlash.Play();
+        SoundManager.Instance.PlayAudioClip(unittype.ToString() + "_Shot", transform);
         //
         int Hitchance = Random.Range(0, 100);
         if (Hitchance <= HitChancePercentage)
@@ -676,6 +686,10 @@ public abstract class AIBasics : AIStats
     }
     protected void Shoot(AIBasics Target, int Damage, int HitChancePercentage, ParticleSystem MuzzleFlash, WeaponType weapontype, RPGBulletScript RPGBullet)
     {
+        MuzzleFlash.Play();
+        if (unittype == UnitType.Human) { SoundManager.Instance.PlayAudioClip(weapontype.ToString() + "_Shot", transform); }
+        else SoundManager.Instance.PlayAudioClip(unittype.ToString() + "_Shot", transform);
+
         int Hitchance = Random.Range(0, 100);
         switch (weapontype)
         {
@@ -707,7 +721,6 @@ public abstract class AIBasics : AIStats
                 break;
         }
         //
-        MuzzleFlash.Play();
         //
 
     }

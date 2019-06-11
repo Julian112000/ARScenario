@@ -14,7 +14,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> unitPrefabs = new List<GameObject>();    //All unit prefabs that are in the game [soldier, terrorist, fennek etc.]
     [SerializeField]
-    private List<GameObject> currentUnits = new List<GameObject>();     //List of all units when scenario is saved
+    private List<GameObject> currentUnits = new List<GameObject>();   //List of all units when scenario is saved
     [SerializeField]
     private Transform[] movedObjects;         //Array of transforms to calculate distance to the unit [Default = fps camera]
     [SerializeField]
@@ -82,7 +82,7 @@ public class SceneManager : MonoBehaviour
     public void ToggleNewSave()
     {
         newsaveToggle = !newsaveToggle;
-        newsavePanel.SetActive(newsaveToggle); 
+        newsavePanel.SetActive(newsaveToggle);
     }
     /// <summary>
     /// Load scenario from database
@@ -170,7 +170,7 @@ public class SceneManager : MonoBehaviour
         data.luditude = posy;
         //Set longitude of unit
         data.longitude = posz;
-        //Save position in vector3 
+        //Save position in vector3
         Vector3 position = (movedObjects[0].position + new Vector3(posx, posy, posz));
         Unit.transform.position = position;
 

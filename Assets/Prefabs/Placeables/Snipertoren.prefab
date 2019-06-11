@@ -24281,7 +24281,7 @@ GameObject:
   - component: {fileID: 409625332246347832}
   - component: {fileID: 6553136794928985441}
   m_Layer: 0
-  m_Name: BulletImpactFleshBigEffect (6)
+  m_Name: FleshImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57154,7 +57154,7 @@ GameObject:
   - component: {fileID: 9159322644814001938}
   - component: {fileID: 1471603333943755772}
   m_Layer: 0
-  m_Name: BulletImpactFleshBigEffect (5)
+  m_Name: FleshImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61703,7 +61703,6 @@ GameObject:
   - component: {fileID: 2210462749041627776}
   - component: {fileID: 1126627939478260197}
   - component: {fileID: 4168688926595442132}
-  - component: {fileID: 7159561619468835891}
   m_Layer: 8
   m_Name: Terrorist (2)
   m_TagString: Terrorist
@@ -61910,19 +61909,6 @@ MonoBehaviour:
   - {fileID: 1441801800443031855}
   CurrentWeapon: {fileID: 0}
   RpgBullet: {fileID: 2768997058330680249}
---- !u!65 &7159561619468835891
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524832782567529238}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.53765714, y: 1.8327479, z: 0.2655847}
-  m_Center: {x: 0.0052248836, y: 0.93981147, z: -0.024792314}
 --- !u!1 &3541430103800059886
 GameObject:
   m_ObjectHideFlags: 0
@@ -100333,7 +100319,7 @@ GameObject:
   - component: {fileID: 3401147274101420946}
   - component: {fileID: 8568535696140125122}
   m_Layer: 0
-  m_Name: BulletImpactFleshBigEffect (5)
+  m_Name: FleshImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157026,7 +157012,7 @@ GameObject:
   - component: {fileID: 1875922932121790033}
   - component: {fileID: 7337150299185824816}
   m_Layer: 0
-  m_Name: BulletImpactFleshBigEffect (4)
+  m_Name: FleshImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

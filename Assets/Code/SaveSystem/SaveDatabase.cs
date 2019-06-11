@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Globalization;
 
 public class SaveDatabase : MonoBehaviour
 {
@@ -222,7 +218,7 @@ public class SaveDatabase : MonoBehaviour
         {
             StartCoroutine(HandleSaveAsync(isnew, time, amount, lat, lon));
         }
-        //If return value is different than create update scenario
+        //If return value is different than create, update scenario
         else if (string.IsNullOrEmpty(isnew) || www.text != "create")
         {
             //Already same scenario in database so override data
