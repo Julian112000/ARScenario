@@ -13,7 +13,11 @@ public class SaveData : MonoBehaviour
     public float longitude;                 //Longitude (GPS) z
     [HideInInspector]
     public float luditude;                  //Lutitude (GPS) y
-
+                                            //Return ID of the unit type
+    public int GetID()
+    {
+        return id;
+    }
     private void Start()
     {
         //Get anchor of the gameobject
@@ -27,19 +31,14 @@ public class SaveData : MonoBehaviour
             transform.parent.position = snappedPosition;
         }
     }
-    //Return ID of the unit type
-    public int GetID()
+    //Get rotation of the unit
+    public Vector3 GetEulerAngles()
     {
-        return id;
+        return transform.eulerAngles;
     }
     //Get position of the anchor
     public Vector3 GetPosition()
     {
         return transform.position;
-    }
-    //Get rotation of the unit
-    public Vector3 GetEulerAngles()
-    {
-        return transform.eulerAngles;
     }
 }

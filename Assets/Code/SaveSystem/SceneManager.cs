@@ -59,25 +59,6 @@ public class SceneManager : MonoBehaviour
         //Load all UI panel scenarios that are listed in mysql
         SaveSystem.LoadScenarios(gameObject, maxSaves);
     }
-    /// <summary>
-    /// Void that cals when the player clicks on save scenario button and saves a new scenario
-    /// </summary>
-    /// <param Text Element="isnew">Component of text element of new saved panel</param>
-    public void Save(Text isnew)
-    {
-        //Find Units in the scene and add them to the 'm_UnitRealtime' list
-        FindUnit();
-
-        //If scenario is saved from new save panel give it that name - otherwise name it untitled
-        if (isnew) StartCoroutine(SaveData(isnew.text));
-        else StartCoroutine(SaveData(""));
-        //Disable new save panel if opened
-        if (newsavePanel.activeSelf)
-            newsavePanel.SetActive(false);
-
-        //Give player feedback that the scenario is saving...
-        SetSavingFeedback("Saving...", true);
-    }
     //Toggle Panel of creating a new save
     public void ToggleNewSave()
     {
@@ -115,6 +96,25 @@ public class SceneManager : MonoBehaviour
         }
     }
     /// <summary>
+    /// Void that cals when the player clicks on save scenario button and saves a new scenario
+    /// </summary>
+    /// <param Text Element="isnew">Component of text element of new saved panel</param>
+    public void Save(Text isnew)
+    {
+        //Find Units in the scene and add them to the 'm_UnitRealtime' list
+        FindUnit();
+
+        //If scenario is saved from new save panel give it that name - otherwise name it untitled
+        if (isnew) StartCoroutine(SaveData(isnew.text));
+        else StartCoroutine(SaveData(""));
+        //Disable new save panel if opened
+        if (newsavePanel.activeSelf)
+            newsavePanel.SetActive(false);
+
+        //Give player feedback that the scenario is saving...
+        SetSavingFeedback("Saving...", true);
+    }
+    /// <summary>
     /// Load data from database and set it to reality
     /// </summary>
     /// <param ID="number">ID from database</param>
@@ -148,12 +148,6 @@ public class SceneManager : MonoBehaviour
         currentId = number;   //Load ID of the scene from database
         currentName = name;   //Load name of the scene from databse
         currentTime = time;   //Load time of the scene from database
-    }
-    //Update UI scenario
-    public void UpdateScenarios(string time)
-    {
-        //Update scenario time in the UI text panel
-        currentScenario.UpdateScenarioData(time);
     }
     //Load unit with all data from database
     public void LoadUnit(int id, string name, 
@@ -308,17 +302,23 @@ public class SceneManager : MonoBehaviour
         //Clear UnitRealtime list at the end.
         unitRealtime.Clear();
     }
-    //Toggle off ui that contains feedback elements
-    public IEnumerator ToggleOffUI()
-    {
-        yield return new WaitForSeconds(3f);
-        savingFeedback.gameObject.SetActive(false);
-    }
     //Togglepanel of the main scenario panel
     public void TogglePanel()
     {
         //Toggle the UI panel of the save system
         panelOpened = !panelOpened;
         scenarioPanel.SetActive(panelOpened);
+    }
+    //Toggle off ui that contains feedback elements
+    public IEnumerator ToggleOffUI()
+    {
+        yield return new WaitForSeconds(3f);
+        savingFeedback.gameObject.SetActive(false);
+    }
+    //Update UI scenario
+    public void UpdateScenarios(string time)
+    {
+        //Update scenario time in the UI text panel
+        currentScenario.UpdateScenarioData(time);
     }
 }

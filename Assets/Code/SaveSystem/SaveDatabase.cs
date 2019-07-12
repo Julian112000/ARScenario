@@ -115,23 +115,6 @@ public class SaveDatabase : MonoBehaviour
         //Start coroutine to save units
         StartCoroutine(SaveScenarioStorage(name));
     }
-    public IEnumerator SaveScenarioStorage(string name)
-    {
-        yield return new WaitForSeconds(1f);
-        //Create new WWWForm and add the form data to it
-        WWWForm form = new WWWForm();
-        form.AddField("action", "scenarioname");
-        form.AddField("scenarioname", name);
-        WWW www = new WWW(url + "api.php", form);
-        yield return www;
-        if (www.text != "create")
-        {
-            string data = www.text; //Store www.text to the data string
-            //ID
-            int db_id = int.Parse(www.text); //Get ID from php script and save it to int
-            SceneManager.Instance.SaveStorageData(db_id);
-        }
-    }
     /// <summary>
     /// Save unit to the database from scenario
     /// </summary>
@@ -162,13 +145,30 @@ public class SaveDatabase : MonoBehaviour
         form.AddField("roty", rotation[1].ToString("0.00"));
         form.AddField("rotz", rotation[2].ToString("0.00"));
         //Save Scale with 2 decimals
-        form.AddField("scalex", scale[0].ToString("0.00")); 
+        form.AddField("scalex", scale[0].ToString("0.00"));
         form.AddField("scaley", scale[1].ToString("0.00"));
         form.AddField("scalez", scale[2].ToString("0.00"));
         WWW www = new WWW(url + "createunitapi.php", form);
         SceneManager.Instance.SetSavingFeedback("SCENARIO SAVED", false);
         StartCoroutine(SceneManager.Instance.ToggleOffUI());
         yield return www;
+    }
+    public IEnumerator SaveScenarioStorage(string name)
+    {
+        yield return new WaitForSeconds(1f);
+        //Create new WWWForm and add the form data to it
+        WWWForm form = new WWWForm();
+        form.AddField("action", "scenarioname");
+        form.AddField("scenarioname", name);
+        WWW www = new WWW(url + "api.php", form);
+        yield return www;
+        if (www.text != "create")
+        {
+            string data = www.text; //Store www.text to the data string
+            //ID
+            int db_id = int.Parse(www.text); //Get ID from php script and save it to int
+            SceneManager.Instance.SaveStorageData(db_id);
+        }
     }
     /// <summary>
     /// Load all Scenarios from database in UI
@@ -228,6 +228,36 @@ public class SaveDatabase : MonoBehaviour
         }
     }
     /// <summary>
+    /// This void is called if a scenario is already in the database
+    /// Scenario will update the amount of units, time, lat etc.
+    /// </summary>
+    /// <param amount of units="amount">New amount of units in the saved scenario</param>
+    /// <param ID of scenario="sceneid">Current ID of the scenario from the database</param>
+    /// <param Time="time">Standard UCL +1 Time of the updated saved scenario</param>
+    /// <param Latitude="lat">New latitude (x) GPS position of the saved scenario</param>
+    /// <param Longitude="lon">New longitude (z) GPS position of the saved scenario</param>
+    public IEnumerator UpdateScenario(int amount, int sceneid, string time, string lat, string lon)
+    {
+        //Create new WWWForm and add the form data to it
+        WWWForm form = new WWWForm();
+        form.AddField("action", "scenario");
+        form.AddField("scenarioid", sceneid);
+        form.AddField("amount", amount);
+        form.AddField("time", time);
+
+#if UNITY_EDITOR
+        lat = lat.Replace(".", ",");        //Replace , to . for the android build if standalone build
+        lon = lon.Replace(".", ",");        //Replace , to . for the android build if standalone build
+#endif
+        form.AddField("latitude", lat);
+        form.AddField("longitude", lon);
+
+        WWW www = new WWW(url + "updateapi.php", form);
+        yield return www;
+        //Update the time of the scenario in database and UI
+        SceneManager.Instance.UpdateScenarios(time);
+    }
+    /// <summary>
     /// Void to call and start GetUnits ienumerator
     /// </summary>
     /// <param Scene ID="sceneid">ID from scenario in mysql database</param>
@@ -280,34 +310,18 @@ public class SaveDatabase : MonoBehaviour
         }
     }
     /// <summary>
-    /// This void is called if a scenario is already in the database
-    /// Scenario will update the amount of units, time, lat etc.
+    /// Delete scenario from the php mysql database
     /// </summary>
-    /// <param amount of units="amount">New amount of units in the saved scenario</param>
-    /// <param ID of scenario="sceneid">Current ID of the scenario from the database</param>
-    /// <param Time="time">Standard UCL +1 Time of the updated saved scenario</param>
-    /// <param Latitude="lat">New latitude (x) GPS position of the saved scenario</param>
-    /// <param Longitude="lon">New longitude (z) GPS position of the saved scenario</param>
-    public IEnumerator UpdateScenario(int amount, int sceneid, string time, string lat, string lon)
+    /// <param Scenario ID="sceneid">id of the soon be deleted scenario from the database</param>
+    public IEnumerator DeleteScenario(int sceneid)
     {
         //Create new WWWForm and add the form data to it
         WWWForm form = new WWWForm();
         form.AddField("action", "scenario");
-        form.AddField("scenarioid", sceneid);
-        form.AddField("amount", amount);
-        form.AddField("time", time);
-
-        #if UNITY_EDITOR
-        lat = lat.Replace(".", ",");        //Replace , to . for the android build if standalone build
-        lon = lon.Replace(".", ",");        //Replace , to . for the android build if standalone build
-        #endif
-        form.AddField("latitude", lat);
-        form.AddField("longitude", lon);
-
-        WWW www = new WWW(url + "updateapi.php", form);
+        form.AddField("sceneid", sceneid);
+        //Delete scenario from database and UI
+        WWW www = new WWW(url + "deleteapi.php", form);
         yield return www;
-        //Update the time of the scenario in database and UI
-        SceneManager.Instance.UpdateScenarios(time);
     }
     /// <summary>
     /// Void to call if the player desides to load the scenario
@@ -344,19 +358,5 @@ public class SaveDatabase : MonoBehaviour
             //Load scenario with the parameters above
             SceneManager.Instance.Load(sceneid, db_name /* name */, db_time /* time */, db_amount /* amount */, db_lat /* latitude */, db_lon /* longitude */);
         }
-    }
-    /// <summary>
-    /// Delete scenario from the php mysql database
-    /// </summary>
-    /// <param Scenario ID="sceneid">id of the soon be deleted scenario from the database</param>
-    public IEnumerator DeleteScenario(int sceneid)
-    {
-        //Create new WWWForm and add the form data to it
-        WWWForm form = new WWWForm();
-        form.AddField("action", "scenario");
-        form.AddField("sceneid", sceneid);
-        //Delete scenario from database and UI
-        WWW www = new WWW(url + "deleteapi.php", form);
-        yield return www;
     }
 }

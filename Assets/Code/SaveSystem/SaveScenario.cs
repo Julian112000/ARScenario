@@ -29,6 +29,15 @@ public class SaveScenario : MonoBehaviour
         else scenariobgImage.color = selectedColors[1];
     }
     /// <summary>
+    /// Update Scneario data of the UI element
+    /// </summary>
+    /// <param Time="time">Normal UCL +1 time</param>
+    public void UpdateScenarioData(string time)
+    {
+        //Update scenario text component with updated save time
+        timeText.text = time;
+    }
+    /// <summary>
     /// Set or Update data to the scenario prefab
     /// </summary>
     /// <param ID="id">ID of the saved scenario</param>
@@ -41,29 +50,20 @@ public class SaveScenario : MonoBehaviour
         nameText.text = name;
         timeText.text = time;
     }
-    /// <summary>
-    /// Update Scneario data of the UI element
-    /// </summary>
-    /// <param Time="time">Normal UCL +1 time</param>
-    public void UpdateScenarioData(string time)
-    {
-        //Update scenario text component with updated save time
-        timeText.text = time;
-    }
     //Load scenario with the scenarioid from SaveDatabase.cs
     public void LoadScenario()
     {
         SaveDatabase.Instance.OnLoadScenario(scenarioId);
-    }
-    //Conformation when scenario is loaded and toggle off the loading UI elements
-    public void ConfirmLoadScenario()
-    {
-        ChangeObjectScript.Instance.ToggleLoadingUI(false);
     }
     //Delete scenario from database and unity world
     public void DeleteScenario()
     {
         SaveDatabase.Instance.OnDeleteScenario(scenarioId);
         Destroy(gameObject);
+    }
+    //Conformation when scenario is loaded and toggle off the loading UI elements
+    public void ConfirmLoadScenario()
+    {
+        ChangeObjectScript.Instance.ToggleLoadingUI(false);
     }
 }
