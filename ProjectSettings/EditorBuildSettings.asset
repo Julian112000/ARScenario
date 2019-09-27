@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/David/DefensieLogoScene.unity
     guid: 1149a39bb86ae8241aecb76b32127763
   - enabled: 1

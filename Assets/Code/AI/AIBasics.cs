@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public enum UnitSide
 {
@@ -32,58 +33,60 @@ public enum AIBehaviour
 }
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(LineRenderer))]
-public abstract class AIBasics : AIStats
+public abstract class AIBasics : AIStats        //This class inherits from AIstats which holds the information about Health etc.
 {
     //Components and basic needed values
-    protected Animator animator;
-    protected LineRenderer linerenderer;
+    protected Animator animator;                    //The animator of this unit
+    protected LineRenderer linerenderer;            //Linerenderer used for waypointing feedback
     [Header("Enums")]
     [SerializeField]
-    private UnitSide unitside;
+    private UnitSide unitside;                      //Side this unit is of  
     [SerializeField]
-    public AIStates aistate;
-    public UnitType unittype;
+    public AIStates aistate;                        //The state this Unit is in
+    public UnitType unittype;                       //Type of this unit
     [SerializeField]
-    public AIBehaviour Behaviour;
+    public AIBehaviour Behaviour;                   //The behaviour this Unit is using
     [Header("Needed Objects")]
     [SerializeField]
-    public Transform VisionPoint;
+    public Transform VisionPoint;                   //Point on unit where vision had to come from
     [SerializeField]
-    protected GameObject LookingObject;
+    protected GameObject LookingObject;             //Object that rotates towards the point the unit is looking at
     [SerializeField]
-    private GameObject WaypointPrefab;
+    private GameObject WaypointPrefab;          //Prefab for the waypoint that has to be placed when making a route
     [SerializeField]
-    private LayerMask LineCastLayers;
+    private LayerMask LineCastLayers;           //Layermask for the linecasting
     [SerializeField]
-    private GameObject SelectedArrow;
+    private GameObject SelectedArrow;           //The arrow above the unit when it gets selected
     [SerializeField]
-    private List<ParticleSystem> HitParticles;
+    private List<ParticleSystem> HitParticles;      //List of particles that are used when the unit is hit
     [SerializeField]
-    private List<ParticleSystem> ExplosionParticles;
+    private List<ParticleSystem> ExplosionParticles;        //List of explosion particles used for when the unit gets hit by an explosive
     //Basic Variables
     [Header("Basic Variables")]
-    public bool Selected;
+    public bool Selected;           //Booleon to check if this unit is selected
     [SerializeField]
-    protected GameObject FoundTarget;
-    protected AIBasics FoundTargetScript;
-    protected float ShootDelayTimer;
+    protected GameObject FoundTarget;           //The target found by this unit
+    protected AIBasics FoundTargetScript;       //The script of the target found by this unit
+    protected float ShootDelayTimer;            //The delay between shots of this unit
     [SerializeField]
-    private float TargetDelayTimer;
+    private float TargetDelayTimer;             //Delay needed for checking who is targeted
     [SerializeField]
-    protected bool PlayModeOn = false;
-    //Variables For when the unit is selected to aim at a certain point
-    //The offset when aiming (this is because the animation might not always work)
-    protected Vector3 PointToAimAt;
+    protected bool PlayModeOn = false;          //If the game is on playmode (used to call play event)
+    /// <summary>
+    /// Variables For when the unit is selected to aim at a certain point
+    /// The offset when aiming (this is because the animation might not always work)
+    /// </summary>
+    protected Vector3 PointToAimAt;     //The point the unit has to aim at
     //Variables Based for the waypoint system
     [Header("Waypoint related")]
     [SerializeField]
-    protected List<Vector3> Waypoints = new List<Vector3>();
+    protected List<Vector3> Waypoints = new List<Vector3>();        //List of all the waypoint positions
     [SerializeField]
-    private List<WaypointScript> waypointscripts = new List<WaypointScript>();
+    private List<WaypointScript> waypointscripts = new List<WaypointScript>();      //list of scripts of all the waypoints placed for this unit
     [SerializeField]
-    private int CurrentWaypoint = 0;
+    private int CurrentWaypoint = 0;        //The current waypoint being used
     [SerializeField]
-    protected bool WantsToMove = false;
+    protected bool WantsToMove = false;     //If they unit wants to move along its route
 
 
     //Constructor of this class
@@ -102,9 +105,10 @@ public abstract class AIBasics : AIStats
         //Subscribe to play event
         SceneHandler.SwitchToPlayMode += PlayMode;
         //Linerenderer
-        linerenderer.SetWidth(0.1f, 0.1f);
+        //it's used for route visuals
+        linerenderer.SetWidth(0.1f, 0.1f);  
         linerenderer.SetPosition(0, transform.position);
-        //
+        //Add the first waypoint which is your position
         Waypoints.Add(transform.position);
         //
         Selected = false;
@@ -112,7 +116,9 @@ public abstract class AIBasics : AIStats
     }
     //Voids called for in the Awake
     #region Awake Voids
-    //Void to Decide if this is a Terrorist unit or a friendly Unit
+    /// <summary>
+    /// Void to Decide if this is a Terrorist unit or a friendly Unit
+    /// </summary>
     private void DecideType()
     {
         if (gameObject.tag == "Friendly")
@@ -135,6 +141,9 @@ public abstract class AIBasics : AIStats
     //
     #endregion
     #region EventSubscribed Voids
+    /// <summary>
+    /// The playmode void which is subscribed to and called when the play event is
+    /// </summary>
     public void PlayMode()
     {
         WantsToMove = true;
@@ -143,7 +152,9 @@ public abstract class AIBasics : AIStats
         Debug.Log("HAPPENEEEEED!");
     }
     #endregion
-    //The update that is inherited by the child class, Every Unit with an AI element will have this update
+    /// <summary>
+    /// The update that is inherited by the child class, Every Unit with an AI element will have this update
+    /// </summary>
     public virtual void Update()
     {
         //Different Types of Updates (peek definition of update to see what it does)
@@ -160,7 +171,9 @@ public abstract class AIBasics : AIStats
     {
         //
     }
-    //Everything related to the vision of the AI
+    /// <summary>
+    /// Everything related to the vision of the AI
+    /// </summary>
     #region Vision Related
     //This void belongs in the update and gets called to make the entire vision work
     public void VisionUpdate()
@@ -277,6 +290,7 @@ public abstract class AIBasics : AIStats
             ResetTarget();
         }
     }
+    //Check if the found target is within the viewingangle of this unit (sight code)
     private void CheckAngleFoundTarget()
     {
         Vector3 TargetDirection = Vector3.Normalize(FoundTarget.transform.position - transform.position);
@@ -291,6 +305,7 @@ public abstract class AIBasics : AIStats
             ResetTarget();
         }
     }
+    //Check if there is an object inbetween the target and this unit (Check if sight is blocked)
     private void CheckCollisionFoundTarget()
     {
         RaycastHit hit;
@@ -300,6 +315,7 @@ public abstract class AIBasics : AIStats
         }
 
     }
+    //Reset the target ( used for when target is out of sight or dead)
     public void ResetTarget()
     {
         switch (aistate)
@@ -619,6 +635,7 @@ public abstract class AIBasics : AIStats
     //
     #region particlePlay Voids
     
+    //Void that gets called when a bullet makes impact with this unit
     private void PlayBulletImpact()
     {
         int ParticleToPlay = Random.Range(0, HitParticles.Count);
@@ -631,6 +648,7 @@ public abstract class AIBasics : AIStats
             }  
         }
     }
+    //Void that gets called when an explosive makes impact with this unit
     public void PlayExplosionImpact()
     {
         int ParticleToPlay = Random.Range(0, ExplosionParticles.Count);
@@ -684,6 +702,7 @@ public abstract class AIBasics : AIStats
         }
 
     }
+    //Overall void for unit shooting (has loads of parameters because alot of different units use this void)
     protected void Shoot(AIBasics Target, int Damage, int HitChancePercentage, ParticleSystem MuzzleFlash, WeaponType weapontype, RPGBulletScript RPGBullet)
     {
         MuzzleFlash.Play();
@@ -724,7 +743,7 @@ public abstract class AIBasics : AIStats
         //
 
     }
-    //
+    //RPG shooting void
     public void RPGDoDamage()
     {
         FoundTargetScript.TakeDamage(unittype, this, Damage);

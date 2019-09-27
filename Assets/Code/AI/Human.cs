@@ -47,6 +47,7 @@ public class Human : AIBasics
     {
         if (PlayModeOn)
         {
+            animator.SetFloat("MovementSpeed", MovementSpeed);
             base.Update();
             //ActionUpdate();
         }

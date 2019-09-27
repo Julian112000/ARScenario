@@ -4981,5 +4981,10 @@ PrefabInstance:
       propertyPath: ScalingCanvas
       value: 
       objectReference: {fileID: 1136137967}
+    - target: {fileID: 8223200011021302075, guid: 8e61edc2f4d179d419de9197d55616c0,
+        type: 3}
+      propertyPath: ChangeObjectScript
+      value: 
+      objectReference: {fileID: 419351501}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e61edc2f4d179d419de9197d55616c0, type: 3}

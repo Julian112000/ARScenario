@@ -370,6 +370,11 @@ namespace GoogleARCore.Examples.HelloAR
             }
         }
 
+        public void FullyEditingObject()
+        {
+            changeMainANI.CloseANI("CloseM");
+        }
+
         /// <summary>
         /// Closes the stats mode.
         /// </summary>
@@ -431,6 +436,7 @@ namespace GoogleARCore.Examples.HelloAR
             mainModeUI.SetActive(true);
             changeRemoveANI.CloseANI("CloseReact");
             changeBehaveANI.CloseANI("CloseBehave");
+            rotatingModeUI.SetActive(false);
 
         }
 
@@ -513,17 +519,17 @@ namespace GoogleARCore.Examples.HelloAR
         public void UpdateRouteUI(GameObject selectedobject)
         {
             BoxCollider collider = routeButtonUI.GetComponent<BoxCollider>();
-            SpriteRenderer SpriteRenderer = routeButtonUI.transform.GetChild(1).GetComponent<SpriteRenderer>();
+            //SpriteRenderer SpriteRenderer = routeButtonUI.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
             if (selectedobject.tag != "Snipertoren")
             {
                 collider.enabled = true;
-                SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 1);
+                //SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 1);
             }
             else
             {
                 collider.enabled = false;
-                SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 0.2f);
+                //SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 0.2f);
             }
         }
 

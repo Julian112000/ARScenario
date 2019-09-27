@@ -41,49 +41,51 @@
     public class ARController : MonoBehaviour
     {
         [SerializeField]
-        private float ScaleSpeed = 0.0025f;
+        private float ScaleSpeed = 0.0025f;                     //Speed for scaling objects
         [SerializeField]
-        private float RotateSpeed = 1.5f;
+        private float RotateSpeed = 1.5f;                       //Speed for rotating objects
         //
         [SerializeField]
-        private Camera FirstpersonCam;
-        private static GameObject Model;
+        private Camera FirstpersonCam;                          //The camera used to get object positions
+        private static GameObject Model;                        //The current model selected model to be placed
         [SerializeField]
-        public static ControllerState controllerstate;
-        public static GameObject CurrentplacedObject;
+        public static ControllerState controllerstate;          //The current state the controller is in
+        public static GameObject CurrentplacedObject;           //The object you just currently placed
         [SerializeField]
-        GameObject GridViewer;
+        GameObject GridViewer;                                  //The gridviewer so the object that creates the grid
         //
-        Vector2 FirstPos;
-        Vector2 LastPos;
-        //
-        [SerializeField]
-        LayerMask unitlayer;
-        [SerializeField]
-        GameObject WaypointPrefab;
+        Vector2 FirstPos;                                       //Position needed for finger input
+        Vector2 LastPos;                                        //Position needed for finger input
         //
         [SerializeField]
-        GameObject BuildCanvas;
+        LayerMask unitlayer;                                    //The layer for the units
         [SerializeField]
-        GameObject ScalingCanvas;
+        GameObject WaypointPrefab;                              //The waypoint prefab for reference when needed to instantiate waypoints
+        //
         [SerializeField]
-        GameObject SelectBuildCanvas;
+        ChangeObjectScript ChangeObjectScript;                  //Script needed for reference
         [SerializeField]
-        GameObject ObjectEditCanvas;
+        GameObject BuildCanvas;                             //Canvas needed for reference
         [SerializeField]
-        GameObject ScalingFeedback;
+        GameObject ScalingCanvas;                           //Canvas needed for reference
         [SerializeField]
-        GameObject RotateFeedback;
+        GameObject SelectBuildCanvas;                       //Canvas needed for reference
         [SerializeField]
-        GameObject FullyEditingCanvas;
+        GameObject ObjectEditCanvas;                        //Canvas needed for reference
         [SerializeField]
-        GameObject StatsChangeCanvas;
+        GameObject ScalingFeedback;                         //Canvas needed for reference
         [SerializeField]
-        public static GameObject CurrentSelectedModel;
-        public static bool SelectedAHuman = false;
-        public static bool Scanning = false;
+        GameObject RotateFeedback;                          //Canvas needed for reference
+        [SerializeField]
+        GameObject FullyEditingCanvas;                      //Canvas needed for reference
+        [SerializeField]
+        GameObject StatsChangeCanvas;                       //Canvas needed for reference
+        [SerializeField]
+        public static GameObject CurrentSelectedModel;      //Model currently selected
+        public static bool SelectedAHuman = false;          //If the selectedmodel is human or not
+        public static bool Scanning = false;                //If we are scanning
 
-        public bool canPlace = false;
+        public bool canPlace = false;                       //If it is possible to place
 
         private void Awake()
         {
@@ -184,16 +186,18 @@
             if (Input.touchCount == 1)
             {
                 Rotating();
-
+                Debug.Log("Rotating");
             }
             if (Input.touchCount == 2)
             {
                 Scaling();
+                Debug.Log("Scaling");
             }
             if (Input.touchCount == 0)
             {
                 ScalingFeedback.SetActive(true);
                 RotateFeedback.SetActive(true);
+                Debug.Log("No Input");
             }
         }
         //This void handles everything needed when wanting to select an object to edit it afterwards
@@ -210,7 +214,9 @@
         //This void is when you have an object selected and now want to choose what to do with it.
         private void FullyEditingObject()
         {
-            //FullyEditingCanvas.SetActive(true);
+            FullyEditingCanvas.SetActive(true);
+            ChangeObjectScript.FullyEditingObject();
+
         }
         //This void is the update of when you are editing a selected units Stats
         private void EditingUnitStats()
@@ -304,18 +310,19 @@
                 // Find the difference in the distances between each frame.
                 float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
                 //
-                if (CurrentSelectedModel.transform.localScale.x > 0.2f && CurrentSelectedModel.transform.localScale.x < 2f)
-                {
-                    CurrentSelectedModel.transform.localScale += new Vector3(CurrentSelectedModel.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
-                }
-                else if (CurrentSelectedModel.transform.localScale.x < 0.2f)
-                {
-                    CurrentSelectedModel.transform.localScale = new Vector3(0.065f, 0.065f, 0.065f);
-                }
-                else if (CurrentSelectedModel.transform.localScale.x > 2f)
-                {
-                    CurrentSelectedModel.transform.localScale = new Vector3(1.95f, 1.95f, 1.95f);
-                }
+                CurrentSelectedModel.transform.localScale += new Vector3(CurrentSelectedModel.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
+                //if (CurrentSelectedModel.transform.localScale.x > 0.2f && CurrentSelectedModel.transform.localScale.x < 2f)
+                //{
+                //    CurrentSelectedModel.transform.localScale += new Vector3(CurrentSelectedModel.transform.localScale.x * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.y * deltaMagnitudeDiff * ScaleSpeed, CurrentSelectedModel.transform.localScale.z * deltaMagnitudeDiff * ScaleSpeed);
+                //}
+                //else if (CurrentSelectedModel.transform.localScale.x < 0.2f)
+                //{
+                //    CurrentSelectedModel.transform.localScale = new Vector3(0.065f, 0.065f, 0.065f);
+                //}
+                //else if (CurrentSelectedModel.transform.localScale.x > 2f)
+                //{
+                //    CurrentSelectedModel.transform.localScale = new Vector3(1.95f, 1.95f, 1.95f);
+                //}
 
                 // Clamp the field of view to make sure it's between 0 and 180.
                 FirstpersonCam.fieldOfView = Mathf.Clamp(FirstpersonCam.fieldOfView, 0.1f, 179.9f);
@@ -398,6 +405,7 @@
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, unitlayer))
             {
+                Debug.Log("Hit an Object");
                 ChangeObjectScript.Instance.UpdateRouteUI(hit.transform.gameObject);
 
                 if (hit.transform.gameObject.tag == "Snipertoren")
@@ -421,6 +429,9 @@
                 selectedscript.TurnOnVisuals();
                 //
                 controllerstate = ControllerState.FullyEditingObject;
+                //
+
+                //
             }
             //if (Physics.Raycast(touch.position, FirstpersonCam.transform.forward,out hit, UnitLayer))
             //{
